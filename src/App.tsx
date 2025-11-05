@@ -9,6 +9,8 @@ import ComunidadesPage from './pages/comunidades/Comunidades-Page';
 import HomePage from './pages/home/Home-page';
 import MonitoreoPage from './pages/monitoreo/Monitoreo-Page';
 import ContactoPage from './pages/contacto/Contacto-Page';
+import NosotrosPage from './pages/nosotros/Nosotros-Page';
+import ColaboradoresPage from './pages/colaboradores/Colaboradores-Page';
 
 
 function AOSRouterSync() {
@@ -34,6 +36,8 @@ function App() {
         <Route path="/comunidades" element={<ComunidadesPage />} />
         <Route path="/monitoreo" element={<MonitoreoPage />} />
         <Route path="/contacto" element={<ContactoPage />} />
+        <Route path="/nosotros" element={<NosotrosPage />} /> 
+        <Route path="/colaboradores" element={<ColaboradoresPage />} /> 
       </Routes>
     </BrowserRouter>
   )
