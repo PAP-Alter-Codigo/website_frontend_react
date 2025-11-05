@@ -7,7 +7,7 @@ const defaultItems: NavItem[] = [
   { to: "/", label: "INICIO" },
   { to: "/comunidades", label: "COMUNIDADES" },
   { to: "/monitoreo", label: "MONITOREO" },
-  { to: "/equipo", label: "NOSOTROS" },
+  { to: "/nosotros", label: "NOSOTROS" },
   { to: "/contacto", label: "CONTACTO" },
 ];
 

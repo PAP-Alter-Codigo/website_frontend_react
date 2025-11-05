@@ -10,7 +10,7 @@ export default function ComunidadesPage() {
     return (
         <>
             <div className="bgColor">
-                <AppHeader />
+                <AppHeader/>
                 <div className="py-40">
                     <div className="flex flex-1 justify-center pb-5">
                         <div className="w-9/12">

@@ -23,6 +23,8 @@ export default function ContactoForm({ onSubmit }: Props) {
     mensaje: "",
   });
 
+
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
     setValues((v) => ({ ...v, [id]: value }));
@@ -57,7 +59,6 @@ export default function ContactoForm({ onSubmit }: Props) {
                 </div>
               </div>
             </div>
-
             <div className="flex flex-1 justify-center pb-5">
               <form onSubmit={handleSubmit} className="w-9/12" noValidate>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 justify-center">
