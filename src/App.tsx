@@ -8,6 +8,7 @@ import "aos/dist/aos.css";
 import ComunidadesPage from './pages/comunidades/Comunidades-Page';
 import HomePage from './pages/home/Home-page';
 import MonitoreoPage from './pages/monitoreo/Monitoreo-Page';
+import ContactoPage from './pages/contacto/Contacto-Page';
 
 
 function AOSRouterSync() {
@@ -32,6 +33,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/comunidades" element={<ComunidadesPage />} />
         <Route path="/monitoreo" element={<MonitoreoPage />} />
+        <Route path="/contacto" element={<ContactoPage />} />
       </Routes>
     </BrowserRouter>
   )
