@@ -5,7 +5,9 @@ import { useEffect } from 'react';
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+import ComunidadesPage from './pages/comunidades/Comunidades-Page';
 import HomePage from './pages/home/Home-page';
+import MonitoreoPage from './pages/monitoreo/Monitoreo-Page';
 
 
 function AOSRouterSync() {
@@ -25,9 +27,11 @@ function App() {
 
   return (
     <BrowserRouter>
-      <AOSRouterSync />
+      <AOSRouterSync/>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/comunidades" element={<ComunidadesPage />} />
+        <Route path="/monitoreo" element={<MonitoreoPage />} />
       </Routes>
     </BrowserRouter>
   )
