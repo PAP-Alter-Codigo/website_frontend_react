@@ -70,3 +70,14 @@ export function loadColaboradores(): ColaboradorEntry[] {
   out.sort((a, b) => (b.year !== a.year ? b.year - a.year : SEASON_ORDER[a.season] - SEASON_ORDER[b.season]));
   return out;
 }
+
+/* 
+colaborators: [
+    {
+        year: 2025,
+        period: "Primavera",
+        name: "juan",
+        picturePath: ""
+    }
+]
+*/

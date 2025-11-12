@@ -1,69 +1,71 @@
+import { Link } from "react-router-dom";
+
 import brush1 from "@assets/brushStrokes/img10-3-1.png"
 import brush2 from "@assets/brushStrokes/img10-2-4.png"
 import brush3 from "@assets/brushStrokes/img10-1-3.png"
-import imgTmp from "@assets/comunidades/image-2-2.png"
 
+import imgTmp from "@assets/comunidades/image-2-2.png"
 
 const comunidades = [
     {
         name: 'Norte',
         img: imgTmp,
-        to: '/'
+        to: '/regiones/norte'
     },
     {
         name: 'Altos Norte',
         img: imgTmp,
-        to: '/'
+        to: '/regiones/altos-norte'
     },
     {
         name: 'Altos Sur',
         img: imgTmp,
-        to: '/'
+        to: '/regiones/altos-sur'
     },
     {
         name: 'Ciénega',
         img: imgTmp,
-        to: '/'
+        to: '/regiones/cienega'
     },
     {
         name: 'Sureste',
         img: imgTmp,
-        to: '/'
+        to: '/regiones/sureste'
     },
     {
         name: 'Sur',
         img: imgTmp,
-        to: '/'
+        to: '/regiones/sur'
     },
     {
         name: 'Sierra de Amula',
         img: imgTmp,
-        to: '/'
+        to: '/regiones/sierra-amula'
     },
     {
         name: 'Costa Sur',
         img: imgTmp,
-        to: '/'
+        to: '/regiones/costa-sur'
     },
     {
         name: 'Costa Norte',
         img: imgTmp,
-        to: '/'
+        to: '/regiones/costa-norte'
     },
     {
         name: 'Sierra Occidental',
         img: imgTmp,
-        to: '/'
+        to: '/regiones/sierra-occidental'
     },
     {
         name: 'Valles',
         img: imgTmp,
-        to: '/'
+        to: '/regiones/valles'
     },
     {
         name: 'Centro',
         img: imgTmp,
-        to: '/'
+        to: '/regiones/centro'
     },
 ]
 
@@ -89,15 +91,17 @@ export default function HomeComunidades() {
         <div className="flex justify-center">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-9/12">
                 {comunidades.map((c) => (
-                    <div key={c.name} data-aos="fade-up"
-                    className="bg-white rounded-4xl shadow-md 
-                    overflow-hidden transition duration-200 ease-in-out 
-                    hover:scale-110">
-                        <img src={c.img} alt="Imagen 1" className="w-full h-48 object-cover rounded-3xl shadow-md"></img>
-                        <div className="p-4 flex justify-center">
-                            <h3 className="text-4xl font-semibold text-gray-800">{c.name}</h3>
+                    <Link key={c.name} data-aos="fade-up" to={c.to}>
+                        <div 
+                        className="bg-white rounded-4xl shadow-md 
+                        overflow-hidden transition duration-200 ease-in-out 
+                        hover:scale-110">
+                            <img src={c.img} alt="Imagen 1" className="w-full h-48 object-cover rounded-3xl shadow-md"></img>
+                            <div className="p-4 flex justify-center">
+                                <h3 className="text-4xl font-semibold text-gray-800">{c.name}</h3>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>

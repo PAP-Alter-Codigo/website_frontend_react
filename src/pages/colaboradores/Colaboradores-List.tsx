@@ -1,6 +1,6 @@
 // src/components/ColaboradoresAcordeon.tsx
 import { useMemo } from "react";
-import { loadColaboradores, type ColaboradorEntry, type Temporada } from "./loader";
+import { loadColaboradores, type ColaboradorEntry, type Temporada } from "./colaboratorHelper";
 
 type Volunteer = {
   nombre: string;
