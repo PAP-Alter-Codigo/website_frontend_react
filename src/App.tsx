@@ -11,6 +11,8 @@ import MonitoreoPage from './pages/monitoreo/Monitoreo-Page';
 import ContactoPage from './pages/contacto/Contacto-Page';
 import NosotrosPage from './pages/nosotros/Nosotros-Page';
 import ColaboradoresPage from './pages/colaboradores/Colaboradores-Page';
+import ComunidadWrapperPage from './pages/comunidades detail/Comunidad-Wrapper-Page';
+import NotFoundPage from './pages/notFound/Not-Found-Page';
 
 
 function AOSRouterSync() {
@@ -34,10 +36,12 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/comunidades" element={<ComunidadesPage />} />
+        <Route path="/regiones/:slug" element={<ComunidadWrapperPage />} />
         <Route path="/monitoreo" element={<MonitoreoPage />} />
         <Route path="/contacto" element={<ContactoPage />} />
         <Route path="/nosotros" element={<NosotrosPage />} /> 
         <Route path="/colaboradores" element={<ColaboradoresPage />} /> 
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   )
