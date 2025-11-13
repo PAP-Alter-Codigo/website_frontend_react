@@ -13,6 +13,8 @@ import NosotrosPage from './pages/nosotros/Nosotros-Page';
 import ColaboradoresPage from './pages/colaboradores/Colaboradores-Page';
 import ComunidadWrapperPage from './pages/comunidades detail/Comunidad-Wrapper-Page';
 import NotFoundPage from './pages/notFound/Not-Found-Page';
+import CentroPage from './pages/comunidades/centro/Centro-Page';
+import SoñeConNutriasPage from './pages/comunidades/centro/juanacatlan/Soñe-Con-Nutrias-Page';
 
 
 function AOSRouterSync() {
@@ -36,6 +38,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/comunidades" element={<ComunidadesPage />} />
+        <Route path="/comunidades/juanacatlan/soñe-con-nutrias" element={<SoñeConNutriasPage />} />
+        <Route path="/comunidades/centro/:slug" element={<CentroPage />} />
         <Route path="/regiones/:slug" element={<ComunidadWrapperPage />} />
         <Route path="/monitoreo" element={<MonitoreoPage />} />
         <Route path="/contacto" element={<ContactoPage />} />
