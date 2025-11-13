@@ -45,10 +45,10 @@ const regiones: Region[] = [
     title: "CENTRO",
     img: IMG.centro,
     items: [
-      { label: "Juanacatlán", to: "/comunidades/juanacatlan" },
-      { label: "Santa Cruz de las Flores", to: "/comunidades/santa-cruz-de-las-flores" },
-      { label: "El Salto", to: "/comunidades/el-salto" },
-      { label: "Ixtlahuacán del Río", to: "/comunidades/ixtlahuacan-del-rio" },
+      { label: "Juanacatlán", to: "/comunidades/centro/juanacatlan" },
+      { label: "Santa Cruz de las Flores", to: "/comunidades/centro/santa-cruz-de-las-flores" },
+      { label: "El Salto", to: "/comunidades/centro/el-salto" },
+      { label: "Ixtlahuacán del Río", to: "/comunidades/centro/ixtlahuacan-del-rio" },
     ],
   },
   {
