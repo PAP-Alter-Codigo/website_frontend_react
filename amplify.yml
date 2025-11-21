@@ -3,8 +3,11 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm install -g pnpm # Installs pnpm globally
-        - pnpm install       # Or pnpm ci, depending on your needs
+        - nvm use 20 || nvm install 20 # Asegura Node 20 (o usa 22)
+        - node -v
+        - npm install -g pnpm
+        - pnpm config set store-dir .pnpm-store # Opcional: ayuda con el caché
+        - pnpm install --frozen-lockfile # Más seguro para CI que 'pnpm install' solo
     build:
       commands:
         - pnpm run build
@@ -14,4 +17,5 @@ frontend:
       - '**/*'
   cache:
     paths:
+      - .pnpm-store/**/* # Cachea la tienda de pnpm
       - node_modules/**/*
