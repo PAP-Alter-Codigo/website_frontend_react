@@ -62,7 +62,7 @@ export const juanacatlan = {
         {
             title: 'MURAL',
             img: img1,
-            to: '/comunidades/juanacatlan/murales'
+            to: '/comunidades/juanacatlan/mural'
         },
         {
             title: 'CORTO',
