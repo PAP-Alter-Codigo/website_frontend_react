@@ -1,62 +1,80 @@
+// src/types/colaboradores.ts
+export type Period = "primavera" | "verano" | "otoño";
 
+export type Persona = {
+  nombre: string;
+  carrera: string;
+  categoria: string;
+  contacto?: string;
+  imagen?: string; // ruta
+};
+
+
+
+import otoño1 from '@assets/colaboradores/2025/otoño/IMG_8544.png'
+import otoño2 from '@assets/colaboradores/2025/otoño/IMG_8547.png'
+import otoño3 from '@assets/colaboradores/2025/otoño/IMG_8550.png'
+import otoño4 from '@assets/colaboradores/2025/otoño/IMG_8576.png'
+import otoño5 from '@assets/colaboradores/2025/otoño/IMG_8569.png'
+import otoño6 from '@assets/colaboradores/2025/otoño/IMG_8565.png'
 
 
 export const otoño2025 = [
     {
         nombre: 'Victoria Valle Chávez',
         carrera: 'Lic. En Arte y Creación.',
-        categoria: '',
+        categoria: 'Artes',
         contacto: '',
-        imagen: '',
+        imagen: otoño1,
     },
     {
         nombre: ' Ximena García García ',
         carrera: 'Lic. En Diseño Integral.',
-        categoria: '',
+        categoria: 'Redes',
         contacto: '',
-        imagen: '',
+        imagen: otoño4,
     },
     {
         nombre: 'Carla Ximena Ramírez Gutiérrez',
         carrera: 'Lic. En Diseño Integral.',
-        categoria: '',
+        categoria: 'Redes',
         contacto: '',
-        imagen: '',
+        imagen: otoño5,
     },
     {
         nombre: 'Eduardo Sedano Álvarez. ',
         carrera: 'Lic. En Ciencias De La Comunicación.',
-        categoria: '',
+        categoria: 'Trabajo Comunitario',
         contacto: '',
         imagen: '',
     },
     {
         nombre: 'Santiago González Solórzano',
         carrera: 'Lic. En Comunicación y Artes Audiovisuales.',
-        categoria: '',
+        categoria: 'Audio',
         contacto: '',
-        imagen: '',
+        imagen: otoño2,
     },
     {
         nombre: 'Mónica Michelle Reyes Hernández',
         carrera: 'Lic. En Comunicación y Artes Audiovisuales.',
-        categoria: '',
+        categoria: 'Audio',
         contacto: '',
-        imagen: '',
+        imagen: otoño3,
     },
     {
         nombre: 'Daniela Bustos Crispin',
         carrera: 'Lic. En Comunicación y Artes Audiovisuales.',
-        categoria: '',
+        categoria: 'Redes',
         contacto: '',
         imagen: '',
     },
     {
         nombre: 'José Jorge Villarreal Farias',
         carrera: 'Lic. En Desarrollo de Software. ',
-        categoria: '',
+        categoria: 'Tecnologias y desarrollo',
         contacto: '',
-        imagen: '',
+        imagen: otoño6,
     },
 ]
 
