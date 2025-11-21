@@ -6,7 +6,8 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 import ComunidadesPage from './pages/comunidades/Comunidades-Page';
-import HomePage from './pages/home/Home-Page';
+/* import HomePage from './pages/home/home-page'; */
+import HomePage from './pages/home/home-page'
 import MonitoreoPage from './pages/monitoreo/Monitoreo-Page';
 import ContactoPage from './pages/contacto/Contacto-Page';
 import NosotrosPage from './pages/nosotros/Nosotros-Page';
