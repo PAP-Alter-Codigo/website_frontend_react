@@ -31,15 +31,18 @@ El sitio incluye:
 
 ## 🛠️ Desarrollo
 ```
-# 1) Instalar con pnpm
+# 1) Instalar pnpm
+npm install -g pnpm
+
+# 2) Instalar con pnpm
 pnpm install
 
-# 2) Entorno de desarrollo
+# 3) Entorno de desarrollo
 pnpm dev
 
-# 3) Build producción
+# 4) Build producción
 pnpm build
 
-# 4) Previsualizar build
+# 5) Previsualizar build
 pnpm preview
 ```

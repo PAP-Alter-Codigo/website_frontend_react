@@ -60,7 +60,7 @@ export const juanacatlan = {
     ],
     resourses: [
         {
-            title: 'MURALES',
+            title: 'MURAL',
             img: img1,
             to: '/comunidades/juanacatlan/murales'
         },
