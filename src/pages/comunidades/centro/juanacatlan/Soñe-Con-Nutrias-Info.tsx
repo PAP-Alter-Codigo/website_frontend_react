@@ -70,7 +70,7 @@ export default function SoñeConNutriasInfo() {
                     </div>
                 </div>
                 <div className="flex justify-center" data-aos="fade-up">
-                    <div className="w-9/12 text-lg sm:text-xl lg:text-2xl font-semibold text-black/90 leading-relaxed">
+                    <div className="w-9/12 text-lg sm:text-xl lg:text-2xl text-black/90 leading-relaxed">
                         Soñé con Nutrias es un cortometraje animado que nace de la lucha y la memoria de la comunidad de Juanacatlán. A través de técnicas de stop motion, da vida a paisajes, rostros y símbolos que evocan la profunda conexión entre el territorio y quienes lo habitan. 
                         Creado dentro del Programa de Aplicación Profesional de Territorios del ITESO, y en colaboración con las y los defensores del territorio de Juanacatlán, este proyecto entrelaza arte y resistencia. Más que un relato visual, Soñé con Nutrias es una invitación a reflexionar sobre la conexión entre la tierra y quienes la habitan, recordándonos la importancia de cuidar, respetar y proteger nuestro entorno. 
                         <div className="mt-4 flex justify-center md:justify-start">

@@ -149,5 +149,10 @@ export const staCruzDeLasFlores = {
             img: staCruz1,
             to: '/comunidades/sta-cruz-de-las-flores/mapa'
         },
+        {
+            title: 'Juego de Mesa Xuchitlan',
+            img: staCruz3,
+            to: '/comunidades/sta-cruz-de-las-flores/xuchitlan'
+        },
     ],
 }
