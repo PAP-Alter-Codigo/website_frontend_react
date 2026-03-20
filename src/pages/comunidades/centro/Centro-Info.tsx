@@ -3,15 +3,16 @@ import brushRT from "@assets/brushStrokes/img10-2-4.png";
 import brushLM from "@assets/brushStrokes/img9-1-7.png";
 import { Link, useParams } from "react-router-dom";
 
-import { juanacatlan, type CommunityDetail } from "./Centro-Data";
+import { juanacatlan, staCruzDeLasFlores, type CommunityDetail } from "./Centro-Data";
 import CentroButtons from "./Centro-buttons";
 import Carrousel from "../../../components/Carrousel";
 
 const comunidades = [
     juanacatlan,
+    staCruzDeLasFlores
 ]
 
-function getMatch(slug: String) {
+function getMatch(slug: String): CommunityDetail | undefined {
     return comunidades.find((e: CommunityDetail) => {
         return e.id === slug;
     })
@@ -71,12 +72,25 @@ export default function CentroInfo() {
                                         loading="lazy"
                                         decoding="async"
                                     /> */}
-                                    <Carrousel images={match.carrousel}
-                                        autoPlay
-                                        intervalMs={5000}
-                                        className="rounded-2xl"
-                                        caption="Galería de comunidad"
-                                    />
+                                    {
+                                        match.carrousel ? (
+                                            <Carrousel images={match.carrousel}
+                                                autoPlay
+                                                intervalMs={5000}
+                                                className="rounded-2xl"
+                                                caption="Galería de comunidad"
+                                            />
+                                        ) : (
+                                            <img
+                                                src={match.imgPrincipal}
+                                                alt={`Paisaje de ${match.title}`}
+                                                className="w-full h-48 sm:h-64 md:h-80 lg:h-[420px] object-cover shadow-lg"
+                                                loading="lazy"
+                                                decoding="async"
+                                            />
+                                        )
+                                    }
+
                                 </div>
 
                                 {
@@ -96,7 +110,7 @@ export default function CentroInfo() {
                                             <figure className="relative overflow-hidden rounded-3xl shadow-xl">
                                                 <img
                                                     src={section.img}
-                                                    className="w-full h-56 sm:h-72 md:h-full object-cover transition-transform duration-500 hover:scale-[1.02]"
+                                                    className="w-full h-56 sm:h-96 object-cover transition-transform duration-500 hover:scale-[1.02]"
                                                     loading="lazy"
                                                     decoding="async"
                                                 />

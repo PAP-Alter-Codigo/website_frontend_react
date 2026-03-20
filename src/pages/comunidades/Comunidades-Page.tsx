@@ -1,16 +1,18 @@
 import AppHeader from "../../components/App-Header";
 import ComunidadesCatalogue from "./Comunidades-Catalogue";
 
+import { Link } from "react-router-dom";
+
 import prtSup1 from "@assets/bigStrokes/01-prt-sup-1.png"
 import prtInf1 from "@assets/bigStrokes/piedepag-1-1.png"
 import ComunidadesMap from "./Comunidades-Map";
-
+import staCruz from "@assets/comunidades/staCruz/20250619_100617.jpg";
 
 export default function ComunidadesPage() {
     return (
         <>
             <div className="bgColor">
-                <AppHeader/>
+                <AppHeader />
                 <div className="py-40">
                     <div className="flex flex-1 justify-center pb-5">
                         <div className="w-9/12">
@@ -25,7 +27,7 @@ export default function ComunidadesPage() {
                 </div>
             </div>
             <img className="w-full select-none" src={prtSup1} alt="01 prt sup 1" />
-            <ComunidadesMap/>
+            <ComunidadesMap />
             <ComunidadesCatalogue />
             <img className="w-full select-none" src={prtInf1} alt="logo resonancias 1" />
         </>

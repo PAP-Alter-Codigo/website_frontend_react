@@ -17,6 +17,8 @@ import NotFoundPage from './pages/notFound/Not-Found-Page';
 import CentroPage from './pages/comunidades/centro/Centro-Page';
 import SoñeConNutriasPage from './pages/comunidades/centro/juanacatlan/Soñe-Con-Nutrias-Page';
 import MuralJuanacatlanPage from './pages/comunidades/centro/juanacatlan/Mural-Juanacatlan-Page';
+import MapaInteractivoPage from './pages/comunidades/centro/sta cruz de las flores/mapa-interactivo/Mapa-Interactivo-Page';
+
 
 
 function AOSRouterSync() {
@@ -48,6 +50,7 @@ function App() {
         <Route path="/contacto" element={<ContactoPage />} />
         <Route path="/nosotros" element={<NosotrosPage />} /> 
         <Route path="/colaboradores" element={<ColaboradoresPage />} /> 
+        <Route path="/comunidades/sta-cruz-de-las-flores/mapa" element={<MapaInteractivoPage />} /> 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

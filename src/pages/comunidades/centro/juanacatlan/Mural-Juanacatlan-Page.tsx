@@ -13,6 +13,14 @@ import juanac7 from "@assets/comunidades/juanacatlan/IMG_20240529_125517.jpg";
 import juanac8 from "@assets/comunidades/juanacatlan/IMG_20240611_091546.jpg";
 import juanac9 from "@assets/comunidades/juanacatlan/IMG_20240611_091603.jpg";
 
+import mural1 from "@assets/comunidades/juanacatlan/Mural/mural1.jpeg";
+import mural2 from "@assets/comunidades/juanacatlan/Mural/mural2.jpeg";
+import mural3 from "@assets/comunidades/juanacatlan/Mural/mural3.jpeg";
+import mural4 from "@assets/comunidades/juanacatlan/Mural/mural4.jpeg";
+import mural5 from "@assets/comunidades/juanacatlan/Mural/mural5.jpeg";
+import mural6 from "@assets/comunidades/juanacatlan/Mural/mural6.jpeg";
+import mural7 from "@assets/comunidades/juanacatlan/Mural/mural7.jpeg";
+
 
 const imgs = [
     { src: juanac1 },
@@ -24,6 +32,13 @@ const imgs = [
     { src: juanac7 },
     { src: juanac8 },
     { src: juanac9 },
+    { src: mural1 },
+    { src: mural2 },
+    { src: mural3 },
+    { src: mural4 },
+    { src: mural5 },
+    { src: mural6 },
+    { src: mural7 },
 ]
 
 
@@ -39,7 +54,7 @@ export default function MuralJuanacatlanPage() {
                     <h1 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-black pb-3 sm:pb-4">
                         Mural
                     </h1>
-                    <div className=" text-lg sm:text-xl lg:text-2xl text-black/90 leading-relaxed">
+                    <div className=" text-lg text-black/90 leading-relaxed">
                         El mural comunitario “Nuestro territorio” es el resultado del encuentro entre imaginación, memoria y colaboración. A través del arte, las y los estudiantes y profesorado de la Escuela Josefa Ortiz de Domínguez, junto con el Grupo El Roble y Un Salto de Vida, en la cabecera municipal de Juanacatlán, transformaron los muros de su entrada en un espacio vivo, lleno de colores, relatos y significados compartidos. Cada trazo fue una conversación, cada color una emoción, cada imagen una ventana al territorio. 
                         <br /><br />
                         El mural comunitario que hemos realizado no solo es una expresión artística, sino un reflejo del esfuerzo colectivo de las infancias, la identidad compartida y la memoria de quienes participaron en su creación. Representa la memoria viva de Juanacatlán, la conexión con su territorio y la esperanza de que las nuevas generaciones encuentren en el arte un camino de unión, aprendizaje y  memoria comunitaria. 

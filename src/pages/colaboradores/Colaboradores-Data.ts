@@ -17,6 +17,7 @@ import otoño3 from '@assets/colaboradores/2025/otoño/IMG_8550.png'
 import otoño4 from '@assets/colaboradores/2025/otoño/IMG_8576.png'
 import otoño5 from '@assets/colaboradores/2025/otoño/IMG_8569.png'
 import otoño6 from '@assets/colaboradores/2025/otoño/IMG_8565.png'
+import otoño7 from '@assets/colaboradores/2025/otoño/IMG_8932.png'
 
 
 export const otoño2025 = [
@@ -46,7 +47,7 @@ export const otoño2025 = [
         carrera: 'Lic. En Ciencias De La Comunicación.',
         categoria: 'Trabajo Comunitario',
         contacto: '',
-        imagen: '',
+        imagen: otoño7,
     },
     {
         nombre: 'Santiago González Solórzano',
