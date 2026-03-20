@@ -1,12 +1,9 @@
 import AppHeader from "../../components/App-Header";
 import ComunidadesCatalogue from "./Comunidades-Catalogue";
 
-import { Link } from "react-router-dom";
-
 import prtSup1 from "@assets/bigStrokes/01-prt-sup-1.png"
 import prtInf1 from "@assets/bigStrokes/piedepag-1-1.png"
 import ComunidadesMap from "./Comunidades-Map";
-import staCruz from "@assets/comunidades/staCruz/20250619_100617.jpg";
 
 export default function ComunidadesPage() {
     return (
