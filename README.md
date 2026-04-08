@@ -46,3 +46,20 @@ pnpm build
 # 5) Previsualizar build
 pnpm preview
 ```
+
+## 🛠️ Contribution
+
+### Imagenes
+- Mantener una organizacion por carpetas de las imagenes a utilizar
+- src/assets
+- organizar todo por carpetas
+- las principales carpetas seran 
+    - Comunidades
+    - Colaboradores
+
+### Comunity Pages
+- dentro de src/pages/comunidades encontraras las pages y componentes de las fichas de comunidades
+- dentro de centro se definio ya una estructura en donde solo hay que nutrir un json y ya se renderiza automaticamente para escalabilidad y facilidad, en caso de comenzar con otras regiones replicar lo hecho aqui
+    - para modificar solo hay que editar Centro-Data.ts, ahi estan los imports y la estructura
+    - reproducir esta estructura para las siguientes comunidades y regiones
+- En el caso de las fichas internas de cada comunidad (mural, juegos de mesa, corto, etc.), la ficha debera de ser desarrollada individualmente en su respectiva carpeta

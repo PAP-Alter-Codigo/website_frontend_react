@@ -18,6 +18,7 @@ import CentroPage from './pages/comunidades/centro/Centro-Page';
 import SoñeConNutriasPage from './pages/comunidades/centro/juanacatlan/Soñe-Con-Nutrias-Page';
 import MuralJuanacatlanPage from './pages/comunidades/centro/juanacatlan/Mural-Juanacatlan-Page';
 import MapaInteractivoPage from './pages/comunidades/centro/sta cruz de las flores/mapa-interactivo/Mapa-Interactivo-Page';
+import XuchitlanPage from './pages/comunidades/centro/sta cruz de las flores/Xuchitlan/Xuchitlan-Page';
 
 
 
@@ -51,6 +52,7 @@ function App() {
         <Route path="/nosotros" element={<NosotrosPage />} /> 
         <Route path="/colaboradores" element={<ColaboradoresPage />} /> 
         <Route path="/comunidades/sta-cruz-de-las-flores/mapa" element={<MapaInteractivoPage />} /> 
+        <Route path="/comunidades/sta-cruz-de-las-flores/xuchitlan" element={<XuchitlanPage />} /> 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

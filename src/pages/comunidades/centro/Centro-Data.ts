@@ -103,7 +103,7 @@ export const staCruzDeLasFlores = {
         {
             subtitle: 'Territorio',
             img: staCruz1,
-            data: 'El antiguo valle de Xuchitlán, habitado desde el año 1550 por los pueblos cocas, tecuexes y tlajomulcas, se ubica en el eje volcánico y ha sido testigo de una larga historia de vida y transformación. En este territorio se encuentran los pueblos originarios de Cofradía, Buenavista, Santa Cruz de las Flores, Cruz Vieja y Santa Cruz de la Loma, comunidades que han mantenido una relación interdependiente con los cerros, barrancas y manantiales. ',
+            data: 'El antiguo valle de Xuchitlán, habitado desde el año 1550 por los pueblos cocas, tecuexes y tlajomulcas, se ubica en el eje volcánico y ha sido testigo de una larga historia de vida y transformación. En este territorio se encuentran los pueblos originarios de Cofradía, Buenavista, Santa Cruz de las Flores, Cruz Vieja y Santa Cruz de la Loma, comunidades que han mantenido una relación interdependiente con los cerros, barrancas y manantiales en el municipio de Tlajomulco de Zúñiga',
             reverse: false
         },
         {
@@ -125,15 +125,15 @@ export const staCruzDeLasFlores = {
             reverse: true
         },
         {
-            subtitle: 'Luchas y defensas del territorio',
-            img: staCruz5,
-            data: 'La comunidad ha enfrentado procesos de despojo y contaminación provocados por la llegada de industrias que alteran el equilibrio ambiental. La defensa del agua subterránea, llevada a cabo en 1991, 2001 y 2021, forma parte de una memoria de resistencia que une a las generaciones. Personajes como el cantautor Vicente Miranda y las mujeres defensoras simbolizan la fuerza del territorio frente a las injusticias ambientales.',
-            reverse: false
-        },
-        {
             subtitle: 'Impacto industrial y esperanza de recuperación ',
             img: staCruz6,
             data: 'El crecimiento de distintas industrias ha provocado contaminación del aire y del agua, pérdida de espacios naturales y afectaciones a la salud. Sin embargo, en medio de la crisis ambiental, la comunidad busca reconstruir la esperanza, recuperar el territorio y fortalecer la defensa de los bienes comunes, promoviendo la armonía entre las personas y la naturaleza.',
+            reverse: false
+        },
+        {
+            subtitle: 'Luchas y defensas del territorio',
+            img: staCruz5,
+            data: 'La comunidad ha enfrentado procesos de despojo y contaminación provocados por la llegada de industrias que alteran el equilibrio ambiental. La defensa del agua subterránea, llevada a cabo en 1991, 2001 y 2021, forma parte de una memoria de resistencia que une a las generaciones. Personajes como el cantautor Vicente Miranda y las mujeres defensoras simbolizan la fuerza del territorio frente a las injusticias ambientales.',
             reverse: true
         },
         {
