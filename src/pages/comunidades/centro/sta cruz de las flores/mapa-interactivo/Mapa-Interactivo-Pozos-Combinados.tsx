@@ -5,7 +5,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L, { DivIcon } from "leaflet";
 
 // ─── GeoJSON ────────────────────────────────────────────────────────────────
-import { GEOJSON } from './MapaGEOJson'
+import { GEOJSON } from './MapaGEOJsonPosos'
 
 
 // ─── Tipos y datos derivados ─────────────────────────────────────────────────
@@ -116,7 +116,7 @@ function ShapeIndicator({ color, shape }: { color: string; shape: Shape }) {
 
 // ─── Componente ──────────────────────────────────────────────────────────────
 
-export default function MapaInteractivoComponent() {
+export default function MapaInteractivoPososCombinados() {
     const [selected, setSelected] = useState<"all" | Capa>("all");
 
     const counts = useMemo(() => {
