@@ -32,6 +32,14 @@ function AOSRouterSync() {
   return null;
 }
 
+function ScrollToTop() {
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+  return null;
+}
+
 function App() {
    useEffect(() => {
       AOS.init({ duration: 600, once: true, offset: 30 }); // config
@@ -39,6 +47,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <AOSRouterSync/>
       <Routes>
         <Route path="/" element={<HomePage />} />
