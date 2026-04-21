@@ -14,7 +14,16 @@ type Uso =
     | "PUBLICO URBANO"
     | "SERVICIOS"
     | "PECUARIO"
-    | "DOMESTICO";
+    | "DOMESTICO"
+    | "POZOS_RIEGO"
+    | "POZOS_DOMO"
+    | "POZOS_DOMESTICO";
+
+const POZO_SOURCE_LAYER_MAP: Record<string, Uso> = {
+    "Pozos profundos y norias de riego": "POZOS_RIEGO",
+    "Pozos Domo sur la Primavera": "POZOS_DOMO",
+    "Pozos para uso doméstico": "POZOS_DOMESTICO",
+};
 
 type Punto = {
     name: string;
@@ -27,12 +36,15 @@ type Punto = {
 // ─── Capas / filtros ──────────────────────────────────────────────────────────
 
 const CAPAS: { key: Uso; label: string; color: string }[] = [
-    { key: "INDUSTRIAL",    label: "Industrial",      color: "#b45309" },
-    { key: "AGRICOLA",      label: "Agrícola",        color: "#15803d" },
-    { key: "PUBLICO URBANO",label: "Público urbano",  color: "#1d4ed8" },
-    { key: "SERVICIOS",     label: "Servicios",       color: "#7c3aed" },
-    { key: "PECUARIO",      label: "Pecuario",        color: "#0f766e" },
-    { key: "DOMESTICO",     label: "Doméstico",       color: "#db2777" },
+    { key: "INDUSTRIAL",       label: "Industrial",                        color: "#b45309" },
+    { key: "AGRICOLA",         label: "Agrícola",                          color: "#15803d" },
+    { key: "PUBLICO URBANO",   label: "Público urbano",                    color: "#1d4ed8" },
+    { key: "SERVICIOS",        label: "Servicios",                         color: "#7c3aed" },
+    { key: "PECUARIO",         label: "Pecuario",                          color: "#0f766e" },
+    { key: "DOMESTICO",        label: "Doméstico",                         color: "#db2777" },
+    { key: "POZOS_RIEGO",      label: "Pozos profundos y norias de riego", color: "#dc2626" },
+    { key: "POZOS_DOMO",       label: "Pozos Domo sur la Primavera",       color: "#d97706" },
+    { key: "POZOS_DOMESTICO",  label: "Pozos uso doméstico",               color: "#0284c7" },
 ];
 
 const colorByUso: Record<Uso, string> = Object.fromEntries(
@@ -61,6 +73,16 @@ const puntos: Punto[] = features
     .filter((f) => f.geometry.type === "Point")
     .map((f) => {
         const coords = f.geometry.coordinates as unknown as number[];
+        const pozoUso = POZO_SOURCE_LAYER_MAP[f.properties.source_layer];
+        if (pozoUso) {
+            return {
+                name: f.properties.Name,
+                lat: coords[1],
+                lng: coords[0],
+                uso: pozoUso,
+                repda: null,
+            };
+        }
         const repda = repdaByTitulo[f.properties.Name] ?? null;
         const uso = (repda?.USO ?? "SERVICIOS") as Uso;
         return {
@@ -81,26 +103,75 @@ const conteoUso: Record<Uso, number> = (() => {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-function makeDivIcon(color: string): DivIcon {
+type MarkerShape =
+    | "circle"
+    | "square"
+    | "diamond"
+    | "hexagon"
+    | "pentagon"
+    | "cross"
+    | "octagon"
+    | "star4"
+    | "ring";
+
+const usoShape: Record<Uso, MarkerShape> = {
+    "INDUSTRIAL":      "circle",
+    "AGRICOLA":        "circle",
+    "PUBLICO URBANO":  "circle",
+    "SERVICIOS":       "circle",
+    "PECUARIO":        "circle",
+    "DOMESTICO":       "circle",
+    "POZOS_RIEGO":     "square",
+    "POZOS_DOMO":      "square",
+    "POZOS_DOMESTICO": "square",
+};
+
+function shapeToSVG(shape: MarkerShape, color: string, size = 18): string {
+    const h = size / 2;
+    const sw = size <= 12 ? 1.5 : 2;
+    switch (shape) {
+        case "circle":
+            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><circle cx="${h}" cy="${h}" r="${h - sw}" fill="${color}" stroke="white" stroke-width="${sw}"/></svg>`;
+        case "square":
+            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><rect x="${sw}" y="${sw}" width="${size - sw * 2}" height="${size - sw * 2}" fill="${color}" stroke="white" stroke-width="${sw}"/></svg>`;
+        case "diamond":
+            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><polygon points="${h},${sw} ${size - sw},${h} ${h},${size - sw} ${sw},${h}" fill="${color}" stroke="white" stroke-width="${sw}"/></svg>`;
+        case "hexagon":
+            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><polygon points="${h},${sw} ${size - sw},${Math.round(size * 0.28)} ${size - sw},${Math.round(size * 0.72)} ${h},${size - sw} ${sw},${Math.round(size * 0.72)} ${sw},${Math.round(size * 0.28)}" fill="${color}" stroke="white" stroke-width="${sw}"/></svg>`;
+        case "pentagon":
+            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><polygon points="${h},${sw} ${size - sw},${Math.round(size * 0.38)} ${Math.round(size * 0.8)},${size - sw} ${Math.round(size * 0.2)},${size - sw} ${sw},${Math.round(size * 0.38)}" fill="${color}" stroke="white" stroke-width="${sw}"/></svg>`;
+        case "cross": {
+            const t = Math.round(size * 0.3);
+            const e = size - t;
+            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><path d="M${t} ${sw} H${e} V${t} H${size - sw} V${e} H${e} V${size - sw} H${t} V${e} H${sw} V${t} H${t} Z" fill="${color}" stroke="white" stroke-width="${sw * 0.6}" stroke-linejoin="round"/></svg>`;
+        }
+        case "octagon": {
+            const cut = Math.round(size * 0.29);
+            const far = size - cut;
+            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><polygon points="${cut},${sw} ${far},${sw} ${size - sw},${cut} ${size - sw},${far} ${far},${size - sw} ${cut},${size - sw} ${sw},${far} ${sw},${cut}" fill="${color}" stroke="white" stroke-width="${sw}"/></svg>`;
+        }
+        case "star4":
+            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><polygon points="${h},${sw} ${Math.round(h + size * 0.15)},${Math.round(h - size * 0.15)} ${size - sw},${h} ${Math.round(h + size * 0.15)},${Math.round(h + size * 0.15)} ${h},${size - sw} ${Math.round(h - size * 0.15)},${Math.round(h + size * 0.15)} ${sw},${h} ${Math.round(h - size * 0.15)},${Math.round(h - size * 0.15)}" fill="${color}" stroke="white" stroke-width="${sw}" stroke-linejoin="round"/></svg>`;
+        case "ring":
+            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><circle cx="${h}" cy="${h}" r="${h - sw}" fill="${color}" stroke="white" stroke-width="${sw}"/><circle cx="${h}" cy="${h}" r="${Math.round(h * 0.42)}" fill="white"/></svg>`;
+    }
+}
+
+function makeDivIcon(color: string, shape: MarkerShape): DivIcon {
+    const svg = shapeToSVG(shape, color, 18);
     return L.divIcon({
         className: "custom-marker",
-        html: `<div style="background-color:${color};width:14px;height:14px;border-radius:50%;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,0.4);"></div>`,
-        iconSize: [14, 14],
-        iconAnchor: [7, 7],
+        html: `<div style="filter:drop-shadow(0 1px 3px rgba(0,0,0,0.45));line-height:0;">${svg}</div>`,
+        iconSize: [18, 18],
+        iconAnchor: [9, 9],
     });
 }
 
-function LeyendaDot({ color }: { color: string }) {
+function LeyendaDot({ color, shape }: { color: string; shape: MarkerShape }) {
     return (
         <span
-            style={{
-                display: "inline-block",
-                width: "0.75rem",
-                height: "0.75rem",
-                borderRadius: "9999px",
-                backgroundColor: color,
-                flexShrink: 0,
-            }}
+            style={{ display: "inline-flex", alignItems: "center", flexShrink: 0 }}
+            dangerouslySetInnerHTML={{ __html: shapeToSVG(shape, color, 13) }}
         />
     );
 }
@@ -235,7 +306,7 @@ export default function MapaInteractivoHumedalAguasSub() {
                                 }`}
                                 aria-pressed={filtroUso === key}
                             >
-                                <LeyendaDot color={color} />
+                                <LeyendaDot color={color} shape={usoShape[key]} />
                                 {label} ({conteoUso[key] ?? 0})
                             </button>
                         ))}
@@ -286,7 +357,7 @@ export default function MapaInteractivoHumedalAguasSub() {
                                 <Marker
                                     key={p.name + i}
                                     position={[p.lat, p.lng]}
-                                    icon={makeDivIcon(colorByUso[p.uso] ?? "#6b7280")}
+                                    icon={makeDivIcon(colorByUso[p.uso] ?? "#6b7280", usoShape[p.uso] ?? "circle")}
                                     eventHandlers={{
                                         click: () => setSelectedPunto(p),
                                     }}
