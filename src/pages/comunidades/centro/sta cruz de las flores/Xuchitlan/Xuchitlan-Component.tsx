@@ -1,10 +1,16 @@
 
 import tablero from "@assets/comunidades/staCruz/xuchitlan/TABLERO_Final.png"
-import card1 from "@assets/comunidades/staCruz/xuchitlan/cardFrontTemp.png"
-import card2 from "@assets/comunidades/staCruz/xuchitlan/cardBack.png"
+
 import BrushCard from "../../../../../components/Brush-Card"
 
+import card1_F from "@assets/comunidades/staCruz/xuchitlan/cartas frente-05.png"
+import card1_B from "@assets/comunidades/staCruz/xuchitlan/cartas-02.png"
 
+import card2_F from "@assets/comunidades/staCruz/xuchitlan/cartas frente-06.png"
+import card2_B from "@assets/comunidades/staCruz/xuchitlan/cartas-03.png"
+
+import card3_F from "@assets/comunidades/staCruz/xuchitlan/cartas frente-07.png"
+import card3_B from "@assets/comunidades/staCruz/xuchitlan/cartas-04.png"
 
 export default function XuchitlanComponent() {
     return (
@@ -53,13 +59,13 @@ export default function XuchitlanComponent() {
 
                 <div className="grid grid-cols-3 items-start gap-4 mt-6">
                     {[
-                        { front: card1, back: card2, title: "Informativas", caption: "Este tipo de cartas se encargan de transmitir distinta información de los elementos bioculturales de Santa Cruz de las Flores, como lo son datos curiosos, sus funciones, y palabras en la lengua coca." },
-                        { front: card1, back: card2, title: "Trivia", caption: "Este tipo de cartas se encargan de cuestionar los conocimientos de los participantes a través de distintas preguntas." },
-                        { front: card1, back: card2, title: "Comunidad", caption: "Este tipo de cartas busca que los participantes realicen actividades en conjunto, como puede ser que todos imiten alguna especie del territorio, generando una comunidad más unida entre ellos. " },
-                    ].map(({ front, back, title, caption }) => (
+                        { front: card1_B, back: card1_F, color: '#629FDE', title: "Informativas", caption: "Este tipo de cartas se encargan de transmitir distinta información de los elementos bioculturales de Santa Cruz de las Flores, como lo son datos curiosos, sus funciones, y palabras en la lengua coca." },
+                        { front: card2_B, back: card2_F, color: '#DE9862', title: "Trivia", caption: "Este tipo de cartas se encargan de cuestionar los conocimientos de los participantes a través de distintas preguntas." },
+                        { front: card3_B, back: card3_F, color: '#227839', title: "Comunidad", caption: "Este tipo de cartas busca que los participantes realicen actividades en conjunto, como puede ser que todos imiten alguna especie del territorio, generando una comunidad más unida entre ellos. " },
+                    ].map(({ front, back, title, caption, color }) => (
                         <div key={title} className="flex flex-col items-center gap-3">
                             <div className="flex-none">
-                                <BrushCard frontImage={front} backImage={back} />
+                                <BrushCard frontImage={front} backImage={back} frontBrush={{primaryColor: color}} backBrush={{primaryColor: color}}/>
                             </div>
                             <div className="text-center px-2 pt-4">
                                 <h3 className="font-bold text-black text-base sm:text-lg leading-tight">
