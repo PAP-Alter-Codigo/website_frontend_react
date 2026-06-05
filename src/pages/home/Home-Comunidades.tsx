@@ -4,27 +4,33 @@ import brush1 from "@assets/brushStrokes/img10-3-1.png"
 import brush2 from "@assets/brushStrokes/img10-2-4.png"
 import brush3 from "@assets/brushStrokes/img10-1-3.png"
 
-import imgTmp from "@assets/comunidades/image-2-2.png"
+import imgTmp from "@assets/regiones/image-2-2.png"
+import imgAltosNorte from "@assets/regiones/altos-norte.jpg"
+import imgCienega from "@assets/regiones/cienega.jpg"
+import imgNorte from "@assets/regiones/norte.jpg"
+import imgSierraOccidental from "@assets/regiones/sierra-occidental.jpeg"
+import imgAltosSur from "@assets/regiones/altos-sur-2.jpeg"
+import imgCentro from "@assets/regiones/centro.png"
 
 const comunidades = [
     {
         name: 'Norte',
-        img: imgTmp,
+        img: imgNorte,
         to: '/regiones/norte'
     },
     {
         name: 'Altos Norte',
-        img: imgTmp,
+        img: imgAltosNorte,
         to: '/regiones/altos-norte'
     },
     {
         name: 'Altos Sur',
-        img: imgTmp,
+        img: imgAltosSur,
         to: '/regiones/altos-sur'
     },
     {
         name: 'Ciénega',
-        img: imgTmp,
+        img: imgCienega,
         to: '/regiones/cienega'
     },
     {
@@ -54,7 +60,7 @@ const comunidades = [
     },
     {
         name: 'Sierra Occidental',
-        img: imgTmp,
+        img: imgSierraOccidental,
         to: '/regiones/sierra-occidental'
     },
     {
@@ -64,7 +70,7 @@ const comunidades = [
     },
     {
         name: 'Centro',
-        img: imgTmp,
+        img: imgCentro,
         to: '/regiones/centro'
     },
 ]
