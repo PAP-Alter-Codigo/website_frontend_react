@@ -1,33 +1,6 @@
 // src/components/Regiones.tsx
 import { Link } from "react-router-dom";
-
-import img1 from "@assets/comunidades/img-8458-1.png"; 
-import img2 from "@assets/comunidades/image-19.png"; 
-import img3 from "@assets/comunidades/image-28.png"; 
-import img4 from "@assets/comunidades/image-17.png"; 
-import img5 from "@assets/comunidades/image-20.png"; 
-import img6 from "@assets/comunidades/image-26.png"; 
-import img7 from "@assets/comunidades/image-17-2.png"; 
-import img8 from "@assets/comunidades/image-24.png"; 
-import img9 from "@assets/comunidades/image-30.png"; 
-import bursh1 from "@assets/brushStrokes/03-graf-1.png"; 
-import bursh2 from "@assets/brushStrokes/03-graf-4.png"; 
-
-
-const IMG = {
-  centro: img1,
-  lagunas: img2,
-  valles: img3,
-  cienega: img4,
-  sureste: img5,
-  sur: img6,
-  sierraAmula: img7,
-  costaSur: img8,
-  costaOcc: img9,
-  deco1: bursh1,
-  deco2: bursh2,
-};
-
+import {regiones} from "./Comunidades-Data";
 
 type Item = { label: string; to: string };
 type Region = {
@@ -37,80 +10,14 @@ type Region = {
   reverse?: boolean; // alterna imagen/tarjeta
 };
 
-const regiones: Region[] = [
-  {
-    title: "CENTRO",
-    img: IMG.centro,
-    items: [
-      { label: "Juanacatlán", to: "/comunidades/centro/juanacatlan" },
-      { label: "Santa Cruz de las Flores", to: "/comunidades/centro/santa-cruz-de-las-flores" },
-      { label: "El Salto", to: "/comunidades/centro/el-salto" },
-      { label: "Ixtlahuacán del Río", to: "/comunidades/centro/ixtlahuacan-del-rio" },
-    ],
-  },
-  {
-    title: "LAGUNAS",
-    img: IMG.lagunas,
-    items: [{ label: "Sayula", to: "/comunidades/sayula" }],
-    reverse: true,
-  },
-  {
-    title: "VALLES",
-    img: IMG.valles,
-    items: [
-      { label: "Tequila", to: "/comunidades/tequila" },
-      { label: "Tecolotlán", to: "/comunidades/tecolotlan" },
-      { label: "Tala", to: "/comunidades/tala" },
-      { label: "Sierra de Quila", to: "/comunidades/sierra-de-quila" },
-    ],
-  },
-  {
-    title: "CIÉNEGA",
-    img: IMG.cienega,
-    items: [
-      { label: "La Noria", to: "/comunidades/la-noria" },
-      { label: "Agua Caliente", to: "/comunidades/agua-caliente" },
-    ],
-    reverse: true,
-  },
-  {
-    title: "SURESTE",
-    img: IMG.sureste,
-    items: [
-      { label: "Santa Cruz de la Soledad", to: "/comunidades/santa-cruz-de-la-soledad" },
-      { label: "Mezcala", to: "/comunidades/mezcala" },
-      { label: "San Antonio Tlayacapan", to: "/comunidades/san-antonio-tlayacapan" },
-    ],
-  },
-  {
-    title: "SUR",
-    img: IMG.sur,
-    items: [
-      { label: "Sierra de Manantlán", to: "/comunidades/sierra-de-manantlan" },
-      { label: "Ciudad Guzmán", to: "/comunidades/ciudad-guzman" },
-    ],
-    reverse: true,
-  },
-  {
-    title: "SIERRA DE AMULA",
-    img: IMG.sierraAmula,
-    items: [
-      { label: "Autlán", to: "/comunidades/autlan" },
-      { label: "El Grullo", to: "/comunidades/el-grullo" },
-    ],
-  },
-  {
-    title: "COSTA SUR",
-    img: IMG.costaSur,
-    items: [{ label: "Costa Careyes", to: "/comunidades/costa-careyes" }],
-    reverse: true,
-  },
-  {
-    title: "COSTA SIERRA-OCCIDENTAL",
-    img: IMG.costaOcc,
-    items: [{ label: "Puerto Vallarta", to: "/comunidades/puerto-vallarta" }],
-  },
-];
+import bursh1 from "@assets/brushStrokes/03-graf-1.png"; 
+import bursh2 from "@assets/brushStrokes/03-graf-4.png"; 
+
+
+const IMG = {
+  deco1: bursh1,
+  deco2: bursh2,
+};
 
 function Chevron() {
   return (
@@ -139,7 +46,7 @@ function RegionBlock({ title, img, items, reverse }: Region) {
         {/* Tarjeta */}
         <section className="bg-white rounded-3xl shadow-xl p-6 sm:p-8 flex flex-col justify-center">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-center tracking-tight">
-            <span className="bg-clip-text text-black">{title}</span>
+            <span className="bg-clip-text text-black">{title.replace(/-/g, " ")}</span>
           </h2>
 
           <ul className="mt-8 space-y-4">
