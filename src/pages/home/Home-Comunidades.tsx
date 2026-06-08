@@ -4,13 +4,18 @@ import brush1 from "@assets/brushStrokes/img10-3-1.png"
 import brush2 from "@assets/brushStrokes/img10-2-4.png"
 import brush3 from "@assets/brushStrokes/img10-1-3.png"
 
-import imgTmp from "@assets/regiones/image-2-2.png"
 import imgAltosNorte from "@assets/regiones/altos-norte.jpg"
 import imgCienega from "@assets/regiones/cienega.jpg"
 import imgNorte from "@assets/regiones/norte.jpg"
 import imgSierraOccidental from "@assets/regiones/sierra-occidental.jpeg"
 import imgAltosSur from "@assets/regiones/altos-sur-2.jpeg"
-import imgCentro from "@assets/regiones/centro.png"
+import imgCentro from "@assets/regiones/centro.jpg"
+import imgLagunas from "@assets/regiones/lagunas.jpeg"
+import imgSierraAmula from "@assets/regiones/sierra-amula.jpeg"
+import imgCostaSur from "@assets/regiones/costa-sur.jpeg"
+import imgValles from "@assets/regiones/valles.jpeg"
+import imgSur from "@assets/regiones/sur.jpeg"
+import imgSureste from "@assets/regiones/image-2-2.png"
 
 const comunidades = [
     {
@@ -35,37 +40,32 @@ const comunidades = [
     },
     {
         name: 'Sureste',
-        img: imgTmp,
+        img: imgSureste,
         to: '/regiones/sureste'
     },
     {
         name: 'Sur',
-        img: imgTmp,
+        img: imgSur,
         to: '/regiones/sur'
     },
     {
         name: 'Sierra de Amula',
-        img: imgTmp,
-        to: '/regiones/sierra-amula'
+        img: imgSierraAmula,
+        to: '/regiones/sierra-de-amula'
     },
     {
         name: 'Costa Sur',
-        img: imgTmp,
+        img: imgCostaSur,
         to: '/regiones/costa-sur'
     },
     {
-        name: 'Costa Norte',
-        img: imgTmp,
-        to: '/regiones/costa-norte'
-    },
-    {
-        name: 'Sierra Occidental',
+        name: 'Costa Sierra Occidental',
         img: imgSierraOccidental,
-        to: '/regiones/sierra-occidental'
+        to: '/regiones/costa-sierra-occidental'
     },
     {
         name: 'Valles',
-        img: imgTmp,
+        img: imgValles,
         to: '/regiones/valles'
     },
     {
@@ -73,6 +73,11 @@ const comunidades = [
         img: imgCentro,
         to: '/regiones/centro'
     },
+    {
+        name: 'Lagunas',
+        img: imgLagunas,
+        to: '/regiones/lagunas'
+    }
 ]
 
 export default function HomeComunidades() {
@@ -104,7 +109,7 @@ export default function HomeComunidades() {
                         hover:scale-110">
                             <img src={c.img} alt="Imagen 1" className="w-full h-48 object-cover rounded-3xl shadow-md"></img>
                             <div className="p-4 flex justify-center">
-                                <h3 className="text-4xl font-semibold text-gray-800">{c.name}</h3>
+                                <h3 className="w-full text-center text-3xl font-semibold text-gray-800">{c.name}</h3>
                             </div>
                         </div>
                     </Link>
