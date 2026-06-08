@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 // Si usas alias @assets:
-import imgPodcast from "@assets/general/image-4-1.png";
+import imgPodcast from "@assets/general/podcast.jpeg";
 import imgMedios from "@assets/general/image-5-1.png";
 import imgDirectorio from "@assets/general/image-18.png";
 // Si prefieres /public, borra los imports y usa src={`${import.meta.env.BASE_URL}img/image-4-1.png`}.
