@@ -70,7 +70,7 @@ export default function ComunidadesDetailPage({ regiones }: Props) {
           {/* Contenido */}
           <section className="bg-white rounded-3xl shadow-xl p-6 sm:p-8 flex flex-col justify-center">
             <h1 className="text-3xl sm:text-4xl font-extrabold text-center tracking-tight">
-              <span className="bg-clip-text text-black">{match.title}</span>
+              <span className="bg-clip-text text-black">{match.title.replace(/-/g, ' ')}</span>
             </h1>
 
             {/* Lista de comunidades de la región */}
