@@ -1,22 +1,7 @@
 // src/components/ColaboradoresAcordeon.tsx
-import { otoño2025, type Persona } from "./Colaboradores-Data";
+import {type Persona, data} from "./Colaboradores-Data";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-
-const data: {
-    year: number;
-    periodos: { name: string; data: Persona[] }[];
-}[] = [
-        {
-            year: 2025,
-            periodos: [
-                {
-                    name: "Otoño",
-                    data: otoño2025
-                }
-            ]
-        },
-    ];
 
 /* ---------- Utils ---------- */
 function Chevron({ className = "w-5 h-5 text-gray-500" }: { className?: string }) {
