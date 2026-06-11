@@ -8,7 +8,10 @@ export type Persona = {
   contacto?: string;
   imagen?: string; // ruta
 };
-
+export type yearData = {
+    year: number;
+    periodos: { name: string; data: Persona[] }[];
+}[];
 
 
 import otoño1 from '@assets/colaboradores/2025/otoño/IMG_8544.png'
@@ -19,6 +22,58 @@ import otoño5 from '@assets/colaboradores/2025/otoño/IMG_8569.png'
 import otoño6 from '@assets/colaboradores/2025/otoño/IMG_8565.png'
 import otoño7 from '@assets/colaboradores/2025/otoño/IMG_8932.png'
 
+import verano1 from '@assets/colaboradores/2024/verano/FranciscoMeza.jpeg'
+import verano2 from '@assets/colaboradores/2024/verano/ChristaBarrios.jpeg'
+import verano3 from '@assets/colaboradores/2024/verano/ErnestoRodriguez.jpeg'
+import verano4 from '@assets/colaboradores/2024/verano/IvanaLedesma.jpeg'
+import verano5 from '@assets/colaboradores/2024/verano/OdetteLopez.jpeg'
+import verano6 from '@assets/colaboradores/2024/verano/IanParres.jpeg'
+
+
+export const verano2024 = [
+    {
+        nombre: 'Francisco Meza Escoto',
+        carrera: 'Lic. en Comunicación y Artes Audiovisuales',
+        categoria: 'Audio',
+        contacto: '',
+        imagen: verano1,
+    },
+    {
+        nombre: 'Christa Barrios Martínez',
+        carrera: 'Ingeniería y Ciencia de Datos',
+        categoria: 'Tecnologias y desarrollo',
+        contacto: '',
+        imagen: verano2,
+    },
+    {
+        nombre: 'Ernesto Rodríguez Hernández',
+        carrera: 'Lic. en Comunicación y Artes Audiovisuales',
+        categoria: 'Audio',
+        contacto: '',
+        imagen: verano3,
+    },
+    {
+        nombre: 'Ivana Ledesma Osuna',
+        carrera: 'Lic. en Ciencias de la Comunicación',
+        categoria: 'Trabajo comunitario',
+        contacto: '',
+        imagen: verano4,
+    },
+    {
+        nombre: 'Odette López Cuevas',
+        carrera: 'Lic. en Gestión Cultural',
+        categoria: 'Trabajo comunitario',
+        contacto: '',
+        imagen: verano5,
+    },
+    {
+        nombre: 'Ian Parres Ocegueda',
+        carrera: 'Lic. en Comunicación y Artes Audiovisuales',
+        categoria: 'Audio',
+        contacto: '',
+        imagen: verano6,
+    }
+]
 
 export const otoño2025 = [
     {
@@ -89,3 +144,27 @@ export const primavera2026 = [
         imagen: '',
     }
 ]
+
+
+
+
+export const data: yearData = [
+    {
+        year: 2025,
+        periodos: [
+            {
+                name: "Otoño",
+                data: otoño2025
+            }
+        ]
+    },
+    {
+        year: 2024,
+        periodos: [
+            {
+                name: "Verano",
+                data: verano2024
+            }
+        ]
+    }
+];
