@@ -96,7 +96,7 @@ export const ADVISORS: Advisor[] = [
       "Mtra. en Estudios sobre la Región",
       "Dra. en Ciencias Sociales"
     ],
-    expertise: "Relaciones internacionales, ciencias sociales y estudios sobre la región",
+    expertise: "Arte, ciencias sociales y estudios sobre la región",
     photoPath: imgAdvisor10
   }
 ];
