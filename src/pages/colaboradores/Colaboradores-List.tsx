@@ -1,5 +1,5 @@
 // src/components/ColaboradoresAcordeon.tsx
-import {type Persona, data} from "./Colaboradores-Data";
+import {type Persona, PeriodosData} from "./Colaboradores-Data";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 
@@ -188,7 +188,7 @@ export default function ColaboradoresList({ title = "Colaboradores por Año y Se
 
     const ordered = useMemo(
         () =>
-            [...data].sort((a, b) => b.year - a.year).map((y) => ({
+            [...PeriodosData].sort((a, b) => b.year - a.year).map((y) => ({
                 ...y,
                 periodos: [...y.periodos].sort((a, b) => {
                     const rank = (s: string) => {
