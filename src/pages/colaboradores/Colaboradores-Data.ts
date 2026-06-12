@@ -8,9 +8,9 @@ export type Persona = {
   contacto?: string;
   imagen?: string; // ruta
 };
-export type yearData = {
-    year: number;
-    periodos: { name: string; data: Persona[] }[];
+export type YearData = {
+  year: number;
+  periodos: { name: string; data: Persona[] }[];
 }[];
 
 
@@ -30,7 +30,7 @@ import verano5 from '@assets/colaboradores/2024/verano/OdetteLopez.jpeg'
 import verano6 from '@assets/colaboradores/2024/verano/IanParres.jpeg'
 
 
-export const verano2024 = [
+export const ColaboradoresVerano2024: Persona[] = [
     {
         nombre: 'Francisco Meza Escoto',
         carrera: 'Lic. en Comunicación y Artes Audiovisuales',
@@ -75,7 +75,7 @@ export const verano2024 = [
     }
 ]
 
-export const otoño2025 = [
+export const ColaboradoresOtoño2025: Persona[] = [
     {
         nombre: 'Victoria Valle Chávez',
         carrera: 'Lic. En Arte y Creación.',
@@ -84,7 +84,7 @@ export const otoño2025 = [
         imagen: otoño1,
     },
     {
-        nombre: ' Ximena García García ',
+        nombre: 'Ximena García García',
         carrera: 'Lic. En Diseño Integral.',
         categoria: 'Redes',
         contacto: '',
@@ -98,7 +98,7 @@ export const otoño2025 = [
         imagen: otoño5,
     },
     {
-        nombre: 'Eduardo Sedano Álvarez. ',
+        nombre: 'Eduardo Sedano Álvarez',
         carrera: 'Lic. En Ciencias De La Comunicación.',
         categoria: 'Trabajo Comunitario',
         contacto: '',
@@ -135,7 +135,7 @@ export const otoño2025 = [
 ]
 
 
-export const primavera2026 = [
+export const ColaboradoresPrimavera2026: Persona[] = [
     {
         nombre: '',
         carrera: '',
@@ -148,13 +148,13 @@ export const primavera2026 = [
 
 
 
-export const data: yearData = [
+export const PeriodosData: YearData = [
     {
         year: 2025,
         periodos: [
             {
                 name: "Otoño",
-                data: otoño2025
+                data: ColaboradoresOtoño2025
             }
         ]
     },
@@ -163,7 +163,7 @@ export const data: yearData = [
         periodos: [
             {
                 name: "Verano",
-                data: verano2024
+                data: ColaboradoresVerano2024
             }
         ]
     }
