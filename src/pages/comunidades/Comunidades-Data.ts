@@ -75,6 +75,7 @@ export const regiones: Region[] = [
     items: [
       { label: "La Noria", to: "/comunidades/la-noria" },
       { label: "Agua Caliente", to: "/comunidades/agua-caliente" },
+      { label: "Mezcala", to: "/comunidades/mezcala" },
     ],
     reverse: true,
   },

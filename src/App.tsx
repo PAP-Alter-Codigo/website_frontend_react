@@ -20,6 +20,7 @@ import MuralJuanacatlanPage from './pages/comunidades/centro/juanacatlan/Mural-J
 import MapaInteractivoPage from './pages/comunidades/centro/sta cruz de las flores/mapa-interactivo/Mapa-Interactivo-Page';
 import XuchitlanPage from './pages/comunidades/centro/sta cruz de las flores/Xuchitlan/Xuchitlan-Page';
 import PodcastPage from './pages/podcast/Podcast-Page';
+import InvestigacionPage from './pages/investigacion/Investigacion-Page';
 
 
 
@@ -63,7 +64,8 @@ function App() {
         <Route path="/podcast" element={<PodcastPage />} />
         <Route path="/colaboradores" element={<ColaboradoresPage />} /> 
         <Route path="/comunidades/sta-cruz-de-las-flores/mapa" element={<MapaInteractivoPage />} /> 
-        <Route path="/comunidades/sta-cruz-de-las-flores/xuchitlan" element={<XuchitlanPage />} /> 
+        <Route path="/comunidades/sta-cruz-de-las-flores/xuchitlan" element={<XuchitlanPage />} />
+        <Route path="/investigacion" element={<InvestigacionPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
