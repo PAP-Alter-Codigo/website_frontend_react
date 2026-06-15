@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 // Si usas alias @assets:
 import imgPodcast from "@assets/general/podcast.jpeg";
-import imgMedios from "@assets/general/image-5-1.png";
+import imgInvestigacion from "@assets/general/investigacion.webp";
 import imgDirectorio from "@assets/general/image-18.png";
 // Si prefieres /public, borra los imports y usa src={`${import.meta.env.BASE_URL}img/image-4-1.png`}.
 
@@ -23,12 +23,12 @@ const cards: Card[] = [
     alt: "Imagen de podcast",
   },
   {
-    to: "/medios",
-    title: "MEDIOS",
+    to: "/investigacion",
+    title: "INVESTIGACIÓN",
     desc:
-      "Aquí están los diferentes recursos informativos en torno a luchas a los que puedes acceder de modo general.",
-    img: imgMedios,
-    alt: "Imagen de medios",
+      "Descubre el proyecto de investigación sobre mujeres defensoras del territorio y cuidados, vinculado a Resonancias.",
+    img: imgInvestigacion,
+    alt: "Imagen de investigación",
   },
   {
     to: "/colaboradores",
