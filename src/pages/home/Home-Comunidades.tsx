@@ -99,13 +99,13 @@ export default function HomeComunidades() {
                 <img className="" src={brush2} alt="01 prt sup 1" />
             </div>
         </div>
-        <div className="flex justify-center">
+        <div className="relative flex justify-center">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-9/12">
                 {comunidades.map((c) => (
                     <Link key={c.name} data-aos="fade-up" to={c.to}>
-                        <div 
-                        className="bg-white rounded-4xl shadow-md 
-                        overflow-hidden transition duration-200 ease-in-out 
+                        <div
+                        className="bg-white rounded-4xl shadow-md
+                        overflow-hidden transition duration-200 ease-in-out
                         hover:scale-110">
                             <img src={c.img} alt="Imagen 1" className="w-full h-48 object-cover rounded-3xl shadow-md"></img>
                             <div className="p-4 flex justify-center">
@@ -115,7 +115,7 @@ export default function HomeComunidades() {
                     </Link>
                 ))}
             </div>
+            <img src={brush3} className="absolute bottom-0 left-0 -z-10"/>
         </div>
-        <img src={brush3}/>
     </>;
 }
