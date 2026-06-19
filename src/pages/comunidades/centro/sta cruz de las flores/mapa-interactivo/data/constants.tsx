@@ -1,0 +1,112 @@
+import L, { DivIcon } from "leaflet";
+import React from "react";
+import type { Uso, MarkerShape, RepdaEntry } from "./types";
+
+export const CAPAS: { key: Uso; label: string; color: string }[] = [
+  { key: "INDUSTRIAL", label: "Industrial", color: "#b45309" },
+  { key: "AGRICOLA", label: "Agrícola", color: "#15803d" },
+  { key: "PUBLICO URBANO", label: "Público urbano", color: "#1d4ed8" },
+  { key: "SERVICIOS", label: "Servicios", color: "#7c3aed" },
+  { key: "PECUARIO", label: "Pecuario", color: "#0f766e" },
+  { key: "DOMESTICO", label: "Doméstico", color: "#db2777" },
+  { key: "POZOS RIEGO", label: "Pozos profundos y norias de riego", color: "#dc2626" },
+  { key: "POZOS DOMO", label: "Pozos Domo sur la Primavera", color: "#d97706" },
+  { key: "POZOS DOMESTICO", label: "Pozos uso doméstico", color: "#0284c7" },
+];
+
+export const POZO_SOURCE_LAYER_MAP: Record<string, Uso> = {
+  "Pozos profundos y norias de riego": "POZOS RIEGO",
+  "Pozos Domo sur la Primavera": "POZOS DOMO",
+  "Pozos para uso doméstico": "POZOS DOMESTICO",
+};
+
+export const TOOLTIPS: Record<Uso, string> = {
+  INDUSTRIAL: "Este tipo de concesión ampara el agua utilizada directamente en fábricas o empresas",
+  AGRICOLA: "Es el agua destinada exclusivamente a la producción de alimentos vegetales",
+  "PUBLICO URBANO": "Es el agua que se entrega a las ciudades, municipios y pueblos para el beneficio común",
+  SERVICIOS: "Este uso aplica para el agua destinada a actividades comerciales o de prestación de bienes y servicios que no son de índole doméstica ni manufacturera",
+  PECUARIO: "Es el agua requerida expresamente para la actividad ganadera y de crianza animal",
+  DOMESTICO: "Es el agua de uso estrictamente particular, enfocada en la subsistencia diaria de las personas",
+  "POZOS RIEGO": "",
+  "POZOS DOMO": "",
+  "POZOS DOMESTICO": "",
+};
+
+export const colorByUso: Record<Uso, string> = Object.fromEntries(
+  CAPAS.map(({ key, color }) => [key, color])
+) as Record<Uso, string>;
+
+export const usoShape: Record<Uso, MarkerShape> = {
+  INDUSTRIAL: "circle",
+  AGRICOLA: "circle",
+  "PUBLICO URBANO": "circle",
+  SERVICIOS: "circle",
+  PECUARIO: "circle",
+  DOMESTICO: "circle",
+  "POZOS RIEGO": "square",
+  "POZOS DOMO": "square",
+  "POZOS DOMESTICO": "square",
+};
+
+export const LABELS: { key: keyof RepdaEntry; label: string }[] = [
+  { key: "ACUIFERO", label: "Acuífero" },
+  { key: "CUENCA", label: "Cuenca" },
+  { key: "NOMREGHID", label: "Región hidrológica" },
+  { key: "USO", label: "Uso" },
+  { key: "VOLSB", label: "Vol. subterráneo (m³/año)" },
+  { key: "CLAVE_ACUIFERO", label: "Clave acuífero" },
+  { key: "OC", label: "Oficina central (OC)" },
+];
+
+// Genera el SVG para un marcador personalizado basado en la forma y color especificados, utilizado para crear los íconos de los puntos en el mapa interactivo
+function shapeToSVG(shape: MarkerShape, color: string, size = 18): string {
+  const h = size / 2;
+  const sw = size <= 12 ? 1.5 : 2;
+  switch (shape) {
+    case "circle":
+      return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><circle cx="${h}" cy="${h}" r="${h - sw}" fill="${color}" stroke="white" stroke-width="${sw}"/></svg>`;
+    case "square":
+      return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><rect x="${sw}" y="${sw}" width="${size - sw * 2}" height="${size - sw * 2}" fill="${color}" stroke="white" stroke-width="${sw}"/></svg>`;
+    case "diamond":
+      return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><polygon points="${h},${sw} ${size - sw},${h} ${h},${size - sw} ${sw},${h}" fill="${color}" stroke="white" stroke-width="${sw}"/></svg>`;
+    case "hexagon":
+      return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><polygon points="${h},${sw} ${size - sw},${Math.round(size * 0.28)} ${size - sw},${Math.round(size * 0.72)} ${h},${size - sw} ${sw},${Math.round(size * 0.72)} ${sw},${Math.round(size * 0.28)}" fill="${color}" stroke="white" stroke-width="${sw}"/></svg>`;
+    case "pentagon":
+      return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><polygon points="${h},${sw} ${size - sw},${Math.round(size * 0.38)} ${Math.round(size * 0.8)},${size - sw} ${Math.round(size * 0.2)},${size - sw} ${sw},${Math.round(size * 0.38)}" fill="${color}" stroke="white" stroke-width="${sw}"/></svg>`;
+    case "cross": {
+      const t = Math.round(size * 0.3);
+      const e = size - t;
+      return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><path d="M${t} ${sw} H${e} V${t} H${size - sw} V${e} H${e} V${size - sw} H${t} V${e} H${sw} V${t} H${t} Z" fill="${color}" stroke="white" stroke-width="${sw * 0.6}" stroke-linejoin="round"/></svg>`;
+    }
+    case "octagon": {
+      const cut = Math.round(size * 0.29);
+      const far = size - cut;
+      return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><polygon points="${cut},${sw} ${far},${sw} ${size - sw},${cut} ${size - sw},${far} ${far},${size - sw} ${cut},${size - sw} ${sw},${far} ${sw},${cut}" fill="${color}" stroke="white" stroke-width="${sw}"/></svg>`;
+    }
+    case "star4":
+      return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><polygon points="${h},${sw} ${Math.round(h + size * 0.15)},${Math.round(h - size * 0.15)} ${size - sw},${h} ${Math.round(h + size * 0.15)},${Math.round(h + size * 0.15)} ${h},${size - sw} ${Math.round(h - size * 0.15)},${Math.round(h + size * 0.15)} ${sw},${h} ${Math.round(h - size * 0.15)},${Math.round(h - size * 0.15)}" fill="${color}" stroke="white" stroke-width="${sw}" stroke-linejoin="round"/></svg>`;
+    case "ring":
+      return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><circle cx="${h}" cy="${h}" r="${h - sw}" fill="${color}" stroke="white" stroke-width="${sw}"/><circle cx="${h}" cy="${h}" r="${Math.round(h * 0.42)}" fill="white"/></svg>`;
+  }
+}
+
+// Genera un ícono de marcador personalizado para Leaflet utilizando la forma y color especificados
+export function makeDivIcon(color: string, shape: MarkerShape): DivIcon {
+  const svg = shapeToSVG(shape, color, 18);
+  return L.divIcon({
+    className: "custom-marker",
+    html: `<div style="filter:drop-shadow(0 1px 3px rgba(0,0,0,0.45));line-height:0;">${svg}</div>`,
+    iconSize: [18, 18],
+    iconAnchor: [9, 9],
+  });
+}
+
+// Componente para mostrar un punto en la leyenda, con su color y forma representativos
+export const LeyendaDot = React.memo(function LeyendaDot({ color, shape }: { color: string; shape: MarkerShape }) {
+  return (
+    <span
+      style={{ display: "inline-flex", alignItems: "center", flexShrink: 0 }}
+      dangerouslySetInnerHTML={{ __html: shapeToSVG(shape, color, 13) }}
+    />
+  );
+});

@@ -1,194 +1,13 @@
 import "leaflet/dist/leaflet.css";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, Polygon } from "react-leaflet";
-import L, { DivIcon } from "leaflet";
 
-import { GEOJSON_HUMEDAL, repdaByTitulo, type RepdaEntry } from "./MapaGEOJsonHumedal";
+import { initializeMapData, getRepdaForPunto } from "./data/loaders";
+import { CAPAS, POZO_SOURCE_LAYER_MAP, TOOLTIPS, usoShape, LABELS, colorByUso, makeDivIcon, LeyendaDot } from "./data/constants.tsx";
+import type { Punto, Uso } from "./data/types";
 
-// ─── Tipos ────────────────────────────────────────────────────────────────────
-
-type Uso =
-    | "INDUSTRIAL"
-    | "AGRICOLA"
-    | "PUBLICO URBANO"
-    | "SERVICIOS"
-    | "PECUARIO"
-    | "DOMESTICO"
-    | "POZOS_RIEGO"
-    | "POZOS_DOMO"
-    | "POZOS_DOMESTICO";
-
-const POZO_SOURCE_LAYER_MAP: Record<string, Uso> = {
-    "Pozos profundos y norias de riego": "POZOS_RIEGO",
-    "Pozos Domo sur la Primavera": "POZOS_DOMO",
-    "Pozos para uso doméstico": "POZOS_DOMESTICO",
-};
-
-type Punto = {
-    name: string;
-    lat: number;
-    lng: number;
-    uso: Uso;
-    repda: RepdaEntry | null;
-};
-
-// ─── Capas / filtros ──────────────────────────────────────────────────────────
-
-const CAPAS: { key: Uso; label: string; color: string }[] = [
-    { key: "INDUSTRIAL",       label: "Industrial",                        color: "#b45309" },
-    { key: "AGRICOLA",         label: "Agrícola",                          color: "#15803d" },
-    { key: "PUBLICO URBANO",   label: "Público urbano",                    color: "#1d4ed8" },
-    { key: "SERVICIOS",        label: "Servicios",                         color: "#7c3aed" },
-    { key: "PECUARIO",         label: "Pecuario",                          color: "#0f766e" },
-    { key: "DOMESTICO",        label: "Doméstico",                         color: "#db2777" },
-    { key: "POZOS_RIEGO",      label: "Pozos profundos y norias de riego", color: "#dc2626" },
-    { key: "POZOS_DOMO",       label: "Pozos Domo sur la Primavera",       color: "#d97706" },
-    { key: "POZOS_DOMESTICO",  label: "Pozos uso doméstico",               color: "#0284c7" },
-];
-
-const colorByUso: Record<Uso, string> = Object.fromEntries(
-    CAPAS.map(({ key, color }) => [key, color])
-) as Record<Uso, string>;
-
-// ─── Datos derivados ──────────────────────────────────────────────────────────
-
-const features = GEOJSON_HUMEDAL.features as unknown as {
-    type: string;
-    properties: { Name: string; source_layer: string };
-    geometry: {
-        type: string;
-        coordinates: number[][] | number[][][] | number[][][][];
-    };
-}[];
-
-const humedal: [number, number][] = (() => {
-    const feat = features.find((f) => f.geometry.type === "Polygon");
-    if (!feat) return [];
-    const ring = (feat.geometry.coordinates as number[][][])[0];
-    return ring.map(([lng, lat]) => [lat, lng] as [number, number]);
-})();
-
-const puntos: Punto[] = features
-    .filter((f) => f.geometry.type === "Point")
-    .map((f) => {
-        const coords = f.geometry.coordinates as unknown as number[];
-        const pozoUso = POZO_SOURCE_LAYER_MAP[f.properties.source_layer];
-        if (pozoUso) {
-            return {
-                name: f.properties.Name,
-                lat: coords[1],
-                lng: coords[0],
-                uso: pozoUso,
-                repda: null,
-            };
-        }
-        const repda = repdaByTitulo[f.properties.Name] ?? null;
-        const uso = (repda?.USO ?? "SERVICIOS") as Uso;
-        return {
-            name: f.properties.Name,
-            lat: coords[1],
-            lng: coords[0],
-            uso,
-            repda,
-        };
-    });
-
-const conteoUso: Record<Uso, number> = (() => {
-    const acc = {} as Record<Uso, number>;
-    for (const c of CAPAS) acc[c.key] = 0;
-    for (const p of puntos) acc[p.uso] = (acc[p.uso] ?? 0) + 1;
-    return acc;
-})();
-
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
-type MarkerShape =
-    | "circle"
-    | "square"
-    | "diamond"
-    | "hexagon"
-    | "pentagon"
-    | "cross"
-    | "octagon"
-    | "star4"
-    | "ring";
-
-const usoShape: Record<Uso, MarkerShape> = {
-    "INDUSTRIAL":      "circle",
-    "AGRICOLA":        "circle",
-    "PUBLICO URBANO":  "circle",
-    "SERVICIOS":       "circle",
-    "PECUARIO":        "circle",
-    "DOMESTICO":       "circle",
-    "POZOS_RIEGO":     "square",
-    "POZOS_DOMO":      "square",
-    "POZOS_DOMESTICO": "square",
-};
-
-function shapeToSVG(shape: MarkerShape, color: string, size = 18): string {
-    const h = size / 2;
-    const sw = size <= 12 ? 1.5 : 2;
-    switch (shape) {
-        case "circle":
-            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><circle cx="${h}" cy="${h}" r="${h - sw}" fill="${color}" stroke="white" stroke-width="${sw}"/></svg>`;
-        case "square":
-            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><rect x="${sw}" y="${sw}" width="${size - sw * 2}" height="${size - sw * 2}" fill="${color}" stroke="white" stroke-width="${sw}"/></svg>`;
-        case "diamond":
-            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><polygon points="${h},${sw} ${size - sw},${h} ${h},${size - sw} ${sw},${h}" fill="${color}" stroke="white" stroke-width="${sw}"/></svg>`;
-        case "hexagon":
-            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><polygon points="${h},${sw} ${size - sw},${Math.round(size * 0.28)} ${size - sw},${Math.round(size * 0.72)} ${h},${size - sw} ${sw},${Math.round(size * 0.72)} ${sw},${Math.round(size * 0.28)}" fill="${color}" stroke="white" stroke-width="${sw}"/></svg>`;
-        case "pentagon":
-            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><polygon points="${h},${sw} ${size - sw},${Math.round(size * 0.38)} ${Math.round(size * 0.8)},${size - sw} ${Math.round(size * 0.2)},${size - sw} ${sw},${Math.round(size * 0.38)}" fill="${color}" stroke="white" stroke-width="${sw}"/></svg>`;
-        case "cross": {
-            const t = Math.round(size * 0.3);
-            const e = size - t;
-            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><path d="M${t} ${sw} H${e} V${t} H${size - sw} V${e} H${e} V${size - sw} H${t} V${e} H${sw} V${t} H${t} Z" fill="${color}" stroke="white" stroke-width="${sw * 0.6}" stroke-linejoin="round"/></svg>`;
-        }
-        case "octagon": {
-            const cut = Math.round(size * 0.29);
-            const far = size - cut;
-            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><polygon points="${cut},${sw} ${far},${sw} ${size - sw},${cut} ${size - sw},${far} ${far},${size - sw} ${cut},${size - sw} ${sw},${far} ${sw},${cut}" fill="${color}" stroke="white" stroke-width="${sw}"/></svg>`;
-        }
-        case "star4":
-            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><polygon points="${h},${sw} ${Math.round(h + size * 0.15)},${Math.round(h - size * 0.15)} ${size - sw},${h} ${Math.round(h + size * 0.15)},${Math.round(h + size * 0.15)} ${h},${size - sw} ${Math.round(h - size * 0.15)},${Math.round(h + size * 0.15)} ${sw},${h} ${Math.round(h - size * 0.15)},${Math.round(h - size * 0.15)}" fill="${color}" stroke="white" stroke-width="${sw}" stroke-linejoin="round"/></svg>`;
-        case "ring":
-            return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><circle cx="${h}" cy="${h}" r="${h - sw}" fill="${color}" stroke="white" stroke-width="${sw}"/><circle cx="${h}" cy="${h}" r="${Math.round(h * 0.42)}" fill="white"/></svg>`;
-    }
-}
-
-function makeDivIcon(color: string, shape: MarkerShape): DivIcon {
-    const svg = shapeToSVG(shape, color, 18);
-    return L.divIcon({
-        className: "custom-marker",
-        html: `<div style="filter:drop-shadow(0 1px 3px rgba(0,0,0,0.45));line-height:0;">${svg}</div>`,
-        iconSize: [18, 18],
-        iconAnchor: [9, 9],
-    });
-}
-
-function LeyendaDot({ color, shape }: { color: string; shape: MarkerShape }) {
-    return (
-        <span
-            style={{ display: "inline-flex", alignItems: "center", flexShrink: 0 }}
-            dangerouslySetInnerHTML={{ __html: shapeToSVG(shape, color, 13) }}
-        />
-    );
-}
-
-// ─── Panel de detalle ─────────────────────────────────────────────────────────
-
-const LABELS: { key: keyof RepdaEntry; label: string }[] = [
-    { key: "TITULO",         label: "Título" },
-    { key: "ACUIFERO",       label: "Acuífero" },
-    { key: "CUENCA",         label: "Cuenca" },
-    { key: "NOMREGHID",      label: "Región hidrológica" },
-    { key: "USO",            label: "Uso" },
-    { key: "VOLSB",          label: "Vol. subterráneo (m³/año)" },
-    { key: "CLAVE_ACUIFERO", label: "Clave acuífero" },
-    { key: "OC",             label: "Oficina central (OC)" },
-];
-
+// ─── Componente para mostrar el detalle de un punto seleccionado, incluyendo su información REPDA si está disponible ───────────────────────
 function DetallePunto({
     punto,
     onClose,
@@ -265,20 +84,52 @@ function DetallePunto({
 // ─── Componente principal ─────────────────────────────────────────────────────
 
 export default function MapaInteractivoHumedalAguasSub() {
+    const [puntos, setPuntos] = useState<Punto[]>([]);
+    const [humedal, setHumedal] = useState<[number, number][]>([]);
     const [filtroUso, setFiltroUso] = useState<"all" | Uso>("all");
     const [selectedPunto, setSelectedPunto] = useState<Punto | null>(null);
+
+    useEffect(() => {
+        initializeMapData(POZO_SOURCE_LAYER_MAP).then(({ puntos, humedal }) => {
+            setPuntos(puntos);
+            setHumedal(humedal);
+        }).catch((err) => {
+            console.error("Error loading map data:", err);
+        });
+    }, []);
 
     const filtered = useMemo(
         () =>
             filtroUso === "all"
                 ? puntos
-                : puntos.filter((p) => p.uso === filtroUso),
-        [filtroUso]
+                : puntos.filter((p: Punto) => p.uso === filtroUso),
+        [filtroUso, puntos]
     );
+
+    const conteoUso = useMemo(() => {
+        const acc = {} as Record<Uso, number>;
+        for (const c of CAPAS) acc[c.key] = 0;
+        for (const p of puntos) acc[p.uso] = (acc[p.uso] ?? 0) + 1;
+        return acc;
+    }, [puntos]);
+
+    const handleMarkerClick = async (punto: Punto) => {
+        if (!punto.repda) {
+            try {
+                const repda = await getRepdaForPunto(punto.name);
+                setSelectedPunto({ ...punto, repda });
+            } catch (err) {
+                console.error("Error loading REPDA:", err);
+                setSelectedPunto(punto);
+            }
+        } else {
+            setSelectedPunto(punto);
+        }
+    };
 
     return (
         <section className="w-full">
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div className="bg-white rounded-xl shadow-lg">
 
                 {/* Filtros */}
                 <div className="p-4 border-b bg-gray-50">
@@ -299,15 +150,25 @@ export default function MapaInteractivoHumedalAguasSub() {
                             <button
                                 key={key}
                                 onClick={() => setFiltroUso(key)}
-                                className={`px-3 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 ${
+                                className={`group relative px-3 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 ${
                                     filtroUso === key
                                         ? "bg-blue-600 text-white"
                                         : "bg-gray-200 text-gray-800 hover:bg-gray-300"
                                 }`}
                                 aria-pressed={filtroUso === key}
+                                aria-describedby={`tooltip-${key}`}
                             >
                                 <LeyendaDot color={color} shape={usoShape[key]} />
                                 {label} ({conteoUso[key] ?? 0})
+                                {TOOLTIPS[key] && (
+                                    <div
+                                        id={`tooltip-${key}`}
+                                        className="invisible group-hover:visible absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-2 bg-gray-50 text-gray-900 text-sm rounded-lg w-52 shadow-xl border border-gray-200 z-50 transition-all opacity-0 group-hover:opacity-100 pointer-events-none whitespace-normal leading-snug font-medium"
+                                    >
+                                        {TOOLTIPS[key]}
+                                        <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-50" />
+                                    </div>
+                                )}
                             </button>
                         ))}
                     </div>
@@ -353,13 +214,13 @@ export default function MapaInteractivoHumedalAguasSub() {
                             )}
 
                             {/* Puntos de aguas subterráneas */}
-                            {filtered.map((p, i) => (
+                            {filtered.map((p: Punto, i: number) => (
                                 <Marker
                                     key={p.name + i}
                                     position={[p.lat, p.lng]}
                                     icon={makeDivIcon(colorByUso[p.uso] ?? "#6b7280", usoShape[p.uso] ?? "circle")}
                                     eventHandlers={{
-                                        click: () => setSelectedPunto(p),
+                                        click: () => handleMarkerClick(p),
                                     }}
                                 >
                                     <Popup>

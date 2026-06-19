@@ -4,7 +4,6 @@ import prtInf1 from "@assets/bigStrokes/piedepag-1-1.png"
 import logo from "@assets/logo/logo-resonancias-1-1.png"
 import HomeComunidades from "./Home-Comunidades";
 import HomeRecursos from "./Home-Recursos";
-import HomeMural from "./Home-Murales";
 
 export default function HomePage() {
     return <>
@@ -30,7 +29,6 @@ export default function HomePage() {
         </div>
         <img className="w-full select-none" src={prtSup1} alt="01 prt sup 1" />
         <HomeComunidades/>
-        <HomeMural/>
         <HomeRecursos/>
         <img className="w-full select-none" src={prtInf1} alt="logo resonancias 1" />
     </>;
