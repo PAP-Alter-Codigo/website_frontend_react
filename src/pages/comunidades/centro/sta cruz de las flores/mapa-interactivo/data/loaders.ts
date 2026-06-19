@@ -2,17 +2,12 @@ import type { Punto, Uso, RepdaEntry } from "./types";
 
 let repdaCache: Record<string, RepdaEntry> | null = null;
 
-const geojsonModules = import.meta.glob<string>('./geojson/*.geojson', { query: '?raw', import: 'default', eager: true }); // Carga de archivos GeoJSON dentro de la carpera geojson
+const DATA_BASE_PATH = '/data/mapas/sta-cruz-de-las-flores';
 
 // Carga y cacheo de datos REPDA para evitar múltiples fetches al acceder a la información detallada de los puntos en el mapa interactivo
 async function loadRepda(): Promise<Record<string, RepdaEntry>> {
   if (repdaCache) return repdaCache;
-  const dataBasePath = () => {
-    const path = new URL(import.meta.url).pathname;
-    return path.substring(0, path.lastIndexOf('/'));
-  };
-  const basePath = dataBasePath();
-  const res = await fetch(`${basePath}/metadata/repda.json`);
+  const res = await fetch(`${DATA_BASE_PATH}/metadata/repda.json`);
   if (!res.ok) throw new Error(`Failed to load REPDA: ${res.statusText}`);
   const data = await res.json();
   repdaCache = data as Record<string, RepdaEntry>;
@@ -24,11 +19,12 @@ export async function initializeMapData(pozoMap: Record<string, Uso>): Promise<{
   puntos: Punto[];
   humedal: [number, number][];
 }> {
-  const humedalGeo = JSON.parse(geojsonModules['./geojson/humedal.geojson']);
-
-  const allGeoJsons = Object.entries(geojsonModules)
-    .filter(([path]) => !path.includes('humedal'))
-    .map(([, raw]) => JSON.parse(raw));
+  // Fetch GeoJSON files from public/data/geojson/
+  const [humedalGeo, aguaGeo, pozosGeo] = await Promise.all([
+    fetch(`${DATA_BASE_PATH}/geojson/humedal.geojson`).then(r => r.json()),
+    fetch(`${DATA_BASE_PATH}/geojson/agua-subterranea-2020.geojson`).then(r => r.json()),
+    fetch(`${DATA_BASE_PATH}/geojson/pozos-domestico-domo-riego.geojson`).then(r => r.json()),
+  ]);
 
   const repda = await loadRepda();
 
@@ -39,7 +35,10 @@ export async function initializeMapData(pozoMap: Record<string, Uso>): Promise<{
     : [];
 
   // Construye la lista de puntos a partir de los archivos GeoJSON, asignando el uso correspondiente según el mapa de capas y la información del REPDA
-  const allFeatures = allGeoJsons.flatMap((geo: any) => geo.features || []);
+  const allFeatures = [
+    ...aguaGeo.features,
+    ...pozosGeo.features,
+  ];
 
   const puntos: Punto[] = allFeatures.map((f: any) => {
     const coords = f.geometry.coordinates as number[];
