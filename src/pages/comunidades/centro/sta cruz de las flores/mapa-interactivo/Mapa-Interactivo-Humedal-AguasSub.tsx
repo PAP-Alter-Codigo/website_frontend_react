@@ -1,11 +1,11 @@
 import "leaflet/dist/leaflet.css";
-
-import { useEffect, useMemo, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, Polygon } from "react-leaflet";
+import L from "leaflet";
+import { useEffect, useMemo, useState, useRef } from "react";
+import { MapContainer, TileLayer, useMap } from "react-leaflet";
 
 import { initializeMapData, getRepdaForPunto } from "./data/loaders";
-import { CAPAS, POZO_SOURCE_LAYER_MAP, TOOLTIPS, usoShape, LABELS, colorByUso, makeDivIcon, LeyendaDot } from "./data/constants.tsx";
-import type { Punto, Uso } from "./data/types";
+import { CAPAS, POZO_SOURCE_LAYER_MAP, TOOLTIPS, usoShape, LABELS, colorByUso, LeyendaDot } from "./data/constants.tsx";
+import type { Punto, Uso, CapasEstructura } from "./data/types";
 
 // ─── Componente para mostrar el detalle de un punto seleccionado, incluyendo su información REPDA si está disponible ───────────────────────
 function DetallePunto({
@@ -81,16 +81,158 @@ function DetallePunto({
     );
 }
 
+/**
+ * Componente CapasControl
+ * 
+ * Se encarga de inicializar el control de capas nativo de Leaflet L.control.layers()
+ * y de mantener sincronizado el estado capasActivas de React con las capas
+ * agregadas o removidas en el mapa.
+ */
+function CapasControl({
+    capas,
+    setCapasActivas,
+    setFiltroUso,
+}: {
+    capas: CapasEstructura;
+    setCapasActivas: React.Dispatch<React.SetStateAction<Set<string>>>;
+    setFiltroUso: React.Dispatch<React.SetStateAction<"all" | Uso>>;
+}) {
+    const map = useMap();
+
+    useEffect(() => {
+        if (!map || !capas) return;
+
+        // Inicializamos el control de capas de Leaflet en la posición superior izquierda
+        const controlLayers = L.control.layers(undefined, undefined, {
+            position: "topleft",
+            collapsed: true,
+        });
+
+        // Agregamos cada capa al mapa y las registramos en el control como overlay por defecto
+        Object.entries(capas).forEach(([name, capa]) => {
+            capa.layerGroup.addTo(map);
+            controlLayers.addOverlay(capa.layerGroup, name);
+        });
+
+        controlLayers.addTo(map);
+
+        // Al iniciar, todas las capas están activadas
+        setCapasActivas(new Set(Object.keys(capas)));
+
+        // Eventos para actualizar la visibilidad en React al marcar/desmarcar en el control de Leaflet
+        const handleOverlayAdd = (e: L.LayersControlEvent) => {
+            setCapasActivas((prev) => {
+                const next = new Set(prev);
+                next.add(e.name);
+                return next;
+            });
+        };
+
+        const handleOverlayRemove = (e: L.LayersControlEvent) => {
+            setCapasActivas((prev) => {
+                const next = new Set(prev);
+                next.delete(e.name);
+                return next;
+            });
+        };
+
+        map.on("overlayadd", handleOverlayAdd);
+        map.on("overlayremove", handleOverlayRemove);
+
+        return () => {
+            controlLayers.remove();
+            Object.values(capas).forEach((capa) => {
+                capa.layerGroup.remove();
+            });
+            map.off("overlayadd", handleOverlayAdd);
+            map.off("overlayremove", handleOverlayRemove);
+        };
+    }, [map, capas, setCapasActivas, setFiltroUso]);
+
+    return null;
+}
+
+/**
+ * Componente FilterButtons
+ * 
+ * Renderiza dinámicamente los botones de filtrado de usos según el listado
+ * de filtros válidos calculados de manera unificada para las capas seleccionadas.
+ */
+function FilterButtons({
+    filtrosDisponibles,
+    filtroUso,
+    setFiltroUso,
+    conteoUso,
+    totalPuntosActivos,
+}: {
+    filtrosDisponibles: Set<Uso>;
+    filtroUso: "all" | Uso;
+    setFiltroUso: (uso: "all" | Uso) => void;
+    conteoUso: Record<Uso, number>;
+    totalPuntosActivos: number;
+}) {
+    // Filtramos la configuración CAPAS predefinida según los usos disponibles en capas activas
+    const activeCapasConfigs = CAPAS.filter((c) => filtrosDisponibles.has(c.key));
+
+    return (
+        <div className="flex flex-wrap gap-2">
+            <button
+                onClick={() => setFiltroUso("all")}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition ${filtroUso === "all"
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                    }`}
+                aria-pressed={filtroUso === "all"}
+            >
+                Todos ({totalPuntosActivos})
+            </button>
+
+            {activeCapasConfigs.map(({ key, label, color }) => (
+                <button
+                    key={key}
+                    onClick={() => setFiltroUso(key)}
+                    className={`group relative px-3 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 ${filtroUso === key
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                        }`}
+                    aria-pressed={filtroUso === key}
+                    aria-describedby={`tooltip-${key}`}
+                >
+                    <LeyendaDot color={color} shape={usoShape[key]} />
+                    {label} ({conteoUso[key] ?? 0})
+                    {TOOLTIPS[key] && (
+                        <div
+                            id={`tooltip-${key}`}
+                            className="invisible group-hover:visible absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-2 bg-gray-50 text-gray-900 text-sm rounded-lg w-52 shadow-xl border border-gray-200 z-50 transition-all opacity-0 group-hover:opacity-100 pointer-events-none whitespace-normal leading-snug font-medium"
+                        >
+                            {TOOLTIPS[key]}
+                            <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-50" />
+                        </div>
+                    )}
+                </button>
+            ))}
+        </div>
+    );
+}
+
 // ─── Componente principal ─────────────────────────────────────────────────────
 
 export default function MapaInteractivoHumedalAguasSub() {
-    const [puntos, setPuntos] = useState<Punto[]>([]);
-    const [humedal, setHumedal] = useState<[number, number][]>([]);
+    const [capas, setCapas] = useState<CapasEstructura | null>(null);
+    const [, setPuntos] = useState<Punto[]>([]);
+    const [, setHumedal] = useState<[number, number][]>([]);
+
+    // Estado de las capas activas sincronizadas con el control de Leaflet
+    const [capasActivas, setCapasActivas] = useState<Set<string>>(new Set());
+
+    // Estado para el filtro de uso actual
     const [filtroUso, setFiltroUso] = useState<"all" | Uso>("all");
     const [selectedPunto, setSelectedPunto] = useState<Punto | null>(null);
 
+    // Carga inicial de datos desde los GeoJSONs y REPDA metadata
     useEffect(() => {
-        initializeMapData(POZO_SOURCE_LAYER_MAP).then(({ puntos, humedal }) => {
+        initializeMapData(POZO_SOURCE_LAYER_MAP).then(({ capas, puntos, humedal }) => {
+            setCapas(capas);
             setPuntos(puntos);
             setHumedal(humedal);
         }).catch((err) => {
@@ -98,21 +240,50 @@ export default function MapaInteractivoHumedalAguasSub() {
         });
     }, []);
 
-    const filtered = useMemo(
-        () =>
-            filtroUso === "all"
-                ? puntos
-                : puntos.filter((p: Punto) => p.uso === filtroUso),
-        [filtroUso, puntos]
-    );
+    // Calcula la unión de usos/filtros disponibles basados en las capas seleccionadas actualmente
+    const filtrosDisponibles = useMemo(() => {
+        const available = new Set<Uso>();
+        capasActivas.forEach((capaName) => {
+            const capa = capas?.[capaName];
+            if (capa && capa.usos) {
+                capa.usos.forEach((uso) => available.add(uso));
+            }
+        });
+        return available;
+    }, [capasActivas, capas]);
 
+    // Recopila los puntos pertenecientes únicamente a las capas que están activas en el mapa
+    const puntosActivos = useMemo(() => {
+        const list: Punto[] = [];
+        capasActivas.forEach((capaName) => {
+            const capa = capas?.[capaName];
+            if (capa && capa.puntos) {
+                list.push(...capa.puntos);
+            }
+        });
+        return list;
+    }, [capasActivas, capas]);
+
+    // Calcula la cantidad de puntos de cada uso basándose únicamente en los puntos de las capas activas
     const conteoUso = useMemo(() => {
         const acc = {} as Record<Uso, number>;
         for (const c of CAPAS) acc[c.key] = 0;
-        for (const p of puntos) acc[p.uso] = (acc[p.uso] ?? 0) + 1;
+        puntosActivos.forEach((p) => {
+            acc[p.uso] = (acc[p.uso] ?? 0) + 1;
+        });
         return acc;
-    }, [puntos]);
+    }, [puntosActivos]);
 
+    // Sincroniza el filtro seleccionado cuando se desactivan capas; 
+    // si el uso actual ya no es parte de las capas activas, se reinicia a "all" (Todos)
+    useEffect(() => {
+        if (filtroUso === "all") return;
+        if (!filtrosDisponibles.has(filtroUso)) {
+            setFiltroUso("all");
+        }
+    }, [filtrosDisponibles, filtroUso]);
+
+    // Maneja la selección del punto detallado, cargando datos del REPDA si no están en caché local
     const handleMarkerClick = async (punto: Punto) => {
         if (!punto.repda) {
             try {
@@ -127,51 +298,62 @@ export default function MapaInteractivoHumedalAguasSub() {
         }
     };
 
+    // Usamos una referencia para evitar recrear y rebincular listeners de clic a los marcadores Leaflet 
+    // en cada renderizado de React
+    const markerClickRef = useRef(handleMarkerClick);
+    useEffect(() => {
+        markerClickRef.current = handleMarkerClick;
+    });
+
+    // Vincula el listener de click a los marcadores de Leaflet una vez cargados
+    useEffect(() => {
+        if (!capas) return;
+
+        Object.values(capas).forEach((capa) => {
+            capa.puntos.forEach((punto) => {
+                if (punto.marker) {
+                    punto.marker.off("click");
+                    punto.marker.on("click", () => {
+                        punto.marker!.openPopup();
+                        markerClickRef.current(punto);
+                    });
+                }
+            });
+        });
+    }, [capas]);
+
+    // Filtra dinámicamente qué marcadores se agregan o remueven de cada layerGroup
+    // según el filtroUso seleccionado en la interfaz
+    useEffect(() => {
+        if (!capas) return;
+
+        Object.entries(capas).forEach(([name, capa]) => {
+            if (name === "Humedal 2020") return;
+
+            capa.layerGroup.clearLayers();
+            capa.puntos.forEach((punto) => {
+                if (filtroUso === "all" || punto.uso === filtroUso) {
+                    if (punto.marker) {
+                        capa.layerGroup.addLayer(punto.marker);
+                    }
+                }
+            });
+        });
+    }, [capas, filtroUso]);
+
     return (
         <section className="w-full">
             <div className="bg-white rounded-xl shadow-lg">
 
-                {/* Filtros */}
+                {/* Filtros Dinámicos */}
                 <div className="p-4 border-b bg-gray-50">
-                    <div className="flex flex-wrap gap-2">
-                        <button
-                            onClick={() => setFiltroUso("all")}
-                            className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-                                filtroUso === "all"
-                                    ? "bg-blue-600 text-white"
-                                    : "bg-gray-200 text-gray-800 hover:bg-gray-300"
-                            }`}
-                            aria-pressed={filtroUso === "all"}
-                        >
-                            Todos ({puntos.length})
-                        </button>
-
-                        {CAPAS.map(({ key, label, color }) => (
-                            <button
-                                key={key}
-                                onClick={() => setFiltroUso(key)}
-                                className={`group relative px-3 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 ${
-                                    filtroUso === key
-                                        ? "bg-blue-600 text-white"
-                                        : "bg-gray-200 text-gray-800 hover:bg-gray-300"
-                                }`}
-                                aria-pressed={filtroUso === key}
-                                aria-describedby={`tooltip-${key}`}
-                            >
-                                <LeyendaDot color={color} shape={usoShape[key]} />
-                                {label} ({conteoUso[key] ?? 0})
-                                {TOOLTIPS[key] && (
-                                    <div
-                                        id={`tooltip-${key}`}
-                                        className="invisible group-hover:visible absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-2 bg-gray-50 text-gray-900 text-sm rounded-lg w-52 shadow-xl border border-gray-200 z-50 transition-all opacity-0 group-hover:opacity-100 pointer-events-none whitespace-normal leading-snug font-medium"
-                                    >
-                                        {TOOLTIPS[key]}
-                                        <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-50" />
-                                    </div>
-                                )}
-                            </button>
-                        ))}
-                    </div>
+                    <FilterButtons
+                        filtrosDisponibles={filtrosDisponibles}
+                        filtroUso={filtroUso}
+                        setFiltroUso={setFiltroUso}
+                        conteoUso={conteoUso}
+                        totalPuntosActivos={puntosActivos.length}
+                    />
                 </div>
 
                 {/* Cuerpo: mapa + panel */}
@@ -191,49 +373,14 @@ export default function MapaInteractivoHumedalAguasSub() {
                                 maxZoom={18}
                             />
 
-                            {/* Polígono del Humedal */}
-                            {humedal.length > 0 && (
-                                <Polygon
-                                    positions={humedal}
-                                    pathOptions={{
-                                        color: "#0ea5e9",
-                                        fillColor: "#7dd3fc",
-                                        fillOpacity: 0.35,
-                                        weight: 2,
-                                    }}
-                                >
-                                    <Popup>
-                                        <div className="text-center min-w-[120px]">
-                                            <p className="font-bold text-base">Humedal 2020</p>
-                                            <p className="text-xs text-gray-500 mt-1">
-                                                Área de humedal documentada en 2020
-                                            </p>
-                                        </div>
-                                    </Popup>
-                                </Polygon>
+                            {/* Control de Capas y Capas de Leaflet */}
+                            {capas && (
+                                <CapasControl
+                                    capas={capas}
+                                    setCapasActivas={setCapasActivas}
+                                    setFiltroUso={setFiltroUso}
+                                />
                             )}
-
-                            {/* Puntos de aguas subterráneas */}
-                            {filtered.map((p: Punto, i: number) => (
-                                <Marker
-                                    key={p.name + i}
-                                    position={[p.lat, p.lng]}
-                                    icon={makeDivIcon(colorByUso[p.uso] ?? "#6b7280", usoShape[p.uso] ?? "circle")}
-                                    eventHandlers={{
-                                        click: () => handleMarkerClick(p),
-                                    }}
-                                >
-                                    <Popup>
-                                        <div className="text-center min-w-[120px]">
-                                            <p className="font-bold text-sm">{p.name}</p>
-                                            <p className="text-xs text-gray-500 mt-1">{p.uso}</p>
-                                            <p className="text-xs text-blue-600 mt-1 cursor-pointer">
-                                                Ver detalle →
-                                            </p>
-                                        </div>
-                                    </Popup>
-                                </Marker>
-                            ))}
                         </MapContainer>
                     </div>
 

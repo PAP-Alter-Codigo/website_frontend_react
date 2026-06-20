@@ -1,3 +1,5 @@
+import type L from "leaflet";
+
 export type RepdaEntry = {
   titular?: string;
   registro?: string;
@@ -59,6 +61,16 @@ export type Punto = {
   lng: number;
   uso: Uso;
   repda: RepdaEntry | null;
+  marker?: L.Marker;
+};
+
+export type CapasEstructura = {
+  [capaName: string]: {
+    layerGroup: L.LayerGroup;
+    puntos: Punto[];
+    usos: Set<Uso>;
+    filterType: "uso" | "pozo";
+  };
 };
 
 export type MarkerShape =
