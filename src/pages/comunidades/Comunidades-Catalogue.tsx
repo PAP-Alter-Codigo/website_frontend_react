@@ -1,6 +1,6 @@
 // src/components/Regiones.tsx
 import { Link } from "react-router-dom";
-import {regiones} from "./Comunidades-Data";
+import { regiones } from "./Comunidades-Data";
 
 type Item = { label: string; to: string };
 type Region = {
@@ -10,8 +10,8 @@ type Region = {
   reverse?: boolean; // alterna imagen/tarjeta
 };
 
-import bursh1 from "@assets/brushStrokes/03-graf-1.png"; 
-import bursh2 from "@assets/brushStrokes/03-graf-4.png"; 
+import bursh1 from "@assets/brushStrokes/03-graf-1.png";
+import bursh2 from "@assets/brushStrokes/03-graf-4.png";
 
 
 const IMG = {
@@ -55,11 +55,11 @@ function RegionBlock({ title, img, items, reverse }: Region) {
                 <Link
                   to={it.to}
                   data-aos={reverse ? "fade-left" : "fade-right"}
-                  className="group flex items-center justify-between w-full rounded-full border border-gray-200 bg-gray-50/70 px-5 py-4 shadow-sm transition hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+                  className="group flex items-center justify-between w-full rounded-full border border-gray-200 bg-gray-50/70 px-4 py-3 sm:px-5 sm:py-4 shadow-sm transition hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
                 >
-                  <span className="text-base sm:text-lg font-semibold text-gray-900">{it.label}</span>
+                  <span className="text-sm sm:text-base md:text-lg font-semibold text-gray-900">{it.label}</span>
                   <span
-                    className="flex items-center justify-center w-9 h-9 rounded-full bg-white shadow ring-1 ring-gray-200 transition-transform group-hover:translate-x-1"
+                    className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white shadow ring-1 ring-gray-200 transition-transform group-hover:translate-x-1"
                     aria-hidden="true"
                   >
                     <Chevron />
@@ -76,7 +76,7 @@ function RegionBlock({ title, img, items, reverse }: Region) {
 
 export default function ComunidadesCatalogue() {
   return (
-    <section className="">
+    <section className="overflow-hidden">
       <div className="relative flex flex-1 justify-center pb-5">
         <div className="w-full">
           {/* Render dinámico de todas las regiones */}
@@ -85,10 +85,10 @@ export default function ComunidadesCatalogue() {
           ))}
 
           {/* Decorativos de fondo */}
-          <div className="absolute top-0 left-0 -z-30">
+          <div className="hidden md:block absolute top-0 left-0 -z-30">
             <img src={IMG.deco1} alt="decorativo 1" loading="lazy" />
           </div>
-          <div className="absolute top-0 right-0 -z-30">
+          <div className="hidden md:block absolute top-0 right-0 -z-30">
             <img src={IMG.deco2} alt="decorativo 2" loading="lazy" />
           </div>
         </div>

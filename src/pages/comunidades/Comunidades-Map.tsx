@@ -5,8 +5,8 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L, { DivIcon } from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-import bursh1 from "@assets/brushStrokes/img10-3-1.png"; 
-import bursh2 from "@assets/brushStrokes/img10-2-4.png"; 
+import bursh1 from "@assets/brushStrokes/img10-3-1.png";
+import bursh2 from "@assets/brushStrokes/img10-2-4.png";
 
 type Categoria =
   | "valles"
@@ -157,11 +157,10 @@ export default function ComunidadesMap() {
               <div className="flex flex-wrap gap-3">
                 <button
                   onClick={() => setSelected("all")}
-                  className={`px-4 py-2 rounded-lg transition ${
-                    selected === "all"
+                  className={`px-4 py-2 rounded-lg transition ${selected === "all"
                       ? "bg-blue-600 text-white hover:bg-blue-700"
                       : "bg-gray-200 text-gray-800 hover:bg-gray-300"
-                  }`}
+                    }`}
                   aria-pressed={selected === "all"}
                 >
                   Todos ({lugares.length})
@@ -171,9 +170,8 @@ export default function ComunidadesMap() {
                   <button
                     key={key}
                     onClick={() => setSelected(key)}
-                    className={`px-3 py-2 rounded-lg transition flex items-center gap-2 ${
-                      selected === key ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-800 hover:bg-gray-300"
-                    }`}
+                    className={`px-3 py-2 rounded-lg transition flex items-center gap-2 ${selected === key ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                      }`}
                     aria-pressed={selected === key}
                   >
                     <span className="dot" style={dotStyle(categoryColors[key])} />
