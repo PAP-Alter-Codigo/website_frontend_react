@@ -41,13 +41,13 @@ export default function PodcastPage() {
 
           {/* Listen Button */}
           <div className="flex justify-center">
-                <a href={PODCAST_URL} target="_blank" className="group bg-gray-100 inline-flex items-center gap-2 py-4 px-8 shadow-2xl rounded-4xl transition duration-200 hover:scale-105 hover:bg-green-200">
-                ESCUCHAR PODCAST
-                <svg className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                </a>
-            </div>
+            <a href={PODCAST_URL} target="_blank" className="group bg-gray-100 inline-flex items-center gap-2 py-4 px-8 shadow-2xl rounded-4xl transition duration-200 hover:scale-105 hover:bg-green-200">
+              ESCUCHAR PODCAST
+              <svg className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
+          </div>
         </div>
       </section>
 

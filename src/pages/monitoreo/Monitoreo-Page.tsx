@@ -16,8 +16,8 @@ export default function MonitoreoPage() {
                         <div className="w-9/12">
                             <div className="text-4xl font-extrabold text-white pb-5">HERRAMIENTA DE MONITOREO</div>
                             <p className="text-white">
-                                La herramienta de monitoreo de TerritorioRios centraliza información sobre conflictos socioambientales 
-                                en Jalisco, facilitando el acceso a datos relevantes para organizaciones, 
+                                La herramienta de monitoreo de TerritorioRios centraliza información sobre conflictos socioambientales
+                                en Jalisco, facilitando el acceso a datos relevantes para organizaciones,
                                 investigadores y defensores del territorio.
                             </p>
                         </div>
@@ -28,17 +28,17 @@ export default function MonitoreoPage() {
 
             <div className="flex justify-center">
                 <a href="https://main.d2mvdor2xa6h3m.amplifyapp.com" target="_blank" className="group bg-gray-100 inline-flex items-center gap-2 py-4 px-8 shadow-2xl rounded-4xl transition duration-200 hover:scale-105 hover:bg-green-200">
-                IR A LA HERRAMIENTA
-                <svg className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                    IR A LA HERRAMIENTA
+                    <svg className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
                 </a>
             </div>
 
 
             <div className="flex justify-center">
                 <div className="w-7/12 p-12">
-                <img className="rounded-4xl shadow-2xl transition duration-200 hover:scale-105" src={monitoreoSS} alt=""/>
+                    <img className="rounded-4xl shadow-2xl transition duration-200 hover:scale-105" src={monitoreoSS} alt="" />
                 </div>
             </div>
 
