@@ -17,21 +17,54 @@ function DetallePunto({
 }) {
     if (!punto) {
         return (
-            <div className="flex flex-col items-center justify-center h-full text-gray-400 gap-3 px-6 text-center">
+            <div className="flex flex-col items-center justify-start h-full text-gray-500 gap-4 px-6 py-6 sm:px-8 sm:py-8 text-center overflow-y-auto">
+                {/*Instrucciones de uso del mapa para el usuario*/}
                 <svg
-                    width="40"
-                    height="40"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                     strokeWidth={1.5}
+                    className="text-sky-600 flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10"
                 >
                     <circle cx="12" cy="12" r="9" />
                     <path strokeLinecap="round" d="M12 8v4m0 4h.01" />
                 </svg>
-                <p className="text-sm">
-                    Haz clic en un punto del mapa para ver su detalle.
-                </p>
+                <h3 className="text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">
+                    Instrucciones de uso
+                </h3>
+                <div className="text-[11px] sm:text-xs text-gray-600 text-left space-y-4 sm:space-y-6 w-full">
+                    <div>
+                        <p className="font-semibold text-gray-700 mb-1 flex items-center gap-1.5 text-xs sm:text-sm">
+                            <span className="text-sky-600 font-bold">1.</span> Seleccionar capas
+                        </p>
+                        <p className="text-gray-500 leading-relaxed">
+                            En la esquina superior izquierda del mapa, usa el icono de capas para elegir entre <strong>"Visualizar todas al mismo tiempo"</strong> o cualquiera de las capas disponibles:
+                        </p>
+                        <ul className="list-disc list-inside pl-3 mt-1 text-gray-500 space-y-0.5">
+                            <li>Extracción de agua subterránea</li>
+                            <li>Descargas de aguas residuales</li>
+                            <li>1991</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <p className="font-semibold text-gray-700 mb-1 flex items-center gap-1.5 text-xs sm:text-sm">
+                            <span className="text-sky-600 font-bold">2.</span> Filtrar por uso
+                        </p>
+                        <p className="text-gray-500 leading-relaxed">
+                            En la parte superior del mapa, usa los botones para filtrar por <strong>tipo de uso</strong>. Pasa el cursor sobre cada botón para ver una breve explicación.
+                        </p>
+                    </div>
+
+                    <div>
+                        <p className="font-semibold text-gray-700 mb-1 flex items-center gap-1.5 text-xs sm:text-sm">
+                            <span className="text-sky-600 font-bold">3.</span> Ver detalle
+                        </p>
+                        <p className="text-gray-500 leading-relaxed">
+                            Haz clic en un punto del mapa para ver aquí su información detallada, como fecha de registro, volumen de extracción (m³ al año o día), municipio, cuerpo receptor y más.
+                        </p>
+                    </div>
+                </div>
             </div>
         );
     }
@@ -42,7 +75,7 @@ function DetallePunto({
         <div className="flex flex-col h-full overflow-y-auto">
             {/* Header */}
             <div
-                className="flex items-center justify-between px-4 py-3 text-white"
+                className="flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 text-white"
                 style={{ backgroundColor: color }}
             >
                 <div>
@@ -51,10 +84,10 @@ function DetallePunto({
                 </div>
                 <button
                     onClick={onClose}
-                    className="ml-2 rounded-full p-1 hover:bg-white/20 transition"
+                    className="ml-2 rounded-full p-1.5 sm:p-2 hover:bg-white/20 transition flex items-center justify-center"
                     aria-label="Cerrar detalle"
                 >
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 16 16" fill="currentColor">
                         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                     </svg>
                 </button>
@@ -64,7 +97,7 @@ function DetallePunto({
             {punto.repda ? (
                 <dl className="divide-y divide-gray-100 text-sm">
                     {LABELS.map(({ key, label }) => (
-                        <div key={key} className="flex flex-col px-4 py-2">
+                        <div key={key} className="flex flex-col px-4 sm:px-6 py-2.5 sm:py-3.5">
                             <dt className="text-xs text-gray-500 font-medium">{label}</dt>
                             <dd className="text-gray-800 font-semibold mt-0.5">
                                 {punto.repda![key] || "—"}
@@ -73,7 +106,7 @@ function DetallePunto({
                     ))}
                 </dl>
             ) : (
-                <div className="px-4 py-6 text-center text-sm text-gray-500">
+                <div className="px-4 sm:px-6 py-6 sm:py-10 text-center text-sm text-gray-500">
                     Este punto no tiene datos en el registro REPDA.
                 </div>
             )}
@@ -98,15 +131,25 @@ function CapasControl({
     setFiltroUso: React.Dispatch<React.SetStateAction<"all" | Uso>>;
 }) {
     const map = useMap();
+    const isSyncingRef = useRef(false);
 
     useEffect(() => {
         if (!map || !capas) return;
+
+        const ALL_TOGGLE_NAME = "Visualizar todas al mismo tiempo";
+        const TARGET_LAYERS = ["Extracción de agua subterránea", "Descargas de aguas residuales", "1991"];
+
+        const allLayersDummy = L.layerGroup();
 
         // Inicializamos el control de capas de Leaflet en la posición superior izquierda
         const controlLayers = L.control.layers(undefined, undefined, {
             position: "topleft",
             collapsed: true,
         });
+
+        // Agregamos primero el toggle general
+        allLayersDummy.addTo(map);
+        controlLayers.addOverlay(allLayersDummy, ALL_TOGGLE_NAME);
 
         // Agregamos cada capa al mapa y las registramos en el control como overlay por defecto
         Object.entries(capas).forEach(([name, capa]) => {
@@ -116,8 +159,10 @@ function CapasControl({
 
         controlLayers.addTo(map);
 
-        // Al iniciar, todas las capas están activadas
-        setCapasActivas(new Set(Object.keys(capas)));
+        // Al iniciar, todas las capas están activadas + el toggle general
+        const initialCapas = new Set(Object.keys(capas));
+        initialCapas.add(ALL_TOGGLE_NAME);
+        setCapasActivas(initialCapas);
 
         // Eventos para actualizar la visibilidad en React al marcar/desmarcar en el control de Leaflet
         const handleOverlayAdd = (e: L.LayersControlEvent) => {
@@ -126,6 +171,35 @@ function CapasControl({
                 next.add(e.name);
                 return next;
             });
+
+            if (isSyncingRef.current) return;
+
+            // Deferimos la sincronización con setTimeout para permitir que Leaflet termine
+            // de procesar el evento de click (desactivando internally su bandera _handlingClick).
+            setTimeout(() => {
+                if (isSyncingRef.current) return;
+                isSyncingRef.current = true;
+                try {
+                    if (e.name === ALL_TOGGLE_NAME) {
+                        TARGET_LAYERS.forEach((name) => {
+                            const capa = capas[name];
+                            if (capa && !map.hasLayer(capa.layerGroup)) {
+                                map.addLayer(capa.layerGroup);
+                            }
+                        });
+                    } else if (TARGET_LAYERS.includes(e.name)) {
+                        const allActive = TARGET_LAYERS.every((name) => {
+                            const capa = capas[name];
+                            return capa && map.hasLayer(capa.layerGroup);
+                        });
+                        if (allActive && !map.hasLayer(allLayersDummy)) {
+                            map.addLayer(allLayersDummy);
+                        }
+                    }
+                } finally {
+                    isSyncingRef.current = false;
+                }
+            }, 0);
         };
 
         const handleOverlayRemove = (e: L.LayersControlEvent) => {
@@ -134,6 +208,31 @@ function CapasControl({
                 next.delete(e.name);
                 return next;
             });
+
+            if (isSyncingRef.current) return;
+
+            // Deferimos la sincronización con setTimeout para permitir que Leaflet termine
+            // de procesar el evento de click (desactivando internally su bandera _handlingClick).
+            setTimeout(() => {
+                if (isSyncingRef.current) return;
+                isSyncingRef.current = true;
+                try {
+                    if (e.name === ALL_TOGGLE_NAME) {
+                        TARGET_LAYERS.forEach((name) => {
+                            const capa = capas[name];
+                            if (capa && map.hasLayer(capa.layerGroup)) {
+                                map.removeLayer(capa.layerGroup);
+                            }
+                        });
+                    } else if (TARGET_LAYERS.includes(e.name)) {
+                        if (map.hasLayer(allLayersDummy)) {
+                            map.removeLayer(allLayersDummy);
+                        }
+                    }
+                } finally {
+                    isSyncingRef.current = false;
+                }
+            }, 0);
         };
 
         map.on("overlayadd", handleOverlayAdd);
@@ -141,6 +240,9 @@ function CapasControl({
 
         return () => {
             controlLayers.remove();
+            if (map.hasLayer(allLayersDummy)) {
+                map.removeLayer(allLayersDummy);
+            }
             Object.values(capas).forEach((capa) => {
                 capa.layerGroup.remove();
             });
@@ -357,13 +459,13 @@ export default function MapaInteractivoHumedalAguasSub() {
                 </div>
 
                 {/* Cuerpo: mapa + panel */}
-                <div className="flex" style={{ height: "560px" }}>
+                <div className="flex flex-col md:flex-row md:h-[560px]">
 
                     {/* Mapa — 70% */}
-                    <div className="flex-7 min-w-0">
+                    <div className="w-full md:w-[70%] h-[400px] md:h-full min-w-0">
                         <MapContainer
                             center={[20.476, -103.506]}
-                            zoom={11}
+                            zoom={12}
                             scrollWheelZoom={true}
                             className="h-full w-full"
                         >
@@ -385,7 +487,7 @@ export default function MapaInteractivoHumedalAguasSub() {
                     </div>
 
                     {/* Panel de detalle — 30% */}
-                    <div className="flex-3 border-l border-gray-200 bg-white min-w-0 overflow-hidden">
+                    <div className="w-full md:w-[30%] h-[380px] md:h-full border-t md:border-t-0 md:border-l border-gray-200 bg-white min-w-0 overflow-hidden">
                         <DetallePunto
                             punto={selectedPunto}
                             onClose={() => setSelectedPunto(null)}

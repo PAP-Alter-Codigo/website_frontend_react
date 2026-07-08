@@ -57,19 +57,19 @@ export async function initializeMapData(pozoMap: Record<string, Uso>): Promise<{
     : [];
 
   const capas: CapasEstructura = {
-    "Mapa de concesiones de descarga de aguas residuales": {
+    "Descargas de aguas residuales": {
       layerGroup: L.layerGroup(),
       puntos: [],
       usos: new Set<Uso>(),
       filterType: "uso"
     },
-    "Mapa de concesiones de extracción de agua subterránea": {
+    "Extracción de agua subterránea": {
       layerGroup: L.layerGroup(),
       puntos: [],
       usos: new Set<Uso>(),
       filterType: "uso"
     },
-    "Mapa comunitario de 1991": {
+    "1991": {
       layerGroup: L.layerGroup(),
       puntos: [],
       usos: new Set<Uso>(),
@@ -108,9 +108,9 @@ export async function initializeMapData(pozoMap: Record<string, Uso>): Promise<{
       marker
     };
 
-    capas["Mapa de concesiones de descarga de aguas residuales"].puntos.push(punto);
-    capas["Mapa de concesiones de descarga de aguas residuales"].usos.add(uso);
-    capas["Mapa de concesiones de descarga de aguas residuales"].layerGroup.addLayer(marker);
+    capas["Descargas de aguas residuales"].puntos.push(punto);
+    capas["Descargas de aguas residuales"].usos.add(uso);
+    capas["Descargas de aguas residuales"].layerGroup.addLayer(marker);
     return punto;
   });
 
@@ -139,9 +139,9 @@ export async function initializeMapData(pozoMap: Record<string, Uso>): Promise<{
       marker
     };
 
-    capas["Mapa de concesiones de extracción de agua subterránea"].puntos.push(punto);
-    capas["Mapa de concesiones de extracción de agua subterránea"].usos.add(uso);
-    capas["Mapa de concesiones de extracción de agua subterránea"].layerGroup.addLayer(marker);
+    capas["Extracción de agua subterránea"].puntos.push(punto);
+    capas["Extracción de agua subterránea"].usos.add(uso);
+    capas["Extracción de agua subterránea"].layerGroup.addLayer(marker);
     return punto;
   });
 
@@ -169,9 +169,9 @@ export async function initializeMapData(pozoMap: Record<string, Uso>): Promise<{
       marker
     };
 
-    capas["Mapa comunitario de 1991"].puntos.push(punto);
-    capas["Mapa comunitario de 1991"].usos.add(pozoUso);
-    capas["Mapa comunitario de 1991"].layerGroup.addLayer(marker);
+    capas["1991"].puntos.push(punto);
+    capas["1991"].usos.add(pozoUso);
+    capas["1991"].layerGroup.addLayer(marker);
     return punto;
   });
 
