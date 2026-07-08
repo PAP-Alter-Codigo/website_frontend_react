@@ -1,6 +1,6 @@
 import L, { DivIcon } from "leaflet";
 import React from "react";
-import type { Uso, MarkerShape, RepdaEntry } from "./types";
+import type { Uso, MarkerShape, RepdaEntry, InstruccionPaso } from "./types";
 
 export const CAPAS: { key: Uso; label: string; color: string }[] = [
   { key: "INDUSTRIAL", label: "Industrial", color: "#b45309" },
@@ -64,7 +64,6 @@ export const LABELS: { key: keyof RepdaEntry; label: string }[] = [
   { key: "procedencia", label: "Procedencia" },
   { key: "tipo_descarga", label: "Tipo descarga" },
   { key: "cuerpo_receptor", label: "Cuerpo receptor" },
-  { key: "volumen_m3_anio_subterraneo", label: "Vol. subterráneo (m³/año)" },
   { key: "region_hidrologica", label: "Región hidrológica" },
 ];
 
@@ -101,13 +100,13 @@ function shapeToSVG(shape: MarkerShape, color: string, size = 18): string {
 }
 
 // Genera un ícono de marcador personalizado para Leaflet utilizando la forma y color especificados
-export function makeDivIcon(color: string, shape: MarkerShape): DivIcon {
-  const svg = shapeToSVG(shape, color, 18);
+export function makeDivIcon(color: string, shape: MarkerShape, size: number = 18): DivIcon {
+  const svg = shapeToSVG(shape, color, size);
   return L.divIcon({
     className: "custom-marker",
     html: `<div style="filter:drop-shadow(0 1px 3px rgba(0,0,0,0.45));line-height:0;">${svg}</div>`,
-    iconSize: [18, 18],
-    iconAnchor: [9, 9],
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2],
   });
 }
 
@@ -120,3 +119,22 @@ export const LeyendaDot = React.memo(function LeyendaDot({ color, shape }: { col
     />
   );
 });
+
+export const DEFAULT_INSTRUCCIONES: InstruccionPaso[] = [
+  {
+    numero: "1.",
+    titulo: "Seleccionar capas",
+    descripcion: "En la esquina superior izquierda del mapa, usa el icono de capas para elegir entre \"Visualizar todas al mismo tiempo\" o cualquiera de las capas disponibles:",
+    items: ["Extracción de agua subterránea", "Descargas de aguas residuales", "1991"],
+  },
+  {
+    numero: "2.",
+    titulo: "Filtrar por uso",
+    descripcion: "En la parte superior del mapa, usa los botones para filtrar por tipo de uso. Pasa el cursor sobre cada botón para ver una breve explicación.",
+  },
+  {
+    numero: "3.",
+    titulo: "Ver detalle",
+    descripcion: "Haz clic en un punto del mapa para ver aquí su información detallada, como fecha de registro, volumen de extracción (m³ al año o día), municipio, cuerpo receptor y más.",
+  },
+];

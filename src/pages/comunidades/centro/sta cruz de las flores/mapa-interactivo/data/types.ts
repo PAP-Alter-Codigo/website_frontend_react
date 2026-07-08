@@ -30,6 +30,14 @@ export type Uso =
   | "POZOS DOMO"
   | "POZOS DOMESTICO";
 
+export interface DatasetConfig {
+  key: string;                    // clave única; también el nombre de la capa que se muestra en el control de capas de Leaflet
+  url: string;                    // ruta al archivo geojson
+  filterType: "uso" | "pozo";     // mismo significado que el filterType de CapasEstructura actual
+  kind: "puntos" | "poligono";    // "puntos" crea marcadores; "poligono" crea un polígono (humedal)
+  pozoSourceLayerMap?: Record<string, Uso>; // solo para conjuntos de datos tipo pozo sin entradas REPDA
+}
+
 export type Punto = {
   name: string;
   lat: number;
@@ -37,6 +45,8 @@ export type Punto = {
   uso: Uso;
   repda: RepdaEntry | null;
   marker?: L.Marker;
+  capaKey?: string;         // de qué conjunto de datos/capa proviene este punto (para la búsqueda de forma por capa)
+  volumenM3Anio?: number;   // parsed de repda.volumen_m3_anio_limpio, utilizado para el escalado de tamaño
 };
 
 export type CapasEstructura = {
@@ -58,3 +68,11 @@ export type MarkerShape =
   | "octagon"
   | "star4"
   | "ring";
+
+export interface InstruccionPaso {
+  numero: string;
+  titulo: string;
+  descripcion: string;
+  items?: string[];
+}
+

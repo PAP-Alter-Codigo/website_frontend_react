@@ -3,17 +3,19 @@ import L from "leaflet";
 import { useEffect, useMemo, useState, useRef } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 
-import { initializeMapData, getRepdaForPunto } from "./data/loaders";
-import { CAPAS, POZO_SOURCE_LAYER_MAP, TOOLTIPS, usoShape, LABELS, colorByUso, LeyendaDot } from "./data/constants.tsx";
-import type { Punto, Uso, CapasEstructura } from "./data/types";
+import { initializeMapData, getRepdaForPunto, DEFAULT_DATASETS } from "./data/loaders";
+import { CAPAS, TOOLTIPS, usoShape, LABELS, colorByUso, LeyendaDot, DEFAULT_INSTRUCCIONES } from "./data/constants.tsx";
+import type { Punto, Uso, CapasEstructura, DatasetConfig, MarkerShape, InstruccionPaso } from "./data/types";
 
 // ─── Componente para mostrar el detalle de un punto seleccionado, incluyendo su información REPDA si está disponible ───────────────────────
 function DetallePunto({
     punto,
     onClose,
+    instrucciones,
 }: {
     punto: Punto | null;
     onClose: () => void;
+    instrucciones?: InstruccionPaso[];
 }) {
     if (!punto) {
         return (
@@ -33,37 +35,23 @@ function DetallePunto({
                     Instrucciones de uso
                 </h3>
                 <div className="text-[11px] sm:text-xs text-gray-600 text-left space-y-4 sm:space-y-6 w-full">
-                    <div>
-                        <p className="font-semibold text-gray-700 mb-1 flex items-center gap-1.5 text-xs sm:text-sm">
-                            <span className="text-sky-600 font-bold">1.</span> Seleccionar capas
-                        </p>
-                        <p className="text-gray-500 leading-relaxed">
-                            En la esquina superior izquierda del mapa, usa el icono de capas para elegir entre <strong>"Visualizar todas al mismo tiempo"</strong> o cualquiera de las capas disponibles:
-                        </p>
-                        <ul className="list-disc list-inside pl-3 mt-1 text-gray-500 space-y-0.5">
-                            <li>Extracción de agua subterránea</li>
-                            <li>Descargas de aguas residuales</li>
-                            <li>1991</li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <p className="font-semibold text-gray-700 mb-1 flex items-center gap-1.5 text-xs sm:text-sm">
-                            <span className="text-sky-600 font-bold">2.</span> Filtrar por uso
-                        </p>
-                        <p className="text-gray-500 leading-relaxed">
-                            En la parte superior del mapa, usa los botones para filtrar por <strong>tipo de uso</strong>. Pasa el cursor sobre cada botón para ver una breve explicación.
-                        </p>
-                    </div>
-
-                    <div>
-                        <p className="font-semibold text-gray-700 mb-1 flex items-center gap-1.5 text-xs sm:text-sm">
-                            <span className="text-sky-600 font-bold">3.</span> Ver detalle
-                        </p>
-                        <p className="text-gray-500 leading-relaxed">
-                            Haz clic en un punto del mapa para ver aquí su información detallada, como fecha de registro, volumen de extracción (m³ al año o día), municipio, cuerpo receptor y más.
-                        </p>
-                    </div>
+                    {(instrucciones ?? DEFAULT_INSTRUCCIONES).map((paso) => (
+                        <div key={paso.numero}>
+                            <p className="font-semibold text-gray-700 mb-1 flex items-center gap-1.5 text-xs sm:text-sm">
+                                <span className="text-sky-600 font-bold">{paso.numero}</span> {paso.titulo}
+                            </p>
+                            <p className="text-gray-500 leading-relaxed">
+                                {paso.descripcion}
+                            </p>
+                            {paso.items && paso.items.length > 0 && (
+                                <ul className="list-disc list-inside pl-3 mt-1 text-gray-500 space-y-0.5">
+                                    {paso.items.map((item, idx) => (
+                                        <li key={idx}>{item}</li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    ))}
                 </div>
             </div>
         );
@@ -125,10 +113,12 @@ function CapasControl({
     capas,
     setCapasActivas,
     setFiltroUso,
+    datasets,
 }: {
     capas: CapasEstructura;
     setCapasActivas: React.Dispatch<React.SetStateAction<Set<string>>>;
     setFiltroUso: React.Dispatch<React.SetStateAction<"all" | Uso>>;
+    datasets: DatasetConfig[];
 }) {
     const map = useMap();
     const isSyncingRef = useRef(false);
@@ -137,7 +127,7 @@ function CapasControl({
         if (!map || !capas) return;
 
         const ALL_TOGGLE_NAME = "Visualizar todas al mismo tiempo";
-        const TARGET_LAYERS = ["Extracción de agua subterránea", "Descargas de aguas residuales", "1991"];
+        const TARGET_LAYERS = datasets.filter((d) => d.kind === "puntos").map((d) => d.key);
 
         const allLayersDummy = L.layerGroup();
 
@@ -249,7 +239,7 @@ function CapasControl({
             map.off("overlayadd", handleOverlayAdd);
             map.off("overlayremove", handleOverlayRemove);
         };
-    }, [map, capas, setCapasActivas, setFiltroUso]);
+    }, [map, capas, setCapasActivas, setFiltroUso, datasets]);
 
     return null;
 }
@@ -319,7 +309,33 @@ function FilterButtons({
 
 // ─── Componente principal ─────────────────────────────────────────────────────
 
-export default function MapaInteractivoHumedalAguasSub() {
+export interface MapaInteractivoProps {
+    datasets?: DatasetConfig[];                    // por defecto: DEFAULT_DATASETS de loaders.ts
+    usoFiltroExacto?: Uso[];                        // por defecto: undefined (sin filtrado, comportamiento original)
+    showFiltros?: boolean;                          // por defecto: true (muestra los filtros)
+    tamanoPorVolumen?: boolean;                     // por defecto: false (iconos fijos de 18px, comportamiento original)
+    shapePorCapa?: Record<string, MarkerShape>;     // por defecto: undefined (usa usoShape por defecto)
+    minIconSize?: number;                           // por defecto: 12
+    maxIconSize?: number;                           // por defecto: 30
+    center?: [number, number];                      // por defecto: [20.476, -103.506] (valor original)
+    zoom?: number;                                  // por defecto: 12 (valor original)
+    lazy?: boolean;                                 // por defecto: false (se monta inmediatamente, comportamiento original)
+    instrucciones?: InstruccionPaso[];              // instrucciones personalizadas para la vista de ayuda
+}
+
+export default function MapaInteractivoHumedalAguasSub({
+    datasets = DEFAULT_DATASETS,
+    usoFiltroExacto,
+    showFiltros = true,
+    tamanoPorVolumen = false,
+    shapePorCapa,
+    minIconSize = 12,
+    maxIconSize = 42,
+    center = [20.476, -103.506],
+    zoom = 12,
+    lazy = false,
+    instrucciones,
+}: MapaInteractivoProps = {}) {
     const [capas, setCapas] = useState<CapasEstructura | null>(null);
     const [, setPuntos] = useState<Punto[]>([]);
     const [, setHumedal] = useState<[number, number][]>([]);
@@ -331,16 +347,50 @@ export default function MapaInteractivoHumedalAguasSub() {
     const [filtroUso, setFiltroUso] = useState<"all" | Uso>("all");
     const [selectedPunto, setSelectedPunto] = useState<Punto | null>(null);
 
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [shouldRender, setShouldRender] = useState(!lazy);
+
+    // Configura IntersectionObserver para carga diferida (lazy load) si está activado
+    // Esto ayuda a que el mapa se cargue cuando el usuario hace scroll hasta el mapa
+    useEffect(() => {
+        if (!lazy) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    setShouldRender(true);
+                    observer.disconnect();
+                }
+            },
+            { rootMargin: "300px 0px", threshold: 0 }
+        );
+
+        if (containerRef.current) {
+            observer.observe(containerRef.current);
+        }
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [lazy]);
+
     // Carga inicial de datos desde los GeoJSONs y REPDA metadata
     useEffect(() => {
-        initializeMapData(POZO_SOURCE_LAYER_MAP).then(({ capas, puntos, humedal }) => {
+        if (!shouldRender) return;
+
+        initializeMapData(datasets, usoFiltroExacto, {
+            tamanoPorVolumen,
+            shapePorCapa,
+            minIconSize,
+            maxIconSize
+        }).then(({ capas, puntos, humedal }) => {
             setCapas(capas);
             setPuntos(puntos);
             setHumedal(humedal);
         }).catch((err) => {
             console.error("Error loading map data:", err);
         });
-    }, []);
+    }, [shouldRender, datasets, usoFiltroExacto, tamanoPorVolumen, shapePorCapa, minIconSize, maxIconSize]);
 
     // Calcula la unión de usos/filtros disponibles basados en las capas seleccionadas actualmente
     const filtrosDisponibles = useMemo(() => {
@@ -430,7 +480,8 @@ export default function MapaInteractivoHumedalAguasSub() {
         if (!capas) return;
 
         Object.entries(capas).forEach(([name, capa]) => {
-            if (name === "Humedal 2020") return;
+            const datasetConfig = datasets.find(d => d.key === name);
+            if (datasetConfig && datasetConfig.kind !== "puntos") return;
 
             capa.layerGroup.clearLayers();
             capa.puntos.forEach((punto) => {
@@ -441,49 +492,58 @@ export default function MapaInteractivoHumedalAguasSub() {
                 }
             });
         });
-    }, [capas, filtroUso]);
+    }, [capas, filtroUso, datasets]);
 
     return (
-        <section className="w-full">
+        <section ref={containerRef} className="w-full">
             <div className="bg-white rounded-xl shadow-lg">
 
                 {/* Filtros Dinámicos */}
-                <div className="p-4 border-b bg-gray-50">
-                    <FilterButtons
-                        filtrosDisponibles={filtrosDisponibles}
-                        filtroUso={filtroUso}
-                        setFiltroUso={setFiltroUso}
-                        conteoUso={conteoUso}
-                        totalPuntosActivos={puntosActivos.length}
-                    />
-                </div>
+                {showFiltros && (
+                    <div className="p-4 border-b bg-gray-50">
+                        <FilterButtons
+                            filtrosDisponibles={filtrosDisponibles}
+                            filtroUso={filtroUso}
+                            setFiltroUso={setFiltroUso}
+                            conteoUso={conteoUso}
+                            totalPuntosActivos={puntosActivos.length}
+                        />
+                    </div>
+                )}
 
                 {/* Cuerpo: mapa + panel */}
                 <div className="flex flex-col md:flex-row md:h-[560px]">
 
                     {/* Mapa — 70% */}
                     <div className="w-full md:w-[70%] h-[400px] md:h-full min-w-0">
-                        <MapContainer
-                            center={[20.476, -103.506]}
-                            zoom={12}
-                            scrollWheelZoom={true}
-                            className="h-full w-full"
-                        >
-                            <TileLayer
-                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                attribution="&copy; OpenStreetMap contributors"
-                                maxZoom={18}
-                            />
-
-                            {/* Control de Capas y Capas de Leaflet */}
-                            {capas && (
-                                <CapasControl
-                                    capas={capas}
-                                    setCapasActivas={setCapasActivas}
-                                    setFiltroUso={setFiltroUso}
+                        {shouldRender ? (
+                            <MapContainer
+                                center={center}
+                                zoom={zoom}
+                                scrollWheelZoom={true}
+                                className="h-full w-full"
+                            >
+                                <TileLayer
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                    attribution="&copy; OpenStreetMap contributors"
+                                    maxZoom={18}
                                 />
-                            )}
-                        </MapContainer>
+
+                                {/* Control de Capas y Capas de Leaflet */}
+                                {capas && (
+                                    <CapasControl
+                                        capas={capas}
+                                        setCapasActivas={setCapasActivas}
+                                        setFiltroUso={setFiltroUso}
+                                        datasets={datasets}
+                                    />
+                                )}
+                            </MapContainer>
+                        ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-500 font-medium text-sm">
+                                Cargando mapa...
+                            </div>
+                        )}
                     </div>
 
                     {/* Panel de detalle — 30% */}
@@ -491,6 +551,7 @@ export default function MapaInteractivoHumedalAguasSub() {
                         <DetallePunto
                             punto={selectedPunto}
                             onClose={() => setSelectedPunto(null)}
+                            instrucciones={instrucciones}
                         />
                     </div>
                 </div>
