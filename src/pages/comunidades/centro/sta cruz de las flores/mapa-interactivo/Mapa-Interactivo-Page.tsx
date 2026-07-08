@@ -4,6 +4,12 @@ import prtSup1 from "@assets/bigStrokes/01-prt-sup-1.png"
 import prtInf1 from "@assets/bigStrokes/piedepag-1-1.png"
 import AppHeader from "../../../../../components/App-Header"
 import MapaInteractivoHumedalAguasSub from "./Mapa-Interactivo-Humedal-AguasSub"
+import MapaInteractivoStory from "./Mapa-Interactivo-Story"
+
+// ── Bases de datos CSV ─────────────────────────────────────────────
+const CSV_DESCARGAS = "/data/mapas/sta-cruz-de-las-flores/csv/descarga_aguas_residuales_2026.csv"
+const CSV_EXTRACCIONES = "/data/mapas/sta-cruz-de-las-flores/csv/extraccion_agua_subterranea_2026.csv"
+const CSV_POZOS_1991 = "/data/mapas/sta-cruz-de-las-flores/csv/pozos_1991.csv"
 
 // ── Pequeños helpers de UI ─────────────────────────────────────────────────────
 
@@ -66,7 +72,7 @@ export default function MapaInteractivoPage() {
             <div className="bgColor">
                 <AppHeader />
             </div>
-            
+
 
             {/* ── HERO ─────────────────────────────────────────────────────────── */}
             {/* TODO: reemplazar el gradiente con una imagen: añadir backgroundImage:"url('...')", backgroundSize:"cover", backgroundPosition:"center" */}
@@ -114,7 +120,7 @@ export default function MapaInteractivoPage() {
                 <div className="max-w-7xl mx-auto">
                     <span className="text-sky-600 text-xs font-semibold uppercase tracking-widest">Herramienta interactiva</span>
                     <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1 mb-6">
-                        Mapa del agua en el territorio
+                        Mapas y datos de concesiones y pozos de agua en el territorio
                     </h2>
                     <MapaInteractivoHumedalAguasSub />
                 </div>
@@ -132,60 +138,16 @@ export default function MapaInteractivoPage() {
                         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">¿Qué es este mapa?</h2>
                     </div>
 
-                    {/* Tarjetas de ideas clave */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-                        {[
-                            {
-                                bg: "bg-sky-50 border-sky-200",
-                                iconBg: "bg-sky-500",
-                                title: "Transecto social",
-                                desc: "Una herramienta para entender cómo se vive, se usa y se defiende el agua en el territorio, no solo para ubicar puntos geográficos.",
-                                icon: (
-                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                ),
-                            },
-                            {
-                                bg: "bg-emerald-50 border-emerald-200",
-                                iconBg: "bg-emerald-500",
-                                title: "Dos saberes",
-                                desc: "Integra el conocimiento ancestral de la comunidad y los datos registrados por instituciones gubernamentales.",
-                                icon: (
-                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
-                                ),
-                            },
-                            {
-                                bg: "bg-amber-50 border-amber-200",
-                                iconBg: "bg-amber-500",
-                                title: "Información accesible",
-                                desc: "Hace accesible información técnica para que cualquier persona pueda comprenderla e interpretar el territorio.",
-                                icon: (
-                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
-                                    </svg>
-                                ),
-                            },
-                        ].map(c => (
-                            <div key={c.title} className={`border rounded-xl p-5 ${c.bg}`}>
-                                <div className={`w-8 h-8 ${c.iconBg} rounded-lg flex items-center justify-center text-white mb-3`}>
-                                    {c.icon}
-                                </div>
-                                <h3 className="font-bold text-gray-900 text-sm mb-1">{c.title}</h3>
-                                <p className="text-gray-600 text-sm leading-relaxed">{c.desc}</p>
-                            </div>
-                        ))}
-                    </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div className="lg:col-span-2 text-gray-700 leading-relaxed space-y-4 text-base">
+                            <p>Este mapa muestra humedales y pozos de extracción presentes en el pueblo originario de Santa Cruz de las Flores. No es solo un mapa para ubicar puntos geográficos; también sirve como una herramienta que se conoce como "transecto social", para entender cómo se vive, se usa y se defiende el agua en el territorio. Aquí se integran dos formas distintas de conocer el agua: por un lado, el conocimiento que la comunidad tiene desde su convivencia natural ancestral con los bienes naturales comunes, y por otro, la información registrada por instituciones gubernamentales en la actualidad.</p>
+                            <p>Esto permite conocer dónde está el agua, entender cómo se han sufrido las oleadas del despojo debido a los procesos productivos que han impactado el territorio y la vida de las personas con el tiempo, y de igual manera reconocer la importancia histórica y vital del agua como un bien común fundamental para la vida de la comunidad. Además, es una herramienta que busca hacer más accesible información que normalmente es técnica o difícil de obtener, para que cualquier persona pueda comprenderla en la interpretación de la realidad y utilizarla.</p>
 
-                    <Accordion id="que-es" label="Leer descripción completa" open={open === "que-es"} onToggle={toggle}>
-                        <p>Este mapa muestra humedales y pozos de extracción presentes en el pueblo originario coca de Santa Cruz de las Flores. No es solo un mapa para ubicar puntos geográficos, sino una herramienta que se conoce como "transecto social", para entender cómo se vive, se usa y se defiende el agua en el territorio. Aquí se integran dos formas distintas de conocer el agua: por un lado, el conocimiento que la comunidad tiene desde su convivencia natural ancestral con los bienes naturales comunes, y por otro, la información registrada por instituciones gubernamentales en la actualidad.</p>
-                        <p>Esto permite conocer dónde está el agua, entender cómo se han sufrido los embastes del despojo debido a los procesos productivos que han impactado el territorio y la vida de las personas con el tiempo, y de igual manera reconocer la importancia histórica y vital del agua como un bien común fundamental para la vida de la comunidad. Además, es una herramienta que busca hacer más accesible información que normalmente es técnica o difícil de obtener, para que cualquier persona pueda comprenderla en la interpretación de la realidad y utilizarla.</p>
-                        <blockquote className="border-l-4 border-sky-400 pl-4 italic text-gray-600 bg-sky-50 py-3 pr-4 rounded-r-lg not-italic">
-                            <strong className="not-italic">Sobre el término "bien común":</strong> Distintas luchas comunitarias cuestionan el uso de conceptos como "recurso", empleados frecuentemente por instituciones y visiones mercantilistas que reducen el agua a una mercancía, separándola de su relación con la vida, el cuerpo y el territorio.
-                        </blockquote>
-                    </Accordion>
+                            <blockquote className="mt-6 border-l-4 border-sky-400 pl-4 text-gray-600 bg-sky-50 py-3 pr-4 rounded-r-lg not-italic">
+                                <strong className="not-italic">Sobre el término "bien común":</strong> Distintas luchas comunitarias cuestionan el uso de conceptos como "recurso", empleados frecuentemente por instituciones gubernamentales y académicas; reducen el agua a una mercancía, separándola de su relación con la vida, el cuerpo y el territorio.
+                            </blockquote>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -201,37 +163,82 @@ export default function MapaInteractivoPage() {
                         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">¿Qué hay en este mapa?</h2>
                     </div>
                     <p className="text-gray-600 mb-8 leading-relaxed max-w-3xl">
-                        El agua puede entenderse y representarse de diferentes maneras. Por ello, en este mapa se presentan <strong>dos capas</strong> sobre los pozos de agua, cada una con su propia fuente y enfoque.
+                        El agua puede entenderse y representarse de diferentes maneras. Por ello, en este mapa se presentan <strong>tres capas</strong> sobre los pozos de agua, cada una con su propia fuente y enfoque.
                     </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-amber-200">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+                        <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-amber-200 flex flex-col">
                             <div className="bg-amber-500 px-6 py-5">
                                 <span className="text-white/75 text-xs font-bold uppercase tracking-widest">Capa 1</span>
-                                <h3 className="text-white text-xl font-bold mt-1">1991 — Memoria comunitaria</h3>
+                                <h3 className="text-white text-lg font-bold mt-1 leading-snug">1991 — Memoria comunitaria</h3>
                             </div>
-                            <div className="px-6 py-5">
+                            <div className="px-6 py-5 flex flex-col flex-1">
                                 <p className="text-gray-600 text-sm leading-relaxed">Muestra el conocimiento basado en la vida cotidiana que la comunidad tiene en torno a la tendencia de extracción del agua. Este saber estructuró su lucha en defensa del agua subterránea.</p>
-                                <div className="mt-4 flex items-center gap-2 text-amber-700 text-sm font-medium">
+                                <div className="mt-auto pt-4 flex items-center gap-2 text-amber-700 text-sm font-medium">
                                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
                                     Fuente: conocimiento comunitario
                                 </div>
+                                <a
+                                    href={CSV_POZOS_1991}
+                                    download
+                                    className="mt-3 flex items-center justify-center gap-2 w-full bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold px-3 py-2 rounded-lg transition-colors"
+                                >
+                                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                    </svg>
+                                    Descargar CSV
+                                </a>
                             </div>
                         </div>
-                        <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-sky-200">
+                        <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-sky-200 flex flex-col">
                             <div className="bg-sky-600 px-6 py-5">
                                 <span className="text-white/75 text-xs font-bold uppercase tracking-widest">Capa 2</span>
-                                <h3 className="text-white text-xl font-bold mt-1">2020 — Datos CONAGUA</h3>
+                                <h3 className="text-white text-lg font-bold mt-1 leading-snug">2026 — Datos de extracción de agua subterránea REPDA</h3>
                             </div>
-                            <div className="px-6 py-5">
-                                <p className="text-gray-600 text-sm leading-relaxed">Representa la forma en que las instituciones registran y administran el agua a través del REPDA (Registro Público de Derechos de Agua).</p>
-                                <div className="mt-4 flex items-center gap-2 text-sky-700 text-sm font-medium">
+                            <div className="px-6 py-5 flex flex-col flex-1">
+                                <p className="text-gray-600 text-sm leading-relaxed">Para obtener permisos de extracción de agua subterránea, las empresas, instituciones y personas deben solicitar una concesión a Conagua a través del Registro Público de Derechos del Agua o Repda. Estos registros son públicos y abiertos.</p>
+                                <div className="mt-auto pt-4 flex items-center gap-2 text-sky-700 text-sm font-medium">
                                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                                     </svg>
                                     Fuente: CONAGUA — REPDA
                                 </div>
+                                <a
+                                    href={CSV_EXTRACCIONES}
+                                    download
+                                    className="mt-3 flex items-center justify-center gap-2 w-full bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold px-3 py-2 rounded-lg transition-colors"
+                                >
+                                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                    </svg>
+                                    Descargar CSV
+                                </a>
+                            </div>
+                        </div>
+                        <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-emerald-200 flex flex-col md:col-span-2 lg:col-span-1">
+                            <div className="bg-emerald-600 px-6 py-5">
+                                <span className="text-white/75 text-xs font-bold uppercase tracking-widest">Capa 3</span>
+                                <h3 className="text-white text-lg font-bold mt-1 leading-snug">2026 — Datos de descarga de aguas residuales</h3>
+                            </div>
+                            <div className="px-6 py-5 flex flex-col flex-1">
+                                <p className="text-gray-600 text-sm leading-relaxed">Las concesiones de Repda también registran permisos de descargas de aguas residuales, junto con su volumen total de descarga.</p>
+                                <div className="mt-auto pt-4 flex items-center gap-2 text-emerald-700 text-sm font-medium">
+                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                    </svg>
+                                    Fuente: CONAGUA — REPDA
+                                </div>
+                                <a
+                                    href={CSV_DESCARGAS}
+                                    download
+                                    className="mt-3 flex items-center justify-center gap-2 w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-3 py-2 rounded-lg transition-colors"
+                                >
+                                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                    </svg>
+                                    Descargar CSV
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -331,7 +338,7 @@ export default function MapaInteractivoPage() {
             {/* ── CAPA 2020 ────────────────────────────────────────────────────── */}
             <section className="py-16 px-4 sm:px-8 lg:px-16 bg-sky-50">
                 <div className="max-w-5xl mx-auto">
-                    <span className="inline-block bg-sky-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-3">CAPA 2020</span>
+                    <span className="inline-block bg-sky-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-3">CAPAS 2026</span>
                     <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Información de CONAGUA</h2>
                     <p className="text-gray-600 mb-8 leading-relaxed max-w-3xl text-sm">
                         Los pozos de esta capa forman parte del <strong>REPDA</strong> (Registro Público de Derechos de Agua). Sin embargo, este registro no siempre refleja lo que ocurre en el territorio por prácticas de corrupción y pozos clandestinos, y su acceso suele ser limitado para la comunidad.
@@ -378,10 +385,10 @@ export default function MapaInteractivoPage() {
                     </div>
 
                     <Accordion
-                        id="capa-2020" label="Leer texto completo sobre esta capa" open={open === "capa-2020"} onToggle={toggle}
+                        id="capa-2026" label="Leer texto completo sobre esta capa" open={open === "capa-2026"} onToggle={toggle}
                         colorClass="bg-sky-50 hover:bg-sky-100" labelClass="text-sky-800" arrowClass="text-sky-600" borderClass="border-sky-200"
                     >
-                        <p>Los pozos que aparecen en esta capa (2020) forman parte de un registro oficial que lleva la Comisión Nacional del Agua (CONAGUA), conocido como REPDA (Registro Público de Derechos de Agua). En este sistema se inscriben los aprovechamientos de agua subterránea, donde se asigna a cada pozo una concesión que indica quién puede usar el agua, para qué se utiliza y cuánta cantidad se permite extraer.</p>
+                        <p>Los pozos que aparecen en esta capa (2026) forman parte de un registro oficial que lleva la Comisión Nacional del Agua (CONAGUA), conocido como REPDA (Registro Público de Derechos de Agua). En este sistema se inscriben los aprovechamientos de agua subterránea, donde se asigna a cada pozo una concesión que indica quién puede usar el agua, para qué se utiliza y cuánta cantidad se permite extraer.</p>
                         <p>Sin embargo, este registro funciona principalmente con fines administrativos y no siempre refleja de manera completa lo que ocurre en el territorio, porque persisten prácticas de corrupción relacionadas a los pozos clandestinos y el saqueo para su comercialización. Además, el acceso a esta información puede ser limitado o poco claro para la comunidad, lo que dificulta conocer con precisión quiénes son los usuarios, cómo se distribuye y aprovecha el agua en la práctica, y cómo se resuelve su tratamiento para su reutilización, por la falta de auditorías.</p>
                         <p>Esta información es más técnica y no siempre es fácil de consultar o entender, por lo que en este mapa se adaptó a un lenguaje más claro acompañado de la explicación de cada indicador, para que pueda ser útil para la comunidad, ya que en el sitio oficial no existe un acceso sencillo a estas explicaciones.</p>
                     </Accordion>
@@ -389,47 +396,7 @@ export default function MapaInteractivoPage() {
             </section>
 
             {/* ── ¿QUÉ HA PASADO CON EL AGUA? ─────────────────────────────────── */}
-            <section className="py-16 px-4 sm:px-8 lg:px-16 bg-white">
-                <div className="max-w-5xl mx-auto">
-                    <div className="flex items-center gap-3 mb-8">
-                        <SectionIcon bg="bg-red-100 text-red-600">
-                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </SectionIcon>
-                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">¿Qué ha pasado con el agua?</h2>
-                    </div>
-
-                    {/* Línea de tiempo */}
-                    <div className="relative mb-10">
-                        <div className="absolute left-5 top-2 bottom-2 w-0.5 bg-gray-200" />
-                        <div className="space-y-8">
-                            {[
-                                { year: "Antes de 1965", color: "bg-teal-500", title: "Convivencia con el agua", desc: "Las familias contaban con pozos de soga propios. Existían arroyos como 'Los Guayabos', 'Los Garrochos', 'El Arenal' y 'El Zarco', así como manantiales en distintas zonas de la comunidad." },
-                                { year: "1965", color: "bg-orange-500", title: "Industria llega a El Salto", desc: "Primeras industrias en zonas cercanas. Comienzan a modificarse las dinámicas extractivistas del territorio y el uso del agua." },
-                                { year: "1975", color: "bg-red-500", title: "Industria en Santa Cruz de las Flores", desc: "La industrialización llega directamente al territorio. Comienza el proceso de transformación del uso del agua." },
-                                { year: "1970 – 1990", color: "bg-amber-500", title: "Transición del uso doméstico", desc: "La mayoría de casas aún tenían pozos de soga pero el proceso industrial ya comenzaba a presionar los recursos subterráneos." },
-                                { year: "2020 – hoy", color: "bg-gray-700", title: "Estrés hídrico y tandeos", desc: "Santa Cruz forma parte de una zona industrial de la ZMG. Algunas familias pasan varios días sin agua. El humedal se ha reducido considerablemente. Cinco décadas de intensificación." },
-                            ].map(item => (
-                                <div key={item.year} className="relative flex gap-4 pl-14">
-                                    <div className={`absolute left-3 top-1 w-4 h-4 rounded-full ${item.color} border-2 border-white ring-2 ring-gray-200 flex-shrink-0`} />
-                                    <div>
-                                        <span className={`inline-block text-xs font-bold px-2 py-0.5 rounded-full ${item.color} text-white mb-1`}>{item.year}</span>
-                                        <h4 className="font-bold text-gray-900 text-sm mb-1">{item.title}</h4>
-                                        <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    <Accordion id="que-paso" label="Leer relato completo" open={open === "que-paso"} onToggle={toggle}>
-                        <p>Hace algunas décadas, la forma en que las personas se relacionaban con el agua era distinta. Muchas familias contaban con su propio pozo de soga en casa, mientras que en el centro del pueblo existían tomas de agua en determinados lugares. También había arroyos (como Arroyo "Los Guayabos", "Los Garrochos", "El Arenal" y "El Zarco" en flagrante despojo, por desvío, destrucción y saqueo pétreo) y manantiales en distintas zonas de la comunidad, lo que permitía comprender de manera más cercana de dónde provenía y ser un agua segura para el consumo humano. Con el paso del tiempo, esta relación comenzó a cambiar. A partir de la llegada del destructivo "progreso" por actividades económicas, especialmente el crecimiento industrial en la zona, el uso del agua se transformó y comenzó a concentrarse en manos de empresas e industrias.</p>
-                        <p>Desde la llegada de las industrias a la región, primero en zonas cercanas como El Salto en 1965 y posteriormente en Santa Cruz de las Flores en 1975, comenzaron a modificarse las dinámicas capitalistas extractivistas del territorio y del uso del agua. Hoy en día, Santa Cruz de las Flores forma parte de una zona industrial de la Zona Metropolitana de Guadalajara, lo que ha incrementado la sobreexplotación. Esto ha derivado en el agotamiento y desaparición de manantiales, la sobreexplotación del agua subterránea y situaciones en las que algunas familias pasan varios días sin acceso al agua, mediante la imposición de tandeos.</p>
-                        <p>Existen barrios donde el acceso al agua es más limitado, mientras que en otras zonas el servicio puede ser más constante. Un ejemplo es el "Humedal de Santa Cruz de las Flores", que anteriormente era más extenso y hoy en día se ha reducido considerablemente. Todo esto muestra que el problema no es reciente, sino que forma parte de un proceso que se ha intensificado a lo largo del tiempo durante cinco décadas.</p>
-                    </Accordion>
-                </div>
-            </section>
+            <MapaInteractivoStory />
 
             {/* ── LA IMPORTANCIA DE LA COMUNIDAD ───────────────────────────────── */}
             <section
