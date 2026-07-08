@@ -53,22 +53,19 @@ export const usoShape: Record<Uso, MarkerShape> = {
 
 export const LABELS: { key: keyof RepdaEntry; label: string }[] = [
   { key: "titular", label: "Titular" },
-  { key: "registro", label: "Registro" },
+  { key: "titulo", label: "Título" },
   { key: "uso", label: "Uso" },
-  { key: "cuenca", label: "Cuenca" },
-  { key: "region_hidrologica", label: "Región hidrológica" },
-  { key: "autoridad_emisora", label: "Autoridad emisora" },
+  { key: "tipo", label: "Tipo" },
+  { key: "volumen_m3_dia_limpio", label: "Vol. diario (m³/día)" },
+  { key: "volumen_m3_anio_limpio", label: "Vol. anual (m³/año)" },
   { key: "fecha_registro", label: "Fecha de registro" },
-  { key: "volumen_extraccion_m3_anio", label: "Vol. extracción (m³/año)" },
-  { key: "volumen_superficiales_m3_anio", label: "Vol. superficial (m³/año)" },
-  { key: "volumen_subterraneas_m3_anio", label: "Vol. subterráneo (m³/año)" },
-  { key: "estado_descarga", label: "Estado descarga" },
   { key: "municipio_descarga", label: "Municipio descarga" },
-  { key: "volumen_descarga_m3_dia_resultado", label: "Vol. descarga (m³/día)" },
-  { key: "cuerpo_receptor", label: "Cuerpo receptor" },
-  { key: "descarga_afluente", label: "Descarga afluente" },
+  { key: "cuenca", label: "Cuenca" },
   { key: "procedencia", label: "Procedencia" },
-  { key: "forma_descargar", label: "Forma de descargar" },
+  { key: "tipo_descarga", label: "Tipo descarga" },
+  { key: "cuerpo_receptor", label: "Cuerpo receptor" },
+  { key: "volumen_m3_anio_subterraneo", label: "Vol. subterráneo (m³/año)" },
+  { key: "region_hidrologica", label: "Región hidrológica" },
 ];
 
 // Genera el SVG para un marcador personalizado basado en la forma y color especificados, utilizado para crear los íconos de los puntos en el mapa interactivo
