@@ -96,7 +96,7 @@ export default function MapaInteractivoPage() {
                         Memoria y defensa del agua
                     </h2>
                     <p className="text-base sm:text-lg text-white/80 leading-relaxed max-w-2xl mx-auto mb-10">
-                        Un mapa comunitario para entender cómo el agua ha cambiado y cómo la comunidad ha defendido ese bien común a lo largo del tiempo.
+                        Mapas comunitarios y datos públicos para comprender cómo ha cambiado el uso del agua en el antiguo Valle de Xuchitlán y sus comunidades.
                     </p>
                     <a
                         href="#mapa"
@@ -347,14 +347,18 @@ export default function MapaInteractivoPage() {
                     <h3 className="text-base font-semibold text-gray-700 mb-4">¿Qué información tiene cada punto?</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                         {[
+                            { label: "Titular", desc: "El nombre de la persona física o empresa a quien se le otorgaron los derechos legales del agua." },
                             { label: "Título", desc: "Clave o código único que identifica el registro del pozo en el sistema de CONAGUA." },
-                            { label: "Acuífero", desc: "Lugar de donde viene el agua. Un acuífero es un depósito natural debajo de la tierra. Muchos pozos pertenecen al acuífero San Isidro." },
-                            { label: "Cuenca", desc: "Zona más grande donde circula el agua, conectando ríos, lluvias y escurrimientos." },
-                            { label: "Región hidrológica", desc: "Organización del territorio según el agua que hay en él, agrupando varias cuencas." },
                             { label: "Uso del agua", desc: "Para qué se utiliza el agua: Agrícola, Doméstico, Público urbano, Pecuario, Industrial o Servicios." },
-                            { label: "Vol. subterráneo (m³/año)", desc: "Cantidad de agua que se puede extraer en un año. A mayor número, mayor volumen extraído." },
-                            { label: "Clave de acuífero", desc: "Número que usan las instituciones para identificar el acuífero en sus sistemas internos." },
-                            { label: "Oficina central (OC)", desc: "Número administrativo interno que indica desde qué oficina se lleva el registro." },
+                            { label: "Tipo", desc: "Extracción de aguas subterráneas o descarga de aguas residuales." },
+                            { label: "Vol. diario y anual (m³/día y año)", desc: "Cantidad de agua que se puede extraer en un día y año. A mayor número, mayor volumen extraído." },
+                            { label: "Fecha registro", desc: "El día exacto en que el título quedó inscrito oficialmente en los libros del REPDA." },
+                            { label: "Municipio descarga", desc: "El municipio geográfico exacto donde se localiza el punto físico de salida del tubo o canal de desecho." },
+                            { label: "Cuenca", desc: "Zona más grande donde circula el agua, conectando ríos, lluvias y escurrimientos." },
+                            { label: "Procedencia", desc: "El origen inicial de la descarga." },
+                            { label: "Tipo descarga", desc: "La clasificación del destino del flujo: si va directo a la naturaleza o si se conecta al drenaje o alcantarillado municipal." },
+                            { label: "Cuerpo receptor", desc: "El sitio natural o artificial específico que recibe el agua residual, como un río, un lago, el subsuelo o una presa." },
+                            { label: "Región hidrológica", desc: "Organización del territorio según el agua que hay en él, agrupando varias cuencas." },
                         ].map((item, i) => (
                             <div key={item.label} className="bg-white border border-sky-200 rounded-xl p-4 shadow-sm">
                                 <span className="text-sky-400 text-xs font-bold">{String(i + 1).padStart(2, "0")}</span>
@@ -375,6 +379,7 @@ export default function MapaInteractivoPage() {
                                 { label: "Pecuario", desc: "Para animales", color: "bg-yellow-100 text-yellow-800" },
                                 { label: "Industrial", desc: "Para fábricas", color: "bg-orange-100 text-orange-800" },
                                 { label: "Servicios", desc: "Para negocios", color: "bg-purple-100 text-purple-800" },
+                                { label: "Diferentes usos", desc: "Para diversos fines", color: "bg-gray-100 text-black-800" },
                             ].map(u => (
                                 <div key={u.label} className={`flex flex-col px-3 py-2 rounded-lg ${u.color}`}>
                                     <span className="text-xs font-bold">{u.label}</span>
