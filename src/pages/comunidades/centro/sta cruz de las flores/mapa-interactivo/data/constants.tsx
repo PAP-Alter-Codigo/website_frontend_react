@@ -1,6 +1,6 @@
 import L, { DivIcon } from "leaflet";
 import React from "react";
-import type { Uso, MarkerShape, RepdaEntry } from "./types";
+import type { Uso, MarkerShape, RepdaEntry, InstruccionPaso } from "./types";
 
 export const CAPAS: { key: Uso; label: string; color: string }[] = [
   { key: "INDUSTRIAL", label: "Industrial", color: "#b45309" },
@@ -53,22 +53,18 @@ export const usoShape: Record<Uso, MarkerShape> = {
 
 export const LABELS: { key: keyof RepdaEntry; label: string }[] = [
   { key: "titular", label: "Titular" },
-  { key: "registro", label: "Registro" },
+  { key: "titulo", label: "Título" },
   { key: "uso", label: "Uso" },
-  { key: "cuenca", label: "Cuenca" },
-  { key: "region_hidrologica", label: "Región hidrológica" },
-  { key: "autoridad_emisora", label: "Autoridad emisora" },
+  { key: "tipo", label: "Tipo" },
+  { key: "volumen_m3_dia_limpio", label: "Vol. diario (m³/día)" },
+  { key: "volumen_m3_anio_limpio", label: "Vol. anual (m³/año)" },
   { key: "fecha_registro", label: "Fecha de registro" },
-  { key: "volumen_extraccion_m3_anio", label: "Vol. extracción (m³/año)" },
-  { key: "volumen_superficiales_m3_anio", label: "Vol. superficial (m³/año)" },
-  { key: "volumen_subterraneas_m3_anio", label: "Vol. subterráneo (m³/año)" },
-  { key: "estado_descarga", label: "Estado descarga" },
   { key: "municipio_descarga", label: "Municipio descarga" },
-  { key: "volumen_descarga_m3_dia_resultado", label: "Vol. descarga (m³/día)" },
-  { key: "cuerpo_receptor", label: "Cuerpo receptor" },
-  { key: "descarga_afluente", label: "Descarga afluente" },
+  { key: "cuenca", label: "Cuenca" },
   { key: "procedencia", label: "Procedencia" },
-  { key: "forma_descargar", label: "Forma de descargar" },
+  { key: "tipo_descarga", label: "Tipo descarga" },
+  { key: "cuerpo_receptor", label: "Cuerpo receptor" },
+  { key: "region_hidrologica", label: "Región hidrológica" },
 ];
 
 // Genera el SVG para un marcador personalizado basado en la forma y color especificados, utilizado para crear los íconos de los puntos en el mapa interactivo
@@ -104,13 +100,13 @@ function shapeToSVG(shape: MarkerShape, color: string, size = 18): string {
 }
 
 // Genera un ícono de marcador personalizado para Leaflet utilizando la forma y color especificados
-export function makeDivIcon(color: string, shape: MarkerShape): DivIcon {
-  const svg = shapeToSVG(shape, color, 18);
+export function makeDivIcon(color: string, shape: MarkerShape, size: number = 18): DivIcon {
+  const svg = shapeToSVG(shape, color, size);
   return L.divIcon({
     className: "custom-marker",
     html: `<div style="filter:drop-shadow(0 1px 3px rgba(0,0,0,0.45));line-height:0;">${svg}</div>`,
-    iconSize: [18, 18],
-    iconAnchor: [9, 9],
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2],
   });
 }
 
@@ -123,3 +119,22 @@ export const LeyendaDot = React.memo(function LeyendaDot({ color, shape }: { col
     />
   );
 });
+
+export const DEFAULT_INSTRUCCIONES: InstruccionPaso[] = [
+  {
+    numero: "1.",
+    titulo: "Seleccionar capas",
+    descripcion: "En la esquina superior izquierda del mapa, usa el icono de capas para elegir entre \"Visualizar todas al mismo tiempo\" o cualquiera de las capas disponibles:",
+    items: ["Extracción de agua subterránea", "Descargas de aguas residuales", "1991"],
+  },
+  {
+    numero: "2.",
+    titulo: "Filtrar por uso",
+    descripcion: "En la parte superior del mapa, usa los botones para filtrar por tipo de uso. Pasa el cursor sobre cada botón para ver una breve explicación.",
+  },
+  {
+    numero: "3.",
+    titulo: "Ver detalle",
+    descripcion: "Haz clic en un punto del mapa para ver aquí su información detallada, como fecha de registro, volumen de extracción (m³ al año o día), municipio, cuerpo receptor y más.",
+  },
+];

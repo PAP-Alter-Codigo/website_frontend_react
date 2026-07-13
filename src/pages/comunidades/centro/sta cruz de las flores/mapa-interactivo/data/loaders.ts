@@ -1,6 +1,6 @@
 import L from "leaflet";
-import type { Punto, Uso, RepdaEntry, CapasEstructura } from "./types";
-import { colorByUso, usoShape, makeDivIcon } from "./constants";
+import type { Punto, Uso, RepdaEntry, CapasEstructura, DatasetConfig, MarkerShape } from "./types";
+import { colorByUso, usoShape, makeDivIcon, POZO_SOURCE_LAYER_MAP } from "./constants";
 
 let repdaCache: Record<string, RepdaEntry> | null = null;
 
@@ -33,168 +33,196 @@ async function loadRepda(): Promise<Record<string, RepdaEntry>> {
   return repdaCache;
 }
 
+export const DEFAULT_DATASETS: DatasetConfig[] = [
+  {
+    key: "Descargas de aguas residuales",
+    url: `${DATA_BASE_PATH}/geojson/tlajomulco-aguas-subterraneas.geojson`,
+    filterType: "uso",
+    kind: "puntos",
+  },
+  {
+    key: "Extracción de agua subterránea",
+    url: `${DATA_BASE_PATH}/geojson/santa-cruz-aguas-subterraneas.geojson`,
+    filterType: "uso",
+    kind: "puntos",
+  },
+  {
+    key: "1991",
+    url: `${DATA_BASE_PATH}/geojson/pozos-domestico-domo-riego.geojson`,
+    filterType: "pozo",
+    kind: "puntos",
+    pozoSourceLayerMap: POZO_SOURCE_LAYER_MAP,
+  },
+  {
+    key: "Humedal 2020",
+    url: `${DATA_BASE_PATH}/geojson/humedal.geojson`,
+    filterType: "uso",
+    kind: "poligono",
+  },
+];
+
+function parseVolumen(raw?: string): number | undefined {
+  if (!raw) return undefined;
+  const value = parseFloat(raw.replace(/,/g, ""));
+  return Number.isNaN(value) ? undefined : value;
+}
 
 // Inicializa los datos del mapa cargando los archivos GeoJSON y el REPDA, y construyendo la lista de puntos y la geometría del humedal para su visualización en el mapa interactivo
-export async function initializeMapData(pozoMap: Record<string, Uso>): Promise<{
+export async function initializeMapData(
+  datasets: DatasetConfig[] = DEFAULT_DATASETS,
+  usoFiltroExacto?: Uso[],
+  options?: {
+    tamanoPorVolumen?: boolean;
+    shapePorCapa?: Record<string, MarkerShape>;
+    minIconSize?: number;
+    maxIconSize?: number;
+  }
+): Promise<{
   capas: CapasEstructura;
   puntos: Punto[];
   humedal: [number, number][];
 }> {
-  // Fetch GeoJSON files from public/data/geojson/
-  const [humedalGeo, aguaGeoTlajomulco, aguaGeoStaCruz, pozosGeo] = await Promise.all([
-    fetch(`${DATA_BASE_PATH}/geojson/humedal.geojson`).then(r => r.json()),
-    fetch(`${DATA_BASE_PATH}/geojson/tlajomulco-aguas-subterraneas.geojson`).then(r => r.json()),
-    fetch(`${DATA_BASE_PATH}/geojson/santa-cruz-aguas-subterraneas.geojson`).then(r => r.json()),
-    fetch(`${DATA_BASE_PATH}/geojson/pozos-domestico-domo-riego.geojson`).then(r => r.json()),
-  ]);
+  // Carga los archivos GeoJSON en paralelo
+  const geojsons = await Promise.all(
+    datasets.map(d => fetch(d.url).then(r => r.json()))
+  );
 
   const repda = await loadRepda();
 
-  // Construye la geometría del humedal a partir del archivo GeoJSON correspondiente
-  const humedalFeature = humedalGeo.features[0];
-  const humedal: [number, number][] = humedalFeature
-    ? ((humedalFeature.geometry.coordinates as number[][][])[0] || []).map(([lng, lat]) => [lat, lng] as [number, number])
-    : [];
+  const capas: CapasEstructura = {};
+  let humedal: [number, number][] = [];
+  const puntos: Punto[] = [];
 
-  const capas: CapasEstructura = {
-    "Mapa de concesiones de descarga de aguas residuales": {
+  // Inicializa capas
+  datasets.forEach((d) => {
+    capas[d.key] = {
       layerGroup: L.layerGroup(),
       puntos: [],
       usos: new Set<Uso>(),
-      filterType: "uso"
-    },
-    "Mapa de concesiones de extracción de agua subterránea": {
-      layerGroup: L.layerGroup(),
-      puntos: [],
-      usos: new Set<Uso>(),
-      filterType: "uso"
-    },
-    "Mapa comunitario de 1991": {
-      layerGroup: L.layerGroup(),
-      puntos: [],
-      usos: new Set<Uso>(),
-      filterType: "pozo"
-    },
-    "Humedal 2020": {
-      layerGroup: L.layerGroup(),
-      puntos: [],
-      usos: new Set<Uso>(),
-      filterType: "uso"
+      filterType: d.filterType,
+    };
+  });
+
+  // Procesa cada dataset
+  datasets.forEach((dataset, index) => {
+    const geojson = geojsons[index];
+
+    if (dataset.kind === "poligono") {
+      const feature = geojson.features?.[0];
+      const coords: [number, number][] = feature
+        ? ((feature.geometry.coordinates as number[][][])[0] || []).map(
+          ([lng, lat]) => [lat, lng] as [number, number]
+        )
+        : [];
+      if (coords.length > 0) {
+        humedal = coords;
+        const polygon = L.polygon(coords, {
+          color: "#0ea5e9",
+          fillColor: "#7dd3fc",
+          fillOpacity: 0.35,
+          weight: 2,
+        });
+        polygon.bindPopup(`
+          <div class="text-center min-w-[120px]">
+            <p class="font-bold text-base">${dataset.key}</p>
+            <p class="text-xs text-gray-500 mt-1">
+              Área de humedal documentada en 2020
+            </p>
+          </div>
+        `);
+        capas[dataset.key].layerGroup.addLayer(polygon);
+      }
+    } else if (dataset.kind === "puntos") {
+      // Primera pasada: recolectar, filtrar y parsear los puntos candidatos
+      interface Candidate {
+        feature: any;
+        coords: number[];
+        uso: Uso;
+        repdaEntry: RepdaEntry | null;
+        volumenM3Anio?: number;
+      }
+      const candidates: Candidate[] = [];
+
+      (geojson.features || []).forEach((f: any) => {
+        const coords = f.geometry.coordinates as number[];
+        const repdaEntry = repda[f.properties.Name] ?? null;
+
+        let uso: Uso;
+        if (dataset.pozoSourceLayerMap) {
+          uso = (dataset.pozoSourceLayerMap[f.properties.source_layer] || "POZOS RIEGO") as Uso;
+        } else {
+          uso = (repdaEntry?.uso ?? "SERVICIOS") as Uso;
+        }
+
+        // Filtro exacto por uso si se proporciona
+        if (usoFiltroExacto && !usoFiltroExacto.includes(uso)) {
+          return;
+        }
+
+        const volumenM3Anio = repdaEntry ? parseVolumen(repdaEntry.volumen_m3_anio_limpio) : undefined;
+
+        candidates.push({
+          feature: f,
+          coords,
+          uso,
+          repdaEntry,
+          volumenM3Anio,
+        });
+      });
+
+      // Calcular el volumen máximo para el dataset si se solicita escalado de tamaño
+      let maxVol: number | undefined;
+      if (options?.tamanoPorVolumen) {
+        const volumes = candidates
+          .map(c => c.volumenM3Anio)
+          .filter((v): v is number => v !== undefined);
+        if (volumes.length > 0) {
+          maxVol = Math.max(...volumes);
+        }
+      }
+
+      // Segunda pasada: crear marcadores/íconos y registrar puntos
+      candidates.forEach(({ feature, coords, uso, repdaEntry, volumenM3Anio }) => {
+        // Resolver forma
+        const shape = options?.shapePorCapa?.[dataset.key] ?? usoShape[uso] ?? "circle";
+
+        // Resolver tamaño
+        let size = 18;
+        if (options?.tamanoPorVolumen && volumenM3Anio !== undefined && maxVol !== undefined && maxVol > 0) {
+          size = Math.round(11 + Math.sqrt(volumenM3Anio / maxVol) * 31);
+        }
+
+        const color = colorByUso[uso] ?? "#6b7280";
+        const marker = L.marker([coords[1], coords[0]], {
+          icon: makeDivIcon(color, shape, size),
+        });
+
+        marker.bindPopup(`
+          <div class="text-center min-w-[120px]">
+            <p class="font-bold text-sm">${feature.properties.Name}</p>
+            <p class="text-xs text-gray-500 mt-1">${uso}</p>
+            <p class="text-xs text-blue-600 mt-1 cursor-pointer">Ver detalle →</p>
+          </div>
+        `);
+
+        const punto: Punto = {
+          name: feature.properties.Name,
+          lat: coords[1],
+          lng: coords[0],
+          uso,
+          repda: repdaEntry,
+          marker,
+          capaKey: dataset.key,
+          volumenM3Anio,
+        };
+
+        capas[dataset.key].puntos.push(punto);
+        capas[dataset.key].usos.add(uso);
+        capas[dataset.key].layerGroup.addLayer(marker);
+        puntos.push(punto);
+      });
     }
-  };
-
-  // 1. Aguas subterráneas Tlajomulco (Mapa de concesiones de descarga de aguas residuales)
-  const tlajomulcoPuntos: Punto[] = (aguaGeoTlajomulco.features || []).map((f: any) => {
-    const coords = f.geometry.coordinates as number[];
-    const repdaEntry = repda[f.properties.Name] ?? null;
-    const uso = (repdaEntry?.uso ?? "SERVICIOS") as Uso;
-    const marker = L.marker([coords[1], coords[0]], {
-      icon: makeDivIcon(colorByUso[uso] ?? "#6b7280", usoShape[uso] ?? "circle")
-    });
-    marker.bindPopup(`
-      <div class="text-center min-w-[120px]">
-        <p class="font-bold text-sm">${f.properties.Name}</p>
-        <p class="text-xs text-gray-500 mt-1">${uso}</p>
-        <p class="text-xs text-blue-600 mt-1 cursor-pointer">Ver detalle →</p>
-      </div>
-    `);
-
-    const punto: Punto = {
-      name: f.properties.Name,
-      lat: coords[1],
-      lng: coords[0],
-      uso,
-      repda: repdaEntry,
-      marker
-    };
-
-    capas["Mapa de concesiones de descarga de aguas residuales"].puntos.push(punto);
-    capas["Mapa de concesiones de descarga de aguas residuales"].usos.add(uso);
-    capas["Mapa de concesiones de descarga de aguas residuales"].layerGroup.addLayer(marker);
-    return punto;
   });
-
-  // 2. Aguas subterráneas Santa Cruz (Mapa de concesiones de extracción de agua subterránea)
-  const santaCruzPuntos: Punto[] = (aguaGeoStaCruz.features || []).map((f: any) => {
-    const coords = f.geometry.coordinates as number[];
-    const repdaEntry = repda[f.properties.Name] ?? null;
-    const uso = (repdaEntry?.uso ?? "SERVICIOS") as Uso;
-    const marker = L.marker([coords[1], coords[0]], {
-      icon: makeDivIcon(colorByUso[uso] ?? "#6b7280", usoShape[uso] ?? "circle")
-    });
-    marker.bindPopup(`
-      <div class="text-center min-w-[120px]">
-        <p class="font-bold text-sm">${f.properties.Name}</p>
-        <p class="text-xs text-gray-500 mt-1">${uso}</p>
-        <p class="text-xs text-blue-600 mt-1 cursor-pointer">Ver detalle →</p>
-      </div>
-    `);
-
-    const punto: Punto = {
-      name: f.properties.Name,
-      lat: coords[1],
-      lng: coords[0],
-      uso,
-      repda: repdaEntry,
-      marker
-    };
-
-    capas["Mapa de concesiones de extracción de agua subterránea"].puntos.push(punto);
-    capas["Mapa de concesiones de extracción de agua subterránea"].usos.add(uso);
-    capas["Mapa de concesiones de extracción de agua subterránea"].layerGroup.addLayer(marker);
-    return punto;
-  });
-
-  // 3. Pozos (Riego, Domo, Doméstico) [Mapa comunitario de 1991]
-  const pozosPuntos: Punto[] = (pozosGeo.features || []).map((f: any) => {
-    const coords = f.geometry.coordinates as number[];
-    const pozoUso = pozoMap[f.properties.source_layer] || "POZOS RIEGO";
-    const marker = L.marker([coords[1], coords[0]], {
-      icon: makeDivIcon(colorByUso[pozoUso] ?? "#6b7280", usoShape[pozoUso] ?? "square")
-    });
-    marker.bindPopup(`
-      <div class="text-center min-w-[120px]">
-        <p class="font-bold text-sm">${f.properties.Name}</p>
-        <p class="text-xs text-gray-500 mt-1">${pozoUso}</p>
-        <p class="text-xs text-blue-600 mt-1 cursor-pointer">Ver detalle →</p>
-      </div>
-    `);
-
-    const punto: Punto = {
-      name: f.properties.Name,
-      lat: coords[1],
-      lng: coords[0],
-      uso: pozoUso,
-      repda: null,
-      marker
-    };
-
-    capas["Mapa comunitario de 1991"].puntos.push(punto);
-    capas["Mapa comunitario de 1991"].usos.add(pozoUso);
-    capas["Mapa comunitario de 1991"].layerGroup.addLayer(marker);
-    return punto;
-  });
-
-  // 4. Humedal 2020
-  if (humedal.length > 0) {
-    const polygon = L.polygon(humedal, {
-      color: "#0ea5e9",
-      fillColor: "#7dd3fc",
-      fillOpacity: 0.35,
-      weight: 2,
-    });
-    polygon.bindPopup(`
-      <div class="text-center min-w-[120px]">
-        <p class="font-bold text-base">Humedal 2020</p>
-        <p class="text-xs text-gray-500 mt-1">
-          Área de humedal documentada en 2020
-        </p>
-      </div>
-    `);
-    capas["Humedal 2020"].layerGroup.addLayer(polygon);
-  }
-
-  const puntos = [...tlajomulcoPuntos, ...santaCruzPuntos, ...pozosPuntos];
 
   return { capas, puntos, humedal };
 }

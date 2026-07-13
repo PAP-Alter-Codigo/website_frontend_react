@@ -3,35 +3,56 @@ import L from "leaflet";
 import { useEffect, useMemo, useState, useRef } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 
-import { initializeMapData, getRepdaForPunto } from "./data/loaders";
-import { CAPAS, POZO_SOURCE_LAYER_MAP, TOOLTIPS, usoShape, LABELS, colorByUso, LeyendaDot } from "./data/constants.tsx";
-import type { Punto, Uso, CapasEstructura } from "./data/types";
+import { initializeMapData, getRepdaForPunto, DEFAULT_DATASETS } from "./data/loaders";
+import { CAPAS, TOOLTIPS, usoShape, LABELS, colorByUso, LeyendaDot, DEFAULT_INSTRUCCIONES } from "./data/constants.tsx";
+import type { Punto, Uso, CapasEstructura, DatasetConfig, MarkerShape, InstruccionPaso } from "./data/types";
 
 // ─── Componente para mostrar el detalle de un punto seleccionado, incluyendo su información REPDA si está disponible ───────────────────────
 function DetallePunto({
     punto,
     onClose,
+    instrucciones,
 }: {
     punto: Punto | null;
     onClose: () => void;
+    instrucciones?: InstruccionPaso[];
 }) {
     if (!punto) {
         return (
-            <div className="flex flex-col items-center justify-center h-full text-gray-400 gap-3 px-6 text-center">
+            <div className="flex flex-col items-center justify-start h-full text-gray-500 gap-4 px-6 py-6 sm:px-8 sm:py-8 text-center overflow-y-auto">
+                {/*Instrucciones de uso del mapa para el usuario*/}
                 <svg
-                    width="40"
-                    height="40"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                     strokeWidth={1.5}
+                    className="text-sky-600 flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10"
                 >
                     <circle cx="12" cy="12" r="9" />
                     <path strokeLinecap="round" d="M12 8v4m0 4h.01" />
                 </svg>
-                <p className="text-sm">
-                    Haz clic en un punto del mapa para ver su detalle.
-                </p>
+                <h3 className="text-xs sm:text-sm font-bold text-gray-700 uppercase tracking-wider">
+                    Instrucciones de uso
+                </h3>
+                <div className="text-[11px] sm:text-xs text-gray-600 text-left space-y-4 sm:space-y-6 w-full">
+                    {(instrucciones ?? DEFAULT_INSTRUCCIONES).map((paso) => (
+                        <div key={paso.numero}>
+                            <p className="font-semibold text-gray-700 mb-1 flex items-center gap-1.5 text-xs sm:text-sm">
+                                <span className="text-sky-600 font-bold">{paso.numero}</span> {paso.titulo}
+                            </p>
+                            <p className="text-gray-500 leading-relaxed">
+                                {paso.descripcion}
+                            </p>
+                            {paso.items && paso.items.length > 0 && (
+                                <ul className="list-disc list-inside pl-3 mt-1 text-gray-500 space-y-0.5">
+                                    {paso.items.map((item, idx) => (
+                                        <li key={idx}>{item}</li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    ))}
+                </div>
             </div>
         );
     }
@@ -42,7 +63,7 @@ function DetallePunto({
         <div className="flex flex-col h-full overflow-y-auto">
             {/* Header */}
             <div
-                className="flex items-center justify-between px-4 py-3 text-white"
+                className="flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 text-white"
                 style={{ backgroundColor: color }}
             >
                 <div>
@@ -51,10 +72,10 @@ function DetallePunto({
                 </div>
                 <button
                     onClick={onClose}
-                    className="ml-2 rounded-full p-1 hover:bg-white/20 transition"
+                    className="ml-2 rounded-full p-1.5 sm:p-2 hover:bg-white/20 transition flex items-center justify-center"
                     aria-label="Cerrar detalle"
                 >
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 16 16" fill="currentColor">
                         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                     </svg>
                 </button>
@@ -64,7 +85,7 @@ function DetallePunto({
             {punto.repda ? (
                 <dl className="divide-y divide-gray-100 text-sm">
                     {LABELS.map(({ key, label }) => (
-                        <div key={key} className="flex flex-col px-4 py-2">
+                        <div key={key} className="flex flex-col px-4 sm:px-6 py-2.5 sm:py-3.5">
                             <dt className="text-xs text-gray-500 font-medium">{label}</dt>
                             <dd className="text-gray-800 font-semibold mt-0.5">
                                 {punto.repda![key] || "—"}
@@ -73,7 +94,7 @@ function DetallePunto({
                     ))}
                 </dl>
             ) : (
-                <div className="px-4 py-6 text-center text-sm text-gray-500">
+                <div className="px-4 sm:px-6 py-6 sm:py-10 text-center text-sm text-gray-500">
                     Este punto no tiene datos en el registro REPDA.
                 </div>
             )}
@@ -92,21 +113,33 @@ function CapasControl({
     capas,
     setCapasActivas,
     setFiltroUso,
+    datasets,
 }: {
     capas: CapasEstructura;
     setCapasActivas: React.Dispatch<React.SetStateAction<Set<string>>>;
     setFiltroUso: React.Dispatch<React.SetStateAction<"all" | Uso>>;
+    datasets: DatasetConfig[];
 }) {
     const map = useMap();
+    const isSyncingRef = useRef(false);
 
     useEffect(() => {
         if (!map || !capas) return;
+
+        const ALL_TOGGLE_NAME = "Visualizar todas al mismo tiempo";
+        const TARGET_LAYERS = datasets.filter((d) => d.kind === "puntos").map((d) => d.key);
+
+        const allLayersDummy = L.layerGroup();
 
         // Inicializamos el control de capas de Leaflet en la posición superior izquierda
         const controlLayers = L.control.layers(undefined, undefined, {
             position: "topleft",
             collapsed: true,
         });
+
+        // Agregamos primero el toggle general
+        allLayersDummy.addTo(map);
+        controlLayers.addOverlay(allLayersDummy, ALL_TOGGLE_NAME);
 
         // Agregamos cada capa al mapa y las registramos en el control como overlay por defecto
         Object.entries(capas).forEach(([name, capa]) => {
@@ -116,8 +149,10 @@ function CapasControl({
 
         controlLayers.addTo(map);
 
-        // Al iniciar, todas las capas están activadas
-        setCapasActivas(new Set(Object.keys(capas)));
+        // Al iniciar, todas las capas están activadas + el toggle general
+        const initialCapas = new Set(Object.keys(capas));
+        initialCapas.add(ALL_TOGGLE_NAME);
+        setCapasActivas(initialCapas);
 
         // Eventos para actualizar la visibilidad en React al marcar/desmarcar en el control de Leaflet
         const handleOverlayAdd = (e: L.LayersControlEvent) => {
@@ -126,6 +161,35 @@ function CapasControl({
                 next.add(e.name);
                 return next;
             });
+
+            if (isSyncingRef.current) return;
+
+            // Deferimos la sincronización con setTimeout para permitir que Leaflet termine
+            // de procesar el evento de click (desactivando internally su bandera _handlingClick).
+            setTimeout(() => {
+                if (isSyncingRef.current) return;
+                isSyncingRef.current = true;
+                try {
+                    if (e.name === ALL_TOGGLE_NAME) {
+                        TARGET_LAYERS.forEach((name) => {
+                            const capa = capas[name];
+                            if (capa && !map.hasLayer(capa.layerGroup)) {
+                                map.addLayer(capa.layerGroup);
+                            }
+                        });
+                    } else if (TARGET_LAYERS.includes(e.name)) {
+                        const allActive = TARGET_LAYERS.every((name) => {
+                            const capa = capas[name];
+                            return capa && map.hasLayer(capa.layerGroup);
+                        });
+                        if (allActive && !map.hasLayer(allLayersDummy)) {
+                            map.addLayer(allLayersDummy);
+                        }
+                    }
+                } finally {
+                    isSyncingRef.current = false;
+                }
+            }, 0);
         };
 
         const handleOverlayRemove = (e: L.LayersControlEvent) => {
@@ -134,6 +198,31 @@ function CapasControl({
                 next.delete(e.name);
                 return next;
             });
+
+            if (isSyncingRef.current) return;
+
+            // Deferimos la sincronización con setTimeout para permitir que Leaflet termine
+            // de procesar el evento de click (desactivando internally su bandera _handlingClick).
+            setTimeout(() => {
+                if (isSyncingRef.current) return;
+                isSyncingRef.current = true;
+                try {
+                    if (e.name === ALL_TOGGLE_NAME) {
+                        TARGET_LAYERS.forEach((name) => {
+                            const capa = capas[name];
+                            if (capa && map.hasLayer(capa.layerGroup)) {
+                                map.removeLayer(capa.layerGroup);
+                            }
+                        });
+                    } else if (TARGET_LAYERS.includes(e.name)) {
+                        if (map.hasLayer(allLayersDummy)) {
+                            map.removeLayer(allLayersDummy);
+                        }
+                    }
+                } finally {
+                    isSyncingRef.current = false;
+                }
+            }, 0);
         };
 
         map.on("overlayadd", handleOverlayAdd);
@@ -141,13 +230,16 @@ function CapasControl({
 
         return () => {
             controlLayers.remove();
+            if (map.hasLayer(allLayersDummy)) {
+                map.removeLayer(allLayersDummy);
+            }
             Object.values(capas).forEach((capa) => {
                 capa.layerGroup.remove();
             });
             map.off("overlayadd", handleOverlayAdd);
             map.off("overlayremove", handleOverlayRemove);
         };
-    }, [map, capas, setCapasActivas, setFiltroUso]);
+    }, [map, capas, setCapasActivas, setFiltroUso, datasets]);
 
     return null;
 }
@@ -217,7 +309,33 @@ function FilterButtons({
 
 // ─── Componente principal ─────────────────────────────────────────────────────
 
-export default function MapaInteractivoHumedalAguasSub() {
+export interface MapaInteractivoProps {
+    datasets?: DatasetConfig[];                    // por defecto: DEFAULT_DATASETS de loaders.ts
+    usoFiltroExacto?: Uso[];                        // por defecto: undefined (sin filtrado, comportamiento original)
+    showFiltros?: boolean;                          // por defecto: true (muestra los filtros)
+    tamanoPorVolumen?: boolean;                     // por defecto: false (iconos fijos de 18px, comportamiento original)
+    shapePorCapa?: Record<string, MarkerShape>;     // por defecto: undefined (usa usoShape por defecto)
+    minIconSize?: number;                           // por defecto: 12
+    maxIconSize?: number;                           // por defecto: 30
+    center?: [number, number];                      // por defecto: [20.476, -103.506] (valor original)
+    zoom?: number;                                  // por defecto: 12 (valor original)
+    lazy?: boolean;                                 // por defecto: false (se monta inmediatamente, comportamiento original)
+    instrucciones?: InstruccionPaso[];              // instrucciones personalizadas para la vista de ayuda
+}
+
+export default function MapaInteractivoHumedalAguasSub({
+    datasets = DEFAULT_DATASETS,
+    usoFiltroExacto,
+    showFiltros = true,
+    tamanoPorVolumen = false,
+    shapePorCapa,
+    minIconSize = 12,
+    maxIconSize = 42,
+    center = [20.476, -103.506],
+    zoom = 12,
+    lazy = false,
+    instrucciones,
+}: MapaInteractivoProps = {}) {
     const [capas, setCapas] = useState<CapasEstructura | null>(null);
     const [, setPuntos] = useState<Punto[]>([]);
     const [, setHumedal] = useState<[number, number][]>([]);
@@ -229,16 +347,50 @@ export default function MapaInteractivoHumedalAguasSub() {
     const [filtroUso, setFiltroUso] = useState<"all" | Uso>("all");
     const [selectedPunto, setSelectedPunto] = useState<Punto | null>(null);
 
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [shouldRender, setShouldRender] = useState(!lazy);
+
+    // Configura IntersectionObserver para carga diferida (lazy load) si está activado
+    // Esto ayuda a que el mapa se cargue cuando el usuario hace scroll hasta el mapa
+    useEffect(() => {
+        if (!lazy) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    setShouldRender(true);
+                    observer.disconnect();
+                }
+            },
+            { rootMargin: "300px 0px", threshold: 0 }
+        );
+
+        if (containerRef.current) {
+            observer.observe(containerRef.current);
+        }
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [lazy]);
+
     // Carga inicial de datos desde los GeoJSONs y REPDA metadata
     useEffect(() => {
-        initializeMapData(POZO_SOURCE_LAYER_MAP).then(({ capas, puntos, humedal }) => {
+        if (!shouldRender) return;
+
+        initializeMapData(datasets, usoFiltroExacto, {
+            tamanoPorVolumen,
+            shapePorCapa,
+            minIconSize,
+            maxIconSize
+        }).then(({ capas, puntos, humedal }) => {
             setCapas(capas);
             setPuntos(puntos);
             setHumedal(humedal);
         }).catch((err) => {
             console.error("Error loading map data:", err);
         });
-    }, []);
+    }, [shouldRender, datasets, usoFiltroExacto, tamanoPorVolumen, shapePorCapa, minIconSize, maxIconSize]);
 
     // Calcula la unión de usos/filtros disponibles basados en las capas seleccionadas actualmente
     const filtrosDisponibles = useMemo(() => {
@@ -328,7 +480,8 @@ export default function MapaInteractivoHumedalAguasSub() {
         if (!capas) return;
 
         Object.entries(capas).forEach(([name, capa]) => {
-            if (name === "Humedal 2020") return;
+            const datasetConfig = datasets.find(d => d.key === name);
+            if (datasetConfig && datasetConfig.kind !== "puntos") return;
 
             capa.layerGroup.clearLayers();
             capa.puntos.forEach((punto) => {
@@ -339,56 +492,66 @@ export default function MapaInteractivoHumedalAguasSub() {
                 }
             });
         });
-    }, [capas, filtroUso]);
+    }, [capas, filtroUso, datasets]);
 
     return (
-        <section className="w-full">
+        <section ref={containerRef} className="w-full">
             <div className="bg-white rounded-xl shadow-lg">
 
                 {/* Filtros Dinámicos */}
-                <div className="p-4 border-b bg-gray-50">
-                    <FilterButtons
-                        filtrosDisponibles={filtrosDisponibles}
-                        filtroUso={filtroUso}
-                        setFiltroUso={setFiltroUso}
-                        conteoUso={conteoUso}
-                        totalPuntosActivos={puntosActivos.length}
-                    />
-                </div>
+                {showFiltros && (
+                    <div className="p-4 border-b bg-gray-50">
+                        <FilterButtons
+                            filtrosDisponibles={filtrosDisponibles}
+                            filtroUso={filtroUso}
+                            setFiltroUso={setFiltroUso}
+                            conteoUso={conteoUso}
+                            totalPuntosActivos={puntosActivos.length}
+                        />
+                    </div>
+                )}
 
                 {/* Cuerpo: mapa + panel */}
-                <div className="flex" style={{ height: "560px" }}>
+                <div className="flex flex-col md:flex-row md:h-[560px]">
 
                     {/* Mapa — 70% */}
-                    <div className="flex-7 min-w-0">
-                        <MapContainer
-                            center={[20.476, -103.506]}
-                            zoom={11}
-                            scrollWheelZoom={true}
-                            className="h-full w-full"
-                        >
-                            <TileLayer
-                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                attribution="&copy; OpenStreetMap contributors"
-                                maxZoom={18}
-                            />
-
-                            {/* Control de Capas y Capas de Leaflet */}
-                            {capas && (
-                                <CapasControl
-                                    capas={capas}
-                                    setCapasActivas={setCapasActivas}
-                                    setFiltroUso={setFiltroUso}
+                    <div className="w-full md:w-[70%] h-[400px] md:h-full min-w-0">
+                        {shouldRender ? (
+                            <MapContainer
+                                center={center}
+                                zoom={zoom}
+                                scrollWheelZoom={true}
+                                className="h-full w-full"
+                            >
+                                <TileLayer
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                    attribution="&copy; OpenStreetMap contributors"
+                                    maxZoom={18}
                                 />
-                            )}
-                        </MapContainer>
+
+                                {/* Control de Capas y Capas de Leaflet */}
+                                {capas && (
+                                    <CapasControl
+                                        capas={capas}
+                                        setCapasActivas={setCapasActivas}
+                                        setFiltroUso={setFiltroUso}
+                                        datasets={datasets}
+                                    />
+                                )}
+                            </MapContainer>
+                        ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-500 font-medium text-sm">
+                                Cargando mapa...
+                            </div>
+                        )}
                     </div>
 
                     {/* Panel de detalle — 30% */}
-                    <div className="flex-3 border-l border-gray-200 bg-white min-w-0 overflow-hidden">
+                    <div className="w-full md:w-[30%] h-[380px] md:h-full border-t md:border-t-0 md:border-l border-gray-200 bg-white min-w-0 overflow-hidden">
                         <DetallePunto
                             punto={selectedPunto}
                             onClose={() => setSelectedPunto(null)}
+                            instrucciones={instrucciones}
                         />
                     </div>
                 </div>

@@ -2,44 +2,19 @@ import type L from "leaflet";
 
 export type RepdaEntry = {
   titular?: string;
-  registro?: string;
+  titulo?: string;
   uso?: string;
-  autoridad_emisora?: string;
+  tipo?: string;
+  volumen_m3_dia_limpio?: string;
+  volumen_m3_anio_limpio?: string;
   fecha_registro?: string;
-  volumen_extraccion_m3_anio?: string;
-  anexos_superficiales?: string;
-  volumen_superficiales_m3_anio?: string;
-  anexos_subterraneas?: string;
-  volumen_subterraneas_m3_anio?: string;
-  numero_anexos_descarga?: string;
-  volumen_descarga_m3_dia_resultado?: string;
-  anexos_zonas_federales?: string;
-  superficie_m2?: string;
-  record_key?: string;
-  detalle_href?: string;
-  numero_descarga?: string;
-  lat_grados?: string;
-  lat_minutos?: string;
-  lat_segundos?: string;
-  latitud?: string;
-  lon_grados?: string;
-  lon_minutos?: string;
-  lon_segundos?: string;
-  longitud?: string;
-  estado_descarga?: string;
   municipio_descarga?: string;
-  region_hidrologica?: string;
   cuenca?: string;
-  cuerpo_receptor?: string;
-  descarga_afluente?: string;
   procedencia?: string;
-  forma_descargar?: string;
   tipo_descarga?: string;
-  volumen_descarga_m3_dia_detalle?: string;
-  volumen_descarga_m3_anio_detalle?: string;
-  pagina_resultados?: string;
-  indice_pagina?: string;
-  error?: string;
+  cuerpo_receptor?: string;
+  volumen_m3_anio_subterraneo?: string;
+  region_hidrologica?: string;
 };
 
 
@@ -55,6 +30,14 @@ export type Uso =
   | "POZOS DOMO"
   | "POZOS DOMESTICO";
 
+export interface DatasetConfig {
+  key: string;                    // clave única; también el nombre de la capa que se muestra en el control de capas de Leaflet
+  url: string;                    // ruta al archivo geojson
+  filterType: "uso" | "pozo";     // mismo significado que el filterType de CapasEstructura actual
+  kind: "puntos" | "poligono";    // "puntos" crea marcadores; "poligono" crea un polígono (humedal)
+  pozoSourceLayerMap?: Record<string, Uso>; // solo para conjuntos de datos tipo pozo sin entradas REPDA
+}
+
 export type Punto = {
   name: string;
   lat: number;
@@ -62,6 +45,8 @@ export type Punto = {
   uso: Uso;
   repda: RepdaEntry | null;
   marker?: L.Marker;
+  capaKey?: string;         // de qué conjunto de datos/capa proviene este punto (para la búsqueda de forma por capa)
+  volumenM3Anio?: number;   // parsed de repda.volumen_m3_anio_limpio, utilizado para el escalado de tamaño
 };
 
 export type CapasEstructura = {
@@ -83,3 +68,11 @@ export type MarkerShape =
   | "octagon"
   | "star4"
   | "ring";
+
+export interface InstruccionPaso {
+  numero: string;
+  titulo: string;
+  descripcion: string;
+  items?: string[];
+}
+

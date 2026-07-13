@@ -101,22 +101,6 @@
     {
       "type": "Feature",
       "properties": {
-        "Name": "08JAL162270/12FQDA25",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.26458333333333,
-          20.49041666666667
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "866146",
         "styleUrl": "#m_ylw-pushpin",
         "source_layer": "REPDA Descarga",
@@ -223,22 +207,6 @@
         "coordinates": [
           -103.50801805555555,
           20.489594722222222
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "843113",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.51826444444444,
-          20.482241944444443
         ]
       }
     },
@@ -597,22 +565,6 @@
     {
       "type": "Feature",
       "properties": {
-        "Name": "JAL156968",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.28592916666666,
-          20.505711944444446
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "08JAL156825/12FMDA17",
         "styleUrl": "#m_ylw-pushpin",
         "source_layer": "REPDA Descarga",
@@ -709,86 +661,6 @@
     {
       "type": "Feature",
       "properties": {
-        "Name": "08JAL156212/12ERDA16",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.44611111111111,
-          20.461111111111112
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "08JAL156212/12ERDA16",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.44694444444445,
-          20.460277777777776
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "08JAL156212/12ERDA16",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.44555555555556,
-          20.461111111111112
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "08JAL156212/12ERDA16",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.44638888888889,
-          20.460833333333333
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "08JAL156212/12ERDA16",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.44666666666667,
-          20.460555555555555
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "08JAL155941/12EMDA16",
         "styleUrl": "#m_ylw-pushpin",
         "source_layer": "REPDA Descarga",
@@ -831,22 +703,6 @@
         "coordinates": [
           -103.56611138888888,
           20.48944611111111
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "JAL150885",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.56388916666667,
-          20.49111277777778
         ]
       }
     },
@@ -901,22 +757,6 @@
     {
       "type": "Feature",
       "properties": {
-        "Name": "JAL155408",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.3944725,
-          20.43230861111111
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "08JAL155095/12HAOC15",
         "styleUrl": "#m_ylw-pushpin",
         "source_layer": "REPDA Descarga",
@@ -927,38 +767,6 @@
         "coordinates": [
           -103.32472222222222,
           20.784722222222225
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "08JAL155095/12HAOC15",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.25083333333333,
-          20.50888888888889
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "08JAL155095/12HAOC15",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.41722222222222,
-          20.776944444444442
         ]
       }
     },
@@ -981,38 +789,6 @@
     {
       "type": "Feature",
       "properties": {
-        "Name": "08JAL155520/12HMOC14",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.31422222222221,
-          20.40636111111111
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "08JAL155520/12HMOC14",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.31755555555556,
-          20.40733333333333
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "JAL131574",
         "styleUrl": "#m_ylw-pushpin",
         "source_layer": "REPDA Descarga",
@@ -1023,22 +799,6 @@
         "coordinates": [
           -103.22555555555556,
           20.497778333333333
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "JAL131574",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.2242225,
-          20.495695
         ]
       }
     },
@@ -1125,22 +885,6 @@
     {
       "type": "Feature",
       "properties": {
-        "Name": "JAL151928",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.2307,
-          20.4845925
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "JAL154297",
         "styleUrl": "#m_ylw-pushpin",
         "source_layer": "REPDA Descarga",
@@ -1205,22 +949,6 @@
     {
       "type": "Feature",
       "properties": {
-        "Name": "08JAL153995/12FMOC13",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.4925,
-          20.48888888888889
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "08JAL153441/12IMDA12",
         "styleUrl": "#m_ylw-pushpin",
         "source_layer": "REPDA Descarga",
@@ -1231,22 +959,6 @@
         "coordinates": [
           -103.485,
           20.547777777777778
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "08JAL153441/12IMDA12",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.48486111111112,
-          20.54788888888889
         ]
       }
     },
@@ -1365,22 +1077,6 @@
     {
       "type": "Feature",
       "properties": {
-        "Name": "08JAL138209/12EMOC11",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.49083333333333,
-          20.57138888888889
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "08JAL138203/12FMOC10",
         "styleUrl": "#m_ylw-pushpin",
         "source_layer": "REPDA Descarga",
@@ -1493,22 +1189,6 @@
     {
       "type": "Feature",
       "properties": {
-        "Name": "08JAL136475/12EMOC10",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.25611111111111,
-          20.47138888888889
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "08JAL134727/12EMOC09",
         "styleUrl": "#m_ylw-pushpin",
         "source_layer": "REPDA Descarga",
@@ -1541,38 +1221,6 @@
     {
       "type": "Feature",
       "properties": {
-        "Name": "08JAL136048/12FMDA19",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.345,
-          20.436944444444446
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "08JAL136048/12FMDA19",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.36,
-          20.438055555555557
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "08JAL136183/12EMOC09",
         "styleUrl": "#m_ylw-pushpin",
         "source_layer": "REPDA Descarga",
@@ -1583,54 +1231,6 @@
         "coordinates": [
           -103.30722222222222,
           20.441388888888888
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "08JAL136183/12EMOC09",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.30444444444444,
-          20.445
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "08JAL136183/12EMOC09",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.30277777777778,
-          20.449166666666667
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "08JAL136183/12EMOC09",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.30277777777778,
-          20.454722222222223
         ]
       }
     },
@@ -1653,22 +1253,6 @@
     {
       "type": "Feature",
       "properties": {
-        "Name": "JAL136055",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.50583361111111,
-          20.468055
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "JAL136080",
         "styleUrl": "#m_ylw-pushpin",
         "source_layer": "REPDA Descarga",
@@ -1679,22 +1263,6 @@
         "coordinates": [
           -103.24558333333333,
           20.437613055555556
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "JAL136080",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.24638916666667,
-          20.436251388888888
         ]
       }
     },
@@ -1726,38 +1294,6 @@
         "type": "Point",
         "coordinates": [
           -103.48472222222222,
-          20.514722222222222
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "08JAL133522/12EMOC08",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.48416666666667,
-          20.514444444444443
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "08JAL133522/12EMOC08",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.48361111111112,
           20.514722222222222
         ]
       }
@@ -1829,38 +1365,6 @@
     {
       "type": "Feature",
       "properties": {
-        "Name": "08JAL132337/12IRDA18",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.27666666666667,
-          20.501666666666665
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "08JAL132337/12IRDA18",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.26888888888888,
-          20.5075
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "08JAL129954/12FMOC08",
         "styleUrl": "#m_ylw-pushpin",
         "source_layer": "REPDA Descarga",
@@ -1893,54 +1397,6 @@
     {
       "type": "Feature",
       "properties": {
-        "Name": "JAL130598",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.29777805555555,
-          20.528058055555555
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "JAL130598",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.31104194444444,
-          20.52669722222222
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "JAL130598",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.3065475,
-          20.52438611111111
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "08JAL129971/12EMDA17",
         "styleUrl": "#m_ylw-pushpin",
         "source_layer": "REPDA Descarga",
@@ -1967,22 +1423,6 @@
         "coordinates": [
           -103.46388888888889,
           20.541666666666668
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "08JAL129735/12HMGR06",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.47500000000001,
-          20.565555555555555
         ]
       }
     },
@@ -2085,22 +1525,6 @@
     {
       "type": "Feature",
       "properties": {
-        "Name": "08JAL128942/12IMGR06",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.49055555555556,
-          20.49138888888889
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "JAL125681",
         "styleUrl": "#m_ylw-pushpin",
         "source_layer": "REPDA Descarga",
@@ -2111,70 +1535,6 @@
         "coordinates": [
           -103.32472277777778,
           20.784724444444446
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "JAL125681",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.25394527777777,
-          20.511501666666668
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "JAL125681",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.43052888888889,
-          20.77311333333333
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "JAL125681",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.33327833333333,
-          20.769613333333332
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "JAL125681",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.25198916666666,
-          20.4643425
         ]
       }
     },
@@ -2293,22 +1653,6 @@
     {
       "type": "Feature",
       "properties": {
-        "Name": "08JAL113510/12EMGR99",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.45847222222223,
-          20.558333333333334
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "08JAL108197/12FPGR98",
         "styleUrl": "#m_ylw-pushpin",
         "source_layer": "REPDA Descarga",
@@ -2319,22 +1663,6 @@
         "coordinates": [
           -103.25944444444444,
           20.490277777777777
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "08JAL104409/12EMGE97",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.45333333333333,
-          20.573055555555555
         ]
       }
     },
@@ -2415,22 +1743,6 @@
         "coordinates": [
           -103.47083333333333,
           20.56722222222222
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "4JAL101599/12CMGE95",
-        "styleUrl": "#m_ylw-pushpin",
-        "source_layer": "REPDA Descarga",
-        "source_document": "REPDA.csv"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -103.45277777777778,
-          20.55777777777778
         ]
       }
     }
