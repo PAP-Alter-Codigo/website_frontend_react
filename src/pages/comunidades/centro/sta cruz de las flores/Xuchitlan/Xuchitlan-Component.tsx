@@ -27,7 +27,7 @@ export default function XuchitlanComponent() {
                         </p>
                     </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-[40%_60%] gap-6 lg:gap-10 pt-4 sm:pt-14 lg:pt-14 items-stretch">
+                <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-6 lg:gap-10 pt-4 sm:pt-14 lg:pt-14 items-stretch">
 
                     {/* Texto */}
                     <div>
@@ -42,13 +42,13 @@ export default function XuchitlanComponent() {
                     </div>
 
                     {/* Imagen */}
-                    <figure className="relative min-h-[300px] p-8">
+                    <div className="w-full overflow-hidden flex items-center justify-center p-4 md:p-8">
                         <img
-                            className="w-full h-full object-cover object-center select-none"
+                            className="max-w-full h-auto max-h-[500px] object-contain rounded-2xl shadow-lg select-none"
                             src={tablero}
-                            alt="logo resonancias 1"
+                            alt="Tablero del juego Xuchitlán"
                         />
-                    </figure>
+                    </div>
 
                 </div>
                 <div className="mt-16">
@@ -57,7 +57,7 @@ export default function XuchitlanComponent() {
                     </h2>
                 </div>
 
-                <div className="grid grid-cols-3 items-start gap-4 mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center mt-6">
                     {[
                         { front: card1_B, back: card1_F, color: '#629FDE', title: "Informativas", caption: "Este tipo de cartas se encargan de transmitir distinta información de los elementos bioculturales de Santa Cruz de las Flores, como lo son datos curiosos, sus funciones, y palabras en la lengua coca." },
                         { front: card2_B, back: card2_F, color: '#DE9862', title: "Trivia", caption: "Este tipo de cartas se encargan de cuestionar los conocimientos de los participantes a través de distintas preguntas." },

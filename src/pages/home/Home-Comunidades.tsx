@@ -4,81 +4,29 @@ import brush1 from "@assets/brushStrokes/img10-3-1.png"
 import brush2 from "@assets/brushStrokes/img10-2-4.png"
 import brush3 from "@assets/brushStrokes/img10-1-3.png"
 
-import imgAltosNorte from "@assets/regiones/altos-norte.jpg"
-import imgCienega from "@assets/regiones/cienega.jpg"
-import imgNorte from "@assets/regiones/norte.jpg"
-import imgSierraOccidental from "@assets/regiones/sierra-occidental.jpeg"
-import imgAltosSur from "@assets/regiones/altos-sur-2.jpeg"
-import imgCentro from "@assets/regiones/centro.jpg"
-import imgLagunas from "@assets/regiones/lagunas.jpeg"
-import imgSierraAmula from "@assets/regiones/sierra-amula.jpeg"
-import imgCostaSur from "@assets/regiones/costa-sur.jpeg"
-import imgValles from "@assets/regiones/valles.jpeg"
-import imgSur from "@assets/regiones/sur.jpeg"
-import imgSureste from "@assets/regiones/image-2-2.png"
+import { regiones } from "../comunidades/Comunidades-Data";
 
-const comunidades = [
-    {
-        name: 'Norte',
-        img: imgNorte,
-        to: '/regiones/norte'
-    },
-    {
-        name: 'Altos Norte',
-        img: imgAltosNorte,
-        to: '/regiones/altos-norte'
-    },
-    {
-        name: 'Altos Sur',
-        img: imgAltosSur,
-        to: '/regiones/altos-sur'
-    },
-    {
-        name: 'Ciénega',
-        img: imgCienega,
-        to: '/regiones/cienega'
-    },
-    {
-        name: 'Sureste',
-        img: imgSureste,
-        to: '/regiones/sureste'
-    },
-    {
-        name: 'Sur',
-        img: imgSur,
-        to: '/regiones/sur'
-    },
-    {
-        name: 'Sierra de Amula',
-        img: imgSierraAmula,
-        to: '/regiones/sierra-de-amula'
-    },
-    {
-        name: 'Costa Sur',
-        img: imgCostaSur,
-        to: '/regiones/costa-sur'
-    },
-    {
-        name: 'Costa Sierra Occidental',
-        img: imgSierraOccidental,
-        to: '/regiones/costa-sierra-occidental'
-    },
-    {
-        name: 'Valles',
-        img: imgValles,
-        to: '/regiones/valles'
-    },
-    {
-        name: 'Centro',
-        img: imgCentro,
-        to: '/regiones/centro'
-    },
-    {
-        name: 'Lagunas',
-        img: imgLagunas,
-        to: '/regiones/lagunas'
-    }
-]
+const comunidades = regiones.map((r) => {
+  let name = r.title;
+  if (name === "CIENEGA") {
+    name = "Ciénega";
+  } else {
+    name = name
+      .toLowerCase()
+      .split("-")
+      .map((word) => {
+        if (word === "de") return "de";
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(" ");
+  }
+
+  return {
+    name,
+    img: r.img,
+    to: `/regiones/${r.title.toLowerCase()}`,
+  };
+});
 
 export default function HomeComunidades() {
     return <>

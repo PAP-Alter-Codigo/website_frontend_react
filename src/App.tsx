@@ -21,6 +21,7 @@ import MapaInteractivoPage from './pages/comunidades/centro/sta cruz de las flor
 import XuchitlanPage from './pages/comunidades/centro/sta cruz de las flores/Xuchitlan/Xuchitlan-Page';
 import PodcastPage from './pages/podcast/Podcast-Page';
 import InvestigacionPage from './pages/investigacion/Investigacion-Page';
+import SierraOccidentalPage from './pages/comunidades/costaSierraOccidental/SierraOccidental-Page';
 
 
 
@@ -43,14 +44,14 @@ function ScrollToTop() {
 }
 
 function App() {
-   useEffect(() => {
-      AOS.init({ duration: 600, once: true, offset: 30 }); // config
-    }, []);
+  useEffect(() => {
+    AOS.init({ duration: 600, once: true, offset: 30 }); // config
+  }, []);
 
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <AOSRouterSync/>
+      <AOSRouterSync />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/comunidades" element={<ComunidadesPage />} />
@@ -60,12 +61,13 @@ function App() {
         <Route path="/regiones/:slug" element={<ComunidadWrapperPage />} />
         <Route path="/monitoreo" element={<MonitoreoPage />} />
         <Route path="/contacto" element={<ContactoPage />} />
-        <Route path="/nosotros" element={<NosotrosPage />} /> 
+        <Route path="/nosotros" element={<NosotrosPage />} />
         <Route path="/podcast" element={<PodcastPage />} />
-        <Route path="/colaboradores" element={<ColaboradoresPage />} /> 
-        <Route path="/comunidades/sta-cruz-de-las-flores/mapa" element={<MapaInteractivoPage />} /> 
+        <Route path="/colaboradores" element={<ColaboradoresPage />} />
+        <Route path="/comunidades/sta-cruz-de-las-flores/mapa" element={<MapaInteractivoPage />} />
         <Route path="/comunidades/sta-cruz-de-las-flores/xuchitlan" element={<XuchitlanPage />} />
         <Route path="/investigacion" element={<InvestigacionPage />} />
+        <Route path="/comunidades/puerto-vallarta" element={<SierraOccidentalPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
