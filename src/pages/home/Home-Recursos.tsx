@@ -71,7 +71,7 @@ export default function HomeRecursos() {
 
                 <div className="p-4 flex flex-1 items-center justify-center">
                   <div className="p-5 text-center">
-                    <h3 className="text-4xl font-semibold text-gray-800">{c.title}</h3>
+                    <h3 className="text-2xl sm:text-3xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold text-gray-800">{c.title}</h3>
                     <p className="pt-4">{c.desc}</p>
                   </div>
                 </div>
