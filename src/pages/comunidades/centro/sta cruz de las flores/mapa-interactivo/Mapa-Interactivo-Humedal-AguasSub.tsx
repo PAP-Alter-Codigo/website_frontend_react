@@ -167,11 +167,13 @@ function CapasControl({
     setCapasActivas,
     setFiltroUso,
     datasets,
+    showCapasControl = true,
 }: {
     capas: CapasEstructura;
     setCapasActivas: React.Dispatch<React.SetStateAction<Set<string>>>;
     setFiltroUso: React.Dispatch<React.SetStateAction<"all" | Uso>>;
     datasets: DatasetConfig[];
+    showCapasControl?: boolean;
 }) {
     const map = useMap();
     const isSyncingRef = useRef(false);
@@ -184,25 +186,28 @@ function CapasControl({
 
         const allLayersDummy = L.layerGroup();
 
-        // Inicializamos el control de capas de Leaflet en la posición superior izquierda
-        const controlLayers = L.control.layers(undefined, undefined, {
-            position: "topleft",
-            collapsed: true,
-        });
+        // Inicializamos el control de capas de Leaflet solo si showCapasControl es verdadero
+        let controlLayers: L.Control.Layers | null = null;
+        if (showCapasControl) {
+            controlLayers = L.control.layers(undefined, undefined, {
+                position: "topleft",
+                collapsed: true,
+            });
+            allLayersDummy.addTo(map);
+            controlLayers.addOverlay(allLayersDummy, ALL_TOGGLE_NAME);
+        }
 
-        // Agregamos primero el toggle general
-        allLayersDummy.addTo(map);
-        controlLayers.addOverlay(allLayersDummy, ALL_TOGGLE_NAME);
-
-        // Agregamos cada capa al mapa (la capa de Humedales se agrega de forma permanente sin opción a desactivarse en el control)
+        // Agregamos cada capa al mapa (todas las capas se muestran en el mapa de manera predeterminada)
         Object.entries(capas).forEach(([name, capa]) => {
             capa.layerGroup.addTo(map);
-            if (name !== "Humedales") {
+            if (showCapasControl && controlLayers && name !== "Humedales") {
                 controlLayers.addOverlay(capa.layerGroup, name);
             }
         });
 
-        controlLayers.addTo(map);
+        if (showCapasControl && controlLayers) {
+            controlLayers.addTo(map);
+        }
 
         // Al iniciar, todas las capas están activadas + el toggle general
         const initialCapas = new Set(Object.keys(capas));
@@ -284,7 +289,9 @@ function CapasControl({
         map.on("overlayremove", handleOverlayRemove);
 
         return () => {
-            controlLayers.remove();
+            if (controlLayers) {
+                controlLayers.remove();
+            }
             if (map.hasLayer(allLayersDummy)) {
                 map.removeLayer(allLayersDummy);
             }
@@ -294,7 +301,7 @@ function CapasControl({
             map.off("overlayadd", handleOverlayAdd);
             map.off("overlayremove", handleOverlayRemove);
         };
-    }, [map, capas, setCapasActivas, setFiltroUso, datasets]);
+    }, [map, capas, setCapasActivas, setFiltroUso, datasets, showCapasControl]);
 
     return null;
 }
@@ -368,6 +375,8 @@ export interface MapaInteractivoProps {
     datasets?: DatasetConfig[];                    // por defecto: DEFAULT_DATASETS de loaders.ts
     usoFiltroExacto?: Uso[];                        // por defecto: undefined (sin filtrado, comportamiento original)
     showFiltros?: boolean;                          // por defecto: true (muestra los filtros)
+    showCapasControl?: boolean;                     // por defecto: true (muestra el icono de capas dentro del mapa)
+    showLayerControl?: boolean;                     // alias de showCapasControl
     tamanoPorVolumen?: boolean;                     // por defecto: false (iconos fijos de 18px, comportamiento original)
     shapePorCapa?: Record<string, MarkerShape>;     // por defecto: undefined (usa usoShape por defecto)
     minIconSize?: number;                           // por defecto: 12
@@ -382,6 +391,8 @@ export default function MapaInteractivoHumedalAguasSub({
     datasets = DEFAULT_DATASETS,
     usoFiltroExacto,
     showFiltros = true,
+    showCapasControl,
+    showLayerControl,
     tamanoPorVolumen = false,
     shapePorCapa,
     minIconSize = 12,
@@ -391,6 +402,7 @@ export default function MapaInteractivoHumedalAguasSub({
     lazy = false,
     instrucciones,
 }: MapaInteractivoProps = {}) {
+    const activeShowCapasControl = showCapasControl ?? showLayerControl ?? true;
     const [capas, setCapas] = useState<CapasEstructura | null>(null);
     const [, setPuntos] = useState<Punto[]>([]);
     const [, setHumedal] = useState<[number, number][]>([]);
@@ -594,13 +606,14 @@ export default function MapaInteractivoHumedalAguasSub({
                                     maxZoom={18}
                                 />
 
-                                {/* Control de Capas y Capas de Leaflet */}
+                                 {/* Control de Capas y Capas de Leaflet */}
                                 {capas && (
                                     <CapasControl
                                         capas={capas}
                                         setCapasActivas={setCapasActivas}
                                         setFiltroUso={setFiltroUso}
                                         datasets={datasets}
+                                        showCapasControl={activeShowCapasControl}
                                     />
                                 )}
                             </MapContainer>
