@@ -367,6 +367,7 @@ function Section1ElDespojo() {
             DEFAULT_DATASETS.find(d => d.key === "Humedales")!
           ]}
           instrucciones={INSTRUCCIONES_MAPA_1991}
+          showLayerControl={false}
           lazy
         />
       </div>
