@@ -5,6 +5,7 @@ import type { InstruccionPaso } from "./data/types"
 
 export interface TableauEmbedData {
   title: string
+  description: string
   src: string
   color: string
   height?: number
@@ -82,9 +83,15 @@ export const SECTION_CONFIGS: Record<string, SectionConfig> = {
     titleColor: "#0c4a6e",
     borderColor: "#0284c7",
   },
+  masGraficas: {
+    id: "masGraficas",
+    background: "#f8fafc",
+    titleColor: "#007c63ff",
+    borderColor: "#00c2adff",
+  },
   metodologia: {
     id: "metodologia",
-    background: "#f8fafc",
+    background: "#ffffff",
     titleColor: "#334155",
     borderColor: "#64748b",
   },
@@ -95,50 +102,72 @@ export const SECTION_CONFIGS: Record<string, SectionConfig> = {
 export const TABLEAU_EMBEDS = {
   extraccion2005: {
     title: "Extracción de agua subterránea a 2005",
-    src: "https://public.tableau.com/views/Extraccindeaguasubterraneaa2005/Tiempoareadescargasuso8?:embed=y&:showVizHome=no&:display_count=n",
+    description: "Esta gráfica muestra cómo han cambiado los registros a lo largo del tiempo. El eje horizontal representa los años y el eje vertical representa el volumen o número de registros, según se indique en el título. La gráfica es interactiva: puedes mover la fecha en la parte superior derecha, al igual que puedes seleccionar algún titular para ver si evolucoión individual a lo largo de los años. En la parte derecha, haz clic sobre la lupa a un lado de “Titular” para buscar un registro específico. ",
+    src: "https://public.tableau.com/views/Extraccindeaguasubterrnea/Tiempoareadescargasuso6?:embed=y&:showVizHome=no&:display_count=n",
     color: "#0284c7",
     height: 500,
   },
   extraccionTiempo: {
     title: "Extracción a lo largo del tiempo en Santa Cruz",
+    description: "",
     src: "https://public.tableau.com/views/ExtraccinalolargodeltiempenSantaCruz/Dashboard11?:embed=y&:showVizHome=no&:display_count=n",
     color: "#f59e0b",
     height: 500,
   },
   serviciosTreemap: {
     title: "Servicios en Santa Cruz: descarga y extracción, tamaño por volumen",
+    description: "En esta gráfica, cada rectángulo representa un titular registrado. El tamaño del rectángulo corresponde al volumen de agua asociado: mientras más grande sea, mayor es el volumen. Los colores agrupan los registros por uso. Al pasar el cursor sobre cada rectángulo, puedes ver el nombre del titular, el uso registrado y el volumen exacto. Puedes seleccionar el tipo de uso en la parte superior derecha.",
     src: "https://public.tableau.com/views/VolumendeextraccinparausodeserviciosdeaguassubterraneasdelacuferoSanIsidro/treemapextraccion2?:embed=y&:showVizHome=no&:display_count=n",
     color: "#7c3aed",
     height: 500,
   },
   industriaBubbles: {
     title: "Industria en Santa Cruz: descarga y extracción por volumen",
+    description: "",
     src: "https://public.tableau.com/views/ConcesionesdeextraccinydescargasindustrialesenSantaCruzbubble/bubbles?:embed=y&:showVizHome=no&:display_count=n",
     color: "#ef4444",
     height: 520,
   },
   volumenTiempo: {
     title: "Volumen de concesiones en el tiempo · Santa Cruz",
+    description: "",
     src: "https://public.tableau.com/views/VolumendeconcesioneseneltiempoSantaCruz/GrficasTiempo?:embed=y&:showVizHome=no&:display_count=n",
     color: "#6366f1",
     height: 480,
   },
   tiempoPorTitular: {
     title: "Tiempo por titular · Descargas de agua",
+    description: "",
     src: "https://public.tableau.com/views/graficotiempoportitular/Tiempoareadescargas2?:embed=y&:showVizHome=no&:display_count=n",
     color: "#6366f1",
     height: 480,
   },
   concesiones2021: {
     title: "Concesiones de extracción de aguas subterráneas después de 2021",
+    description: "",
     src: "https://public.tableau.com/views/Concesionesparaextraccindeaguassubterraneasdespuesde2021/Dashboard13?:embed=y&:showVizHome=no&:display_count=n",
-    color: "#0284c7",
+    color: "#007c63ff",
     height: 520,
   },
   radialYPastelStzCruz: {
     title: "Radial y pastel · Santa Cruz",
-    src: "https://public.tableau.com/views/RadialyPastelSantaCruz/Story6?:embed=y&:showVizHome=no&:display_count=n",
-    color: "#0284c7",
+    description: "Gráfica Radial: Esta gráfica permite comparar visualmente la participación de cada uso y cada titular dentro del conjunto de registros. Muestra cómo se distribuye el volumen total entre distintos usos registrados. Al pasar el cursor sobre cada categoría, se muestra el dato exacto del porcentaje que representa el titular dentro del conjunto.<br></br>Gráfica pastel: Esta gráfica muestra cómo se distribuye el volumen total entre distintos usos registrados. Cada segmento representa una categoría, como “industrial” o “servicios”. Mientras más grande sea el segmento, mayor es su participación dentro del total. Pasa el cursor sobre cada segmento para ver el porcentaje y el volumen correspondiente.",
+    src: "https://public.tableau.com/views/PastelyRadialSantaCruz/Story6?:embed=y&:showVizHome=no&:display_count=n",
+    color: "#007c63ff",
+    height: 520,
+  },
+  buscadorConcesiones: {
+    title: "Buscador de concesiones",
+    description: "",
+    src: "https://public.tableau.com/views/Buscadordeconcesiones/Dashboard14?:embed=y&:showVizHome=no&:display_count=n",
+    color: "#007c63ff",
+    height: 520,
+  },
+  treemapsDescargasExtraccion: {
+    title: "Treemaps de concesiones descargas y extracción",
+    description: "",
+    src: "https://public.tableau.com/views/Treemapsdeconcesionesdescargasyextraccin/Treemap?:embed=y&:showVizHome=no&:display_count=n",
+    color: "#007c63ff",
     height: 520,
   }
 } satisfies Record<string, TableauEmbedData>
@@ -311,5 +340,24 @@ export const INSTRUCCIONES_TAMANO_VOLUMEN: InstruccionPaso[] = [
     numero: "4.",
     titulo: "Ver detalle",
     descripcion: "Haz clic en un punto para ver su información detallada.",
+  },
+]
+
+export const INSTRUCCIONES_MAPA_1991: InstruccionPaso[] = [
+  {
+    numero: "1.",
+    titulo: "Capas mostradas",
+    descripcion:
+      "Este mapa muestra las capas de pozos de las que se tiene registro en 1991 y el humedal La Playa.",
+  },
+  {
+    numero: "2.",
+    titulo: "Filtrar por uso",
+    descripcion: "En la parte superior del mapa, usa los botones para filtrar por tipo de uso. Pasa el cursor sobre cada botón para ver una breve explicación.",
+  },
+  {
+    numero: "3.",
+    titulo: "Ver detalle",
+    descripcion: "Haz clic en un punto del mapa para ver aquí su información detallada.",
   },
 ]

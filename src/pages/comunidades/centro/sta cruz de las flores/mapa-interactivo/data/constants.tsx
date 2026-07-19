@@ -29,9 +29,9 @@ export const TOOLTIPS: Record<Uso, string> = {
   PECUARIO: "Es el agua requerida expresamente para la actividad ganadera y de crianza animal",
   DOMESTICO: "Es el agua de uso estrictamente particular, enfocada en la subsistencia diaria de las personas",
   "DIFERENTES USOS": "Es el agua destinada a diferentes usos",
-  "POZOS RIEGO": "",
-  "POZOS DOMO": "",
-  "POZOS DOMESTICO": "",
+  "POZOS RIEGO": "Los pozos profundos suelen perforarse a mayor profundidad y requieren bombeo; las norias suelen ser excavaciones que aprovechan agua más cercana a la superficie. Ambos forman parte de la infraestructura local para acceder al agua del subsuelo",
+  "POZOS DOMO": " Esta categoría reúne referencias comunitarias o territoriales sobre aprovechamientos de agua ubicados hacia esa zona.",
+  "POZOS DOMESTICO": "Aprovechamiento de agua asociado a necesidades básicas de vivienda o unidades familiares, como consumo cotidiano, limpieza, higiene y otros usos del hogar.",
 };
 
 export const colorByUso: Record<Uso, string> = Object.fromEntries(
@@ -125,7 +125,7 @@ export const DEFAULT_INSTRUCCIONES: InstruccionPaso[] = [
     numero: "1.",
     titulo: "Seleccionar capas",
     descripcion: "En la esquina superior izquierda del mapa, usa el icono de capas para elegir entre \"Visualizar todas al mismo tiempo\" o cualquiera de las capas disponibles:",
-    items: ["Extracción de agua subterránea", "Descargas de aguas residuales", "1991"],
+    items: ["Concesiones de extracción de agua subterránea, REPDA (2026)", "Permisos de descarga de aguas residuales, REPDA (2026)", "Mapa comunitario 1991"],
   },
   {
     numero: "2.",

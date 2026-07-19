@@ -115,17 +115,6 @@ export default function MapaInteractivoPage() {
                 </div>
             </section>
 
-            {/* ── MAPA ─────────────────────────────────────────────────────────── */}
-            <section id="mapa" className="bg-slate-50 py-12 px-4 sm:px-8 lg:px-16">
-                <div className="max-w-7xl mx-auto">
-                    <span className="text-sky-600 text-xs font-semibold uppercase tracking-widest">Herramienta interactiva</span>
-                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1 mb-6">
-                        Mapas y datos de concesiones y pozos de agua en el territorio
-                    </h2>
-                    <MapaInteractivoHumedalAguasSub />
-                </div>
-            </section>
-
             {/* ── ¿QUÉ ES ESTE MAPA? ───────────────────────────────────────────── */}
             <section className="py-16 px-4 sm:px-8 lg:px-16 bg-white">
                 <div className="max-w-5xl mx-auto">
@@ -151,8 +140,20 @@ export default function MapaInteractivoPage() {
                 </div>
             </section>
 
+            {/* ── MAPA ─────────────────────────────────────────────────────────── */}
+            <section id="mapa" className="bg-slate-50 py-12 px-4 sm:px-8 lg:px-16">
+                <div className="max-w-7xl mx-auto">
+                    <span className="text-sky-600 text-xs font-semibold uppercase tracking-widest">Herramienta interactiva</span>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1 mb-6">
+                        Mapas y datos de concesiones y pozos de agua en el territorio
+                    </h2>
+                    <MapaInteractivoHumedalAguasSub />
+                </div>
+            </section>
+
+
             {/* ── ¿QUÉ HAY EN ESTE MAPA? ───────────────────────────────────────── */}
-            <section className="py-16 px-4 sm:px-8 lg:px-16 bg-slate-50">
+            <section className="py-16 px-4 sm:px-8 lg:px-16 bg-white">
                 <div className="max-w-5xl mx-auto">
                     <div className="flex items-center gap-3 mb-4">
                         <SectionIcon bg="bg-indigo-100 text-indigo-600">
@@ -162,8 +163,14 @@ export default function MapaInteractivoPage() {
                         </SectionIcon>
                         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">¿Qué hay en este mapa?</h2>
                     </div>
-                    <p className="text-gray-600 mb-8 leading-relaxed max-w-3xl">
-                        El agua puede entenderse y representarse de diferentes maneras. Por ello, en este mapa se presentan <strong>tres capas</strong> sobre los pozos de agua, cada una con su propia fuente y enfoque.
+                    <p className="text-gray-600 mb-8 leading-relaxed text-base">
+                        El mapa integra cuatro capas principales. La primera corresponde al mapa comunitario de 1991, elaborado a partir de la memoria local sobre el territorio.
+                        La segunda muestra zonas de humedal identificadas en el área de estudio.
+                        La tercera presenta concesiones de extracción de agua subterránea registradas en el Registro Público de Derechos del Agua (REPDA).
+                        La cuarta muestra permisos de descarga de aguas residuales registrados en la misma fuente. Los datos de REPDA son registrados ante la Comisión Nacional del Agua (CONAGUA).
+                    </p>
+                    <p className="text-gray-600 mb-8 leading-relaxed text-base">
+                        Las capas comunitarias permiten ubicar elementos de memoria territorial; las capas de CONAGUA permiten observar registros administrativos sobre extracción y descarga de agua. La lectura conjunta ayuda a identificar tensiones entre historia local, transformación territorial y gestión oficial del agua.
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
                         <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-amber-200 flex flex-col">
@@ -242,11 +249,14 @@ export default function MapaInteractivoPage() {
                             </div>
                         </div>
                     </div>
+                    <p className="text-gray-600 mb-8 leading-relaxed text-base pt-8">
+                        <strong>Humedales:</strong> Zonas donde el agua se acumula, circula o permanece cerca de la superficie durante ciertos periodos. Los humedales ayudan a regular escurrimientos, infiltrar agua, sostener vegetación y mantener funciones ecológicas importantes para el territorio.
+                    </p>
                 </div>
             </section>
 
             {/* ── ¿QUÉ SON LOS POZOS? ──────────────────────────────────────────── */}
-            <section className="py-16 px-4 sm:px-8 lg:px-16 bg-white">
+            <section className="py-16 px-4 sm:px-8 lg:px-16 bg-slate-50">
                 <div className="max-w-5xl mx-auto">
                     <div className="flex items-center gap-3 mb-8">
                         <SectionIcon bg="bg-teal-100 text-teal-600">
@@ -355,8 +365,7 @@ export default function MapaInteractivoPage() {
                             { label: "Fecha registro", desc: "El día exacto en que el título quedó inscrito oficialmente en los libros del REPDA." },
                             { label: "Municipio descarga", desc: "El municipio geográfico exacto donde se localiza el punto físico de salida del tubo o canal de desecho." },
                             { label: "Cuenca", desc: "Zona más grande donde circula el agua, conectando ríos, lluvias y escurrimientos." },
-                            { label: "Procedencia", desc: "El origen inicial de la descarga." },
-                            { label: "Tipo descarga", desc: "La clasificación del destino del flujo: si va directo a la naturaleza o si se conecta al drenaje o alcantarillado municipal." },
+                            { label: "Procedencia", desc: "La procedencia indica de dónde provienen las aguas residuales antes de ser descargadas. Puede referirse al origen de la actividad que genera el agua usada, por ejemplo servicios, industria, uso urbano u otras categorías registradas." },
                             { label: "Cuerpo receptor", desc: "El sitio natural o artificial específico que recibe el agua residual, como un río, un lago, el subsuelo o una presa." },
                             { label: "Región hidrológica", desc: "Organización del territorio según el agua que hay en él, agrupando varias cuencas." },
                         ].map((item, i) => (
@@ -474,6 +483,37 @@ export default function MapaInteractivoPage() {
                             </div>
                         )}
                     </div>
+                </div>
+            </section>
+
+            {/* ── Créditos ──────────────────────────────────────────── */}
+            <section className="py-12 px-4 sm:px-8 lg:px-16 bg-slate-50 border-t border-slate-200/60">
+                <div className="max-w-4xl mx-auto">
+                    <div className="flex items-center gap-3 mb-6">
+                        <SectionIcon bg="bg-teal-100 text-teal-600">
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </SectionIcon>
+                        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Créditos</h2>
+                    </div>
+
+                    <ul className="space-y-3 text-sm sm:text-base text-gray-700">
+                        {[
+                            { role: "Investigación, análisis de datos y redacción", name: "Alejandra Partida Vital" },
+                            { role: "Montaje web e integración de mapas interactivos", name: "Sara Aranda Gutiérrez" },
+                            { role: "Montaje web e integración de mapas interactivos", name: "Jorge Villarreal" },
+                            { role: "Primera propuesta del mapa comunitario y primera descarga y tratamiento de datos", name: "Tania Tapia" },
+                            { role: "Asesoría comunitaria e información territorial", name: "Comité Agua y Vida" },
+                        ].map((c, idx) => (
+                            <li key={idx} className="flex items-start gap-2.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-teal-600 mt-2 shrink-0" />
+                                <span>
+                                    <strong className="font-semibold text-gray-900">{c.role}:</strong> {c.name}
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             </section>
 
