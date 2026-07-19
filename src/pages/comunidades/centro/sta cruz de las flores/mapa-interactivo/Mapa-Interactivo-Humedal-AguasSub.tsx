@@ -39,6 +39,40 @@ function DetallePunto({
                         <div key={paso.numero}>
                             <p className="font-semibold text-gray-700 mb-1 flex items-center gap-1.5 text-xs sm:text-sm">
                                 <span className="text-sky-600 font-bold">{paso.numero}</span> {paso.titulo}
+                                {paso.titulo.toLowerCase().includes("seleccionar capas") && (
+                                    <span className="inline-flex items-center justify-center w-7 h-7 bg-white border border-gray-300 rounded shadow-[0_1px_2.5px_rgba(0,0,0,0.18)] align-middle ml-1.5 select-none shrink-0">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 26 26"
+                                            className="w-5.5 h-5.5"
+                                        >
+                                            {/* Bottom Sheet */}
+                                            <polygon
+                                                points="13,11 21,15 13,19 5,15"
+                                                fill="#d1d5db"
+                                                stroke="#71717a"
+                                                strokeWidth="1.2"
+                                                strokeLinejoin="round"
+                                            />
+                                            {/* Middle Sheet */}
+                                            <polygon
+                                                points="13,8 21,12 13,16 5,12"
+                                                fill="#e5e7eb"
+                                                stroke="#71717a"
+                                                strokeWidth="1.2"
+                                                strokeLinejoin="round"
+                                            />
+                                            {/* Top Sheet */}
+                                            <polygon
+                                                points="13,5 21,9 13,13 5,9"
+                                                fill="#ffffff"
+                                                stroke="#71717a"
+                                                strokeWidth="1.2"
+                                                strokeLinejoin="round"
+                                            />
+                                        </svg>
+                                    </span>
+                                )}
                             </p>
                             <p className="text-gray-500 leading-relaxed">
                                 {paso.descripcion}
@@ -67,8 +101,11 @@ function DetallePunto({
                 style={{ backgroundColor: color }}
             >
                 <div>
-                    <p className="text-xs font-medium opacity-80">Aguas subterráneas — REPDA</p>
-                    <p className="text-base font-bold leading-tight">{punto.name}</p>
+                    <p className="text-xs font-medium opacity-80">{punto.capaKey || "Aguas subterráneas — REPDA"}</p>
+                    <p className="text-base font-bold leading-tight">{punto.repda?.titular || punto.name}</p>
+                    {punto.repda?.titular && (
+                        <p className="text-xs font-mono opacity-80 mt-0.5">{punto.name}</p>
+                    )}
                 </div>
                 <button
                     onClick={onClose}
@@ -94,8 +131,24 @@ function DetallePunto({
                     ))}
                 </dl>
             ) : (
-                <div className="px-4 sm:px-6 py-6 sm:py-10 text-center text-sm text-gray-500">
-                    Este punto no tiene datos en el registro REPDA.
+                <div className="px-4 sm:px-6 py-6 sm:py-8 flex flex-col gap-4 text-sm text-gray-600">
+                    {TOOLTIPS[punto.uso] ? (
+                        <div className="rounded-xl text-left">
+                            <h4 className="font-bold text-gray-900 mb-2.5 flex items-center gap-1.5 text-xs uppercase tracking-wider text-sky-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4 text-sky-600">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 16v-4m0-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Información del uso
+                            </h4>
+                            <p className="leading-relaxed text-gray-700 text-sm">
+                                {TOOLTIPS[punto.uso]}
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="text-center text-gray-500 py-6">
+                            Este punto no tiene datos en el registro REPDA.
+                        </div>
+                    )}
                 </div>
             )}
         </div>
@@ -141,10 +194,12 @@ function CapasControl({
         allLayersDummy.addTo(map);
         controlLayers.addOverlay(allLayersDummy, ALL_TOGGLE_NAME);
 
-        // Agregamos cada capa al mapa y las registramos en el control como overlay por defecto
+        // Agregamos cada capa al mapa (la capa de Humedales se agrega de forma permanente sin opción a desactivarse en el control)
         Object.entries(capas).forEach(([name, capa]) => {
             capa.layerGroup.addTo(map);
-            controlLayers.addOverlay(capa.layerGroup, name);
+            if (name !== "Humedales") {
+                controlLayers.addOverlay(capa.layerGroup, name);
+            }
         });
 
         controlLayers.addTo(map);
@@ -267,7 +322,7 @@ function FilterButtons({
     const activeCapasConfigs = CAPAS.filter((c) => filtrosDisponibles.has(c.key));
 
     return (
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 relative z-50">
             <button
                 onClick={() => setFiltroUso("all")}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition ${filtroUso === "all"
@@ -295,7 +350,7 @@ function FilterButtons({
                     {TOOLTIPS[key] && (
                         <div
                             id={`tooltip-${key}`}
-                            className="invisible group-hover:visible absolute bottom-full left-1/2 -translate-x-1/2 mb-3 px-3 py-2 bg-gray-50 text-gray-900 text-sm rounded-lg w-52 shadow-xl border border-gray-200 z-50 transition-all opacity-0 group-hover:opacity-100 pointer-events-none whitespace-normal leading-snug font-medium"
+                            className="invisible group-hover:visible absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 px-3.5 py-2.5 bg-gray-50 text-gray-900 text-xs rounded-lg w-60 shadow-[0_12px_28px_rgba(0,0,0,0.18)] border border-gray-200 z-[9999] transition-all opacity-0 group-hover:opacity-100 pointer-events-none whitespace-normal leading-relaxed font-medium text-left"
                         >
                             {TOOLTIPS[key]}
                             <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-50" />
@@ -457,7 +512,7 @@ export default function MapaInteractivoHumedalAguasSub({
         markerClickRef.current = handleMarkerClick;
     });
 
-    // Vincula el listener de click a los marcadores de Leaflet una vez cargados
+    // Vincula los listeners de click y hover a los marcadores de Leaflet una vez cargados
     useEffect(() => {
         if (!capas) return;
 
@@ -465,9 +520,19 @@ export default function MapaInteractivoHumedalAguasSub({
             capa.puntos.forEach((punto) => {
                 if (punto.marker) {
                     punto.marker.off("click");
+                    punto.marker.off("mouseover");
+                    punto.marker.off("mouseout");
+
                     punto.marker.on("click", () => {
-                        punto.marker!.openPopup();
                         markerClickRef.current(punto);
+                    });
+
+                    punto.marker.on("mouseover", () => {
+                        punto.marker!.openPopup();
+                    });
+
+                    punto.marker.on("mouseout", () => {
+                        punto.marker!.closePopup();
                     });
                 }
             });
@@ -495,12 +560,12 @@ export default function MapaInteractivoHumedalAguasSub({
     }, [capas, filtroUso, datasets]);
 
     return (
-        <section ref={containerRef} className="w-full">
-            <div className="bg-white rounded-xl shadow-lg">
+        <section ref={containerRef} className="w-full relative z-30">
+            <div className="bg-white rounded-xl shadow-lg relative z-30">
 
                 {/* Filtros Dinámicos */}
                 {showFiltros && (
-                    <div className="p-4 border-b bg-gray-50">
+                    <div className="p-4 border-b bg-gray-50 rounded-t-xl relative z-40">
                         <FilterButtons
                             filtrosDisponibles={filtrosDisponibles}
                             filtroUso={filtroUso}
@@ -512,7 +577,7 @@ export default function MapaInteractivoHumedalAguasSub({
                 )}
 
                 {/* Cuerpo: mapa + panel */}
-                <div className="flex flex-col md:flex-row md:h-[560px]">
+                <div className={`flex flex-col md:flex-row md:h-[560px] ${showFiltros ? 'rounded-b-xl' : 'rounded-xl'} overflow-hidden relative z-10`}>
 
                     {/* Mapa — 70% */}
                     <div className="w-full md:w-[70%] h-[400px] md:h-full min-w-0">

@@ -35,26 +35,26 @@ async function loadRepda(): Promise<Record<string, RepdaEntry>> {
 
 export const DEFAULT_DATASETS: DatasetConfig[] = [
   {
-    key: "Descargas de aguas residuales",
+    key: "Permisos de descarga de aguas residuales, REPDA (2026)",
     url: `${DATA_BASE_PATH}/geojson/tlajomulco-aguas-subterraneas.geojson`,
     filterType: "uso",
     kind: "puntos",
   },
   {
-    key: "Extracción de agua subterránea",
+    key: "Concesiones de extracción de agua subterránea, REPDA (2026)",
     url: `${DATA_BASE_PATH}/geojson/santa-cruz-aguas-subterraneas.geojson`,
     filterType: "uso",
     kind: "puntos",
   },
   {
-    key: "1991",
+    key: "Mapa comunitario 1991",
     url: `${DATA_BASE_PATH}/geojson/pozos-domestico-domo-riego.geojson`,
     filterType: "pozo",
     kind: "puntos",
     pozoSourceLayerMap: POZO_SOURCE_LAYER_MAP,
   },
   {
-    key: "Humedal 2020",
+    key: "Humedales",
     url: `${DATA_BASE_PATH}/geojson/humedal.geojson`,
     filterType: "uso",
     kind: "poligono",
@@ -82,9 +82,16 @@ export async function initializeMapData(
   puntos: Punto[];
   humedal: [number, number][];
 }> {
+  // Asegura que la capa de Humedales esté siempre presente en todos los mapas interactivos
+  const hasHumedal = datasets.some((d) => d.key === "Humedales");
+  const humedalDataset = DEFAULT_DATASETS.find((d) => d.key === "Humedales");
+  const effectiveDatasets = hasHumedal || !humedalDataset
+    ? datasets
+    : [...datasets, humedalDataset];
+
   // Carga los archivos GeoJSON en paralelo
   const geojsons = await Promise.all(
-    datasets.map(d => fetch(d.url).then(r => r.json()))
+    effectiveDatasets.map(d => fetch(d.url).then(r => r.json()))
   );
 
   const repda = await loadRepda();
@@ -94,7 +101,7 @@ export async function initializeMapData(
   const puntos: Punto[] = [];
 
   // Inicializa capas
-  datasets.forEach((d) => {
+  effectiveDatasets.forEach((d) => {
     capas[d.key] = {
       layerGroup: L.layerGroup(),
       puntos: [],
@@ -104,7 +111,7 @@ export async function initializeMapData(
   });
 
   // Procesa cada dataset
-  datasets.forEach((dataset, index) => {
+  effectiveDatasets.forEach((dataset, index) => {
     const geojson = geojsons[index];
 
     if (dataset.kind === "poligono") {
@@ -197,9 +204,10 @@ export async function initializeMapData(
           icon: makeDivIcon(color, shape, size),
         });
 
+        const popupLabel = repdaEntry?.titular || feature.properties.Name;
         marker.bindPopup(`
           <div class="text-center min-w-[120px]">
-            <p class="font-bold text-sm">${feature.properties.Name}</p>
+            <p class="font-bold text-sm">${popupLabel}</p>
             <p class="text-xs text-gray-500 mt-1">${uso}</p>
             <p class="text-xs text-blue-600 mt-1 cursor-pointer">Ver detalle →</p>
           </div>

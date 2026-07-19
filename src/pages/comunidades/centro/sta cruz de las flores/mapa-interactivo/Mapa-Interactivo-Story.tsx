@@ -17,6 +17,7 @@ import {
   type LegalArticleData,
   type ReferenciasData,
   INSTRUCCIONES_TAMANO_VOLUMEN,
+  INSTRUCCIONES_MAPA_1991,
 } from "./Mapa-Interactivo-Story-Data"
 
 
@@ -118,6 +119,31 @@ function TableauEmbed({ data }: { data: TableauEmbedData }) {
       <div className="bg-slate-50 pt-1.5 pb-2.5 px-4 text-[13px] font-semibold text-slate-800">
         {data.title}
       </div>
+      {data.description && data.description.trim() !== "" && (
+        <div className="bg-slate-50 px-4 pb-3 pt-0.5 border-b border-slate-200">
+          <div className="bg-white rounded-lg border border-slate-200/80 p-3 flex items-start gap-2.5 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-4 h-4 shrink-0 mt-0.5"
+              style={{ color: data.color }}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
+              />
+            </svg>
+            <div
+              className="flex-1 text-[12px] leading-relaxed text-slate-600"
+              dangerouslySetInnerHTML={{ __html: data.description }}
+            />
+          </div>
+        </div>
+      )}
       <iframe
         src={data.src}
         width="100%"
@@ -277,8 +303,8 @@ function Section1ElDespojo() {
 
       <div className="text-gray-700 leading-relaxed text-[15px] flex flex-col gap-[18px]">
         <p>
-          Cuando R, investigadora del comité Agua y Vida y miembro de una de las familias fundadoras del pueblo,
-          a quien se le otorgó ese pseudónimo por seguridad, era niña, el agua parecía brotar por sí sola de la tierra.
+          Cuando R, investigadora del Comité Agua y Vida y miembro de una de las familias Fundadoras del pueblo de Santa Cruz de las Flores,
+          a quien se le otorgó ese pseudónimo, era niña, el agua parecía brotar por sí sola de la tierra.
           Cada casa tenía su propio pozo y había bebederos comunitarios. Al estar el pueblo sentado en la parte más
           baja de la cuenca del río Santiago-Guadalajara, el agua de los diversos manantiales y arroyos como Los Guayabos,
           El Arenal y las múltiples escorrentías de los cerros circundantes bajaba por la gravedad y surtía las tomas
@@ -290,7 +316,7 @@ function Section1ElDespojo() {
         </p>
         <p>
           La abundancia de agua vio a Santa Cruz de las Flores ―de la misma forma en que vio a muchos otros
-          pueblos― prosperar gracias a ella y a la capacidad que les daba de llevar una forma de vida autónoma;
+          pueblos prosperar― gracias a ella y a la capacidad que les daba de llevar una forma de vida autónoma;
           el agua les daba el poder de generar subsistencia propia, sin tener que depender de la industria,
           teniendo sus medios de sobrevivencia asegurados.
         </p>
@@ -299,21 +325,26 @@ function Section1ElDespojo() {
           text='"Yo pienso que es como una cierta forma de vida hasta entregada a que tú te haces
           responsable de ti mismo. ¿Quieres un huevo? Ahí tienes tu gallina. ¿Quieres fruta?
           Ahí está el árbol."'
-          author="— R, integrante del comité Agua y Vida de Santa Cruz de las Flores, Tlaj."
+          author="— R, integrante del Comité Agua y Vida de Santa Cruz de las Flores, Tlaj."
           borderColor="#38bdf8"
           bgColor="#f0f9ff"
           citeColor="#0284c7"
           margin="4px 0"
         />
 
-        <p>Por lo mismo, cuenta R, que se tenía en Santa Cruz una cultura de no desperdicio.</p>
+        <p>Santa Cruz de las Flores forma parte de una región con una historia territorial
+          anterior a la expansión industrial, inmobiliaria y metropolitana del sur de Guadalajara.
+          La zona se relaciona con el antiguo Valle de Xuchitlán y con la presencia de población originaria coca,
+          por lo que los procesos de despojo del agua no pueden leerse únicamente desde las concesiones contemporáneas.
+          También forman parte de una historia más larga de transformación del territorio, pérdida de control
+          comunitario y reorganización de los bienes comunes.</p>
 
       </div>
 
       {/* mapa con capa de 1991 */}
-      <div className="my-7 rounded-[14px] overflow-hidden border border-slate-200 shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+      <div className="my-7 rounded-[14px] border border-slate-200 shadow-[0_2px_12px_rgba(0,0,0,0.06)] relative z-30 bg-white">
         <div
-          className="py-2.5 px-[18px] border-b flex items-center gap-2.5"
+          className="py-2.5 px-[18px] border-b flex items-center gap-2.5 rounded-t-[13px] overflow-hidden"
           style={{
             background: MAP_SNAPSHOTS.mapa1991.headerBg,
             borderBottomColor: MAP_SNAPSHOTS.mapa1991.headerBorder,
@@ -332,9 +363,10 @@ function Section1ElDespojo() {
         </div>
         <MapaInteractivoHumedalAguasSub
           datasets={[
-            DEFAULT_DATASETS.find(d => d.key === "1991")!,
-            DEFAULT_DATASETS.find(d => d.key === "Humedal 2020")!,
+            DEFAULT_DATASETS.find(d => d.key === "Mapa comunitario 1991")!,
+            DEFAULT_DATASETS.find(d => d.key === "Humedales")!
           ]}
+          instrucciones={INSTRUCCIONES_MAPA_1991}
           lazy
         />
       </div>
@@ -443,7 +475,7 @@ function Section2PrimerasLuchas() {
         ranchitos. Yo creo que era tan fuerte la resistencia porque se sabía que sí se podía.
         Antes teníamos la duda, la incertidumbre, porque íbamos con el Estado. Aun así, pudimos
         parar y suspender esa decisión de extraer agua."'
-          author="— R, integrante del comité Agua y Vida de Santa Cruz de las Flores, Tlaj."
+          author="— R, integrante del Comité Agua y Vida de Santa Cruz de las Flores, Tlaj."
           borderColor="#f59e0b"
           bgColor="#fffbeb"
           citeColor="#d97706"
@@ -537,16 +569,16 @@ function Section3Inmobiliarias() {
         </div>
         <MapaInteractivoHumedalAguasSub
           datasets={[
-            DEFAULT_DATASETS.find(d => d.key === "Extracción de agua subterránea")!,
-            DEFAULT_DATASETS.find(d => d.key === "Descargas de aguas residuales")!,
-            DEFAULT_DATASETS.find(d => d.key === "Humedal 2020")!,
+            DEFAULT_DATASETS.find(d => d.key === "Concesiones de extracción de agua subterránea, REPDA (2026)")!,
+            DEFAULT_DATASETS.find(d => d.key === "Permisos de descarga de aguas residuales, REPDA (2026)")!,
+            DEFAULT_DATASETS.find(d => d.key === "Humedales")!,
           ]}
           usoFiltroExacto={["SERVICIOS"]}
           showFiltros={false}
           tamanoPorVolumen
           shapePorCapa={{
-            "Extracción de agua subterránea": "circle",
-            "Descargas de aguas residuales": "square",
+            "Concesiones de extracción de agua subterránea, REPDA (2026)": "circle",
+            "Permisos de descarga de aguas residuales, REPDA (2026)": "square",
           }}
           instrucciones={INSTRUCCIONES_TAMANO_VOLUMEN}
           lazy
@@ -658,9 +690,9 @@ function Section4Industria() {
       </p>
 
       {/** Mapa Industria en Santa Cruz, descarga y extracción, tamaño por volumen*/}
-      <div className="my-7 rounded-[14px] overflow-hidden border border-slate-200 shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+      <div className="my-7 rounded-[14px] border border-slate-200 shadow-[0_2px_12px_rgba(0,0,0,0.06)] relative z-30 bg-white">
         <div
-          className="py-2.5 px-[18px] border-b flex items-center gap-2.5"
+          className="py-2.5 px-[18px] border-b flex items-center gap-2.5 rounded-t-[13px] overflow-hidden"
           style={{
             background: MAP_SNAPSHOTS.industriaSantaCruz.headerBg,
             borderBottomColor: MAP_SNAPSHOTS.industriaSantaCruz.headerBorder,
@@ -679,16 +711,16 @@ function Section4Industria() {
         </div>
         <MapaInteractivoHumedalAguasSub
           datasets={[
-            DEFAULT_DATASETS.find(d => d.key === "Extracción de agua subterránea")!,
-            DEFAULT_DATASETS.find(d => d.key === "Descargas de aguas residuales")!,
-            DEFAULT_DATASETS.find(d => d.key === "Humedal 2020")!,
+            DEFAULT_DATASETS.find(d => d.key === "Concesiones de extracción de agua subterránea, REPDA (2026)")!,
+            DEFAULT_DATASETS.find(d => d.key === "Permisos de descarga de aguas residuales, REPDA (2026)")!,
+            DEFAULT_DATASETS.find(d => d.key === "Humedales")!,
           ]}
           usoFiltroExacto={["INDUSTRIAL"]}
           showFiltros={false}
           tamanoPorVolumen
           shapePorCapa={{
-            "Extracción de agua subterránea": "circle",
-            "Descargas de aguas residuales": "square",
+            "Concesiones de extracción de agua subterránea, REPDA (2026)": "circle",
+            "Permisos de descarga de aguas residuales, REPDA (2026)": "square",
           }}
           instrucciones={INSTRUCCIONES_TAMANO_VOLUMEN}
           lazy
@@ -785,7 +817,7 @@ function Section5DespojoAgua() {
           sobre algo tan valiosísimo para la vida que era el agua, porque esa es la parte de cómo 
           hacerse de ellos de recursos, de cómo establecer una relación de subalternidad de los 
           ciudadanos a depender de un papá grandote, ¿verdad?"'
-          author="— R, investigadora del comité Agua y Vida"
+          author="— R, investigadora del Comité Agua y Vida"
           borderColor="#38bdf8"
           bgColor="#f0f9ff"
           citeColor="#0284c7"
@@ -841,15 +873,33 @@ function Section5DespojoAgua() {
 
       <LegalArticleBlock articles={LEGAL_ARTICLES} />
 
-      <TableauEmbed data={TABLEAU_EMBEDS.concesiones2021} />
-      <TableauEmbed data={TABLEAU_EMBEDS.radialYPastelStzCruz} />
     </SectionWrapper>
   )
 }
 
-// ── Section 6: Metodología y Referencias ──────────────────────────────────────
+// ── Section 6: Más graficas ──────────────────────────────────────
 
-function Section6Metodologia() {
+function Section6MasGraficas() {
+  const { background, titleColor, borderColor } = SECTION_CONFIGS.masGraficas
+  return (
+    <SectionWrapper background={background}>
+      <SectionTitle color={titleColor} borderColor={borderColor} marginBottom={24}>
+        Más gráficas
+      </SectionTitle>
+
+      <div className="flex flex-col gap-4">
+        <TableauEmbed data={TABLEAU_EMBEDS.concesiones2021} />
+        <TableauEmbed data={TABLEAU_EMBEDS.radialYPastelStzCruz} />
+        <TableauEmbed data={TABLEAU_EMBEDS.buscadorConcesiones} />
+        <TableauEmbed data={TABLEAU_EMBEDS.treemapsDescargasExtraccion} />
+      </div>
+    </SectionWrapper>
+  )
+}
+
+// ── Section 7: Metodología y Referencias ──────────────────────────────────────
+
+function Section7Metodologia() {
   const { background, titleColor, borderColor } = SECTION_CONFIGS.metodologia
   return (
     <SectionWrapper background={background}>
@@ -939,7 +989,8 @@ export default function MapaInteractivoStory() {
       <Section3Inmobiliarias />
       <Section4Industria />
       <Section5DespojoAgua />
-      <Section6Metodologia />
+      <Section6MasGraficas />
+      <Section7Metodologia />
     </div>
   )
 }
