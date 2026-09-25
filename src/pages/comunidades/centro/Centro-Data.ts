@@ -12,6 +12,9 @@ import juanac8 from "@assets/comunidades/juanacatlan/IMG_20240611_091546.jpg";
 import juanac9 from "@assets/comunidades/juanacatlan/IMG_20240611_091603.jpg";
 import juanac10 from "@assets/comunidades/juanacatlan/IMG_20240611_113948.jpg";
 import juanac11 from "@assets/comunidades/juanacatlan/IMG-20240529-WA0052.jpg";
+import juanac12 from "@assets/comunidades/juanacatlan/20260923_100736.jpeg";
+import juanac13 from "@assets/comunidades/juanacatlan/20260923_101019.jpeg";
+import juanac14 from "@assets/comunidades/juanacatlan/20260923_102408.jpeg";
 
 import CortoJuanacatlan from "@assets/comunidades/juanacatlan/SoñeConNutrias/image-33.png"
 
@@ -47,13 +50,13 @@ export const juanacatlan = {
     sections: [
         {
             subtitle: 'Xonocatlan',
-            img: img1,
+            img: juanac12,
             data: 'El pueblo de Juanacatlán enfrenta problemáticas socioambientales derivadas de la industrialización, proyectos extractivos, contaminación ambiental y del crecimiento inmobiliario irregular. Las consecuencias de estas problemáticas se ven reflejadas en: Contaminación del aire, suelo y cuerpos de agua de la cuenca Alta Lerma-Chapala-Santiago; afectaciones a la salud y pérdida de un entorno sano; Deforestación de bosques y cambio de uso de suelos; Pérdida de biodiversidad; Incendios forestales y de vertederos municipales; Caza furtiva; Desplazamiento y despojo de las comunidades; Violencias e inseguridad.',
             reverse: false
         },
         {
             subtitle: '',
-            img: img1,
+            img: juanac13,
             data: 'La comunidad de Xonocatlan resiste ante estas problemáticas a través de distintas acciones: Actividades culturales y de protesta en el espacio público; Festivales, foros y talleres; Huertos comunitarios agroecológicos y medicinales; Recorridos de reconocimiento del paisaje y la herencia cultural; Conformación del Concejo Indígena de Xonocatlan; Investigación comunitaria; Defensa legal ante irregularidades, omisiones y afectaciones; Articulación con colectivos y universidades.',
             reverse: true
         }
@@ -61,7 +64,7 @@ export const juanacatlan = {
     resourses: [
         {
             title: 'MURAL',
-            img: img1,
+            img: juanac14,
             to: '/comunidades/juanacatlan/mural'
         },
         {
