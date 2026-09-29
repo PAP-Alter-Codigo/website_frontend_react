@@ -16,7 +16,7 @@ import juanac12 from "@assets/comunidades/juanacatlan/20260923_100736.jpeg";
 import juanac13 from "@assets/comunidades/juanacatlan/20260923_101019.jpeg";
 import juanac14 from "@assets/comunidades/juanacatlan/20260923_102408.jpeg";
 
-import CortoJuanacatlan from "@assets/comunidades/juanacatlan/SoñeConNutrias/image-33.png"
+//import CortoJuanacatlan from "@assets/comunidades/juanacatlan/SoñeConNutrias/image-33.png"
 
 
 export interface CommunitySection {
@@ -66,12 +66,12 @@ export const juanacatlan = {
             title: 'MURAL',
             img: juanac14,
             to: '/comunidades/juanacatlan/mural'
-        },
+        }/*,
         {
             title: 'CORTO',
             img: CortoJuanacatlan,
             to: '/comunidades/juanacatlan/soñe-con-nutrias'
-        }
+        }*/
     ],
     carrousel: [
         juanac1,
