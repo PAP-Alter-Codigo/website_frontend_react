@@ -5,8 +5,9 @@ frontend:
       commands:
         - nvm use 20 || nvm install 20 # Asegura Node 20 (o usa 22)
         - node -v
-        - npm install -g pnpm
+        - npm install -g pnpm@9 # Fija pnpm en v9 para evitar cambios inesperados
         - pnpm config set store-dir .pnpm-store # Opcional: ayuda con el caché
+        - echo "only-built-dependencies[]=esbuild" >> .npmrc # Autoriza el build script de esbuild
         - pnpm install --frozen-lockfile # Más seguro para CI que 'pnpm install' solo
     build:
       commands:
