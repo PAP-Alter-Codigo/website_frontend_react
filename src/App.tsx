@@ -15,7 +15,7 @@ import ColaboradoresPage from './pages/colaboradores/Colaboradores-Page';
 import ComunidadWrapperPage from './pages/comunidades detail/Comunidad-Wrapper-Page';
 import NotFoundPage from './pages/notFound/Not-Found-Page';
 import CentroPage from './pages/comunidades/centro/Centro-Page';
-import SoñeConNutriasPage from './pages/comunidades/centro/juanacatlan/Soñe-Con-Nutrias-Page';
+/* import SoñeConNutriasPage from './pages/comunidades/centro/juanacatlan/Soñe-Con-Nutrias-Page'; */
 import MuralJuanacatlanPage from './pages/comunidades/centro/juanacatlan/Mural-Juanacatlan-Page';
 import MapaInteractivoPage from './pages/comunidades/centro/sta cruz de las flores/mapa-interactivo/Mapa-Interactivo-Page';
 import XuchitlanPage from './pages/comunidades/centro/sta cruz de las flores/Xuchitlan/Xuchitlan-Page';
@@ -54,8 +54,7 @@ function App() {
       <AOSRouterSync />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/comunidades" element={<ComunidadesPage />} />
-        <Route path="/comunidades/juanacatlan/soñe-con-nutrias" element={<SoñeConNutriasPage />} />
+        <Route path="/comunidades" element={<ComunidadesPage />} />        
         <Route path="/comunidades/juanacatlan/mural" element={<MuralJuanacatlanPage />} />
         <Route path="/comunidades/centro/:slug" element={<CentroPage />} />
         <Route path="/regiones/:slug" element={<ComunidadWrapperPage />} />
