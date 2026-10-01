@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+backend:
+  name: github
+  repo: PAP-Alter-Codigo/website_frontend_react
+  branch: main
+
+media_folder: /public/cms-content
+public_folder: /cms-content
+
+collections:
+  - name: "colaboradores_global"
+    label: "Colaboradores (Lista Completa)"
+    files:
+      - name: "colaboradores_index"
+        label: "Lista de Colaboradores por Año"
+        file: "public/cms-content/colaboradores/index.json"
+        format: "json"
+        fields:
+          - label: "Periodos por Año"
+            name: "colaboradores" # Campo contenedor interno
+            widget: "list"
+            summary: "Año {{fields.year}}"
+            fields:
+              - { label: "Año", name: "year", widget: "number", value_type: "int" }
+              - label: "Periodos"
+                name: "periodos"
+                widget: "list"
+                summary: "{{fields.name}}"
+                fields:
+                  - label: "Nombre del Periodo"
+                    name: "name"
+                    widget: "select"
+                    options: ["primavera", "verano", "otoño"]
+                  - label: "Personas"
+                    name: "data"
+                    widget: "list"
+                    summary: "{{fields.nombre}} - {{fields.carrera}}"
+                    fields:
+                      - { label: "Nombre", name: "nombre", widget: "string" }
+                      - { label: "Carrera", name: "carrera", widget: "string" }
+                      - { label: "Categoría", name: "categoria", widget: "string" }
+                      - { label: "Contacto", name: "contacto", widget: "string", required: false }
+                      - { label: "Imagen", name: "imagen", widget: "image", required: false }
