@@ -7,34 +7,28 @@ import juanac1 from "@assets/comunidades/juanacatlan/DSCN0544.jpg";
 /* import juanac2 from "@assets/comunidades/juanacatlan/IMG_3182.jpg";
 import juanac3 from "@assets/comunidades/juanacatlan/IMG_3220.jpg";
 import juanac4 from "@assets/comunidades/juanacatlan/IMG_3242.jpg"; */
-import juanac5 from "@assets/comunidades/juanacatlan/IMG_3621.jpg";
+//import juanac5 from "@assets/comunidades/juanacatlan/IMG_3621.jpg";
 import juanac6 from "@assets/comunidades/juanacatlan/IMG_20240529_100755.jpg";
-import juanac7 from "@assets/comunidades/juanacatlan/IMG_20240529_125517.jpg";
+//import juanac7 from "@assets/comunidades/juanacatlan/IMG_20240529_125517.jpg";
 import juanac8 from "@assets/comunidades/juanacatlan/IMG_20240611_091546.jpg";
-import juanac9 from "@assets/comunidades/juanacatlan/IMG_20240611_091603.jpg";
+//import juanac9 from "@assets/comunidades/juanacatlan/IMG_20240611_091603.jpg";
 
 import mural1 from "@assets/comunidades/juanacatlan/Mural/mural1.jpeg";
-import mural2 from "@assets/comunidades/juanacatlan/Mural/mural2.jpeg";
-import mural3 from "@assets/comunidades/juanacatlan/Mural/mural3.jpeg";
+//import mural2 from "@assets/comunidades/juanacatlan/Mural/mural2.jpeg";
+//import mural3 from "@assets/comunidades/juanacatlan/Mural/mural3.jpeg";
 import mural4 from "@assets/comunidades/juanacatlan/Mural/mural4.jpeg";
 import mural5 from "@assets/comunidades/juanacatlan/Mural/mural5.jpeg";
-import mural6 from "@assets/comunidades/juanacatlan/Mural/mural6.jpeg";
+//import mural6 from "@assets/comunidades/juanacatlan/Mural/mural6.jpeg";
 import mural7 from "@assets/comunidades/juanacatlan/Mural/mural7.jpeg";
 
 
 const imgs = [
     { src: juanac1 },
-    { src: juanac5 },
     { src: juanac6 },
-    { src: juanac7 },
     { src: juanac8 },
-    { src: juanac9 },
     { src: mural1 },
-    { src: mural2 },
-    { src: mural3 },
     { src: mural4 },
     { src: mural5 },
-    { src: mural6 },
     { src: mural7 },
 ]
 

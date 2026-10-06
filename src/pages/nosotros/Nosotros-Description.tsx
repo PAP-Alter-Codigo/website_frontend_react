@@ -4,7 +4,7 @@ export default function NosotrosDescription() {
     <section>
       <div className="flex flex-1 justify-center pt-12">
         <div className="w-9/12 mx-auto">
-          <h2 className="text-4xl font-extrabold pb-5 text-center">NOSOTROS</h2>
+          <h2 className="text-4xl font-extrabold pb-5 text-center">NOSOTRXS</h2>
 
           <div className="space-y-4 text-lg leading-relaxed text-gray-700">
             <p>
