@@ -15,6 +15,7 @@ export function useCMSContent<T>(
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+    // Si no hay path válido, detener la ejecución
     if (!path) {
       setLoading(false);
       return;
@@ -29,39 +30,30 @@ export function useCMSContent<T>(
 
       try {
         const response = await fetch(path, { signal });
-        const contentType = response.headers.get("content-type");
-        const isHtml = contentType && contentType.includes("text/html");
 
-        // Si responde 200 OK y es JSON real
-        if (response.ok && !isHtml) {
+        if (response.ok) {
           const json = (await response.json()) as T;
           setData(json);
           setError(null);
-        } 
-        // Si responde 404 o si devolvió HTML (SPA Fallback de Vite para archivos inexistentes)
-        else if (response.status === 404 || isHtml) {
+        } else if (response.status === 404) {
           if (fallbackData !== undefined) {
             setData(fallbackData);
             setError(null);
           } else {
-            throw new Error(`Content not found at ${path}`);
+            throw new Error(`Content not found at ${path} (404)`);
           }
-        } 
-        // Errores de servidor (500, etc.)
-        else {
+        } else {
           throw new Error(`Failed to fetch ${path}: ${response.status} ${response.statusText}`);
         }
       } catch (err: unknown) {
         if (err instanceof Error && err.name === 'AbortError') {
+          // Petición cancelada por unmount/cambio de dep; no actualizar estado
           return;
         }
-
-        // Si falló el parseo de JSON pero contamos con fallbackData, rescatamos
-        if (fallbackData !== undefined) {
-          setData(fallbackData);
-          setError(null);
-        } else {
-          setError(err instanceof Error ? err : new Error(String(err)));
+        
+        // Si falló por otra razón y no hubo manejo previo
+        setError(err instanceof Error ? err : new Error(String(err)));
+        if (fallbackData === undefined) {
           setData(null);
         }
       } finally {

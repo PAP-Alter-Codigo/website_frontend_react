@@ -1,7 +1,7 @@
 // src/components/ColaboradoresAcordeon.tsx
-import {type Persona, PeriodosData} from "./Colaboradores-Data";
+import { type Persona, type YearData, PeriodosData } from "./Colaboradores-Data";
 import { useEffect, useMemo, useRef, useState } from "react";
-
+import { useCMSContent } from "../../hooks/useCMSContent";
 
 /* ---------- Utils ---------- */
 function Chevron({ className = "w-5 h-5 text-gray-500" }: { className?: string }) {
@@ -186,9 +186,25 @@ type Props = { title?: string };
 export default function ColaboradoresList({ title = "Colaboradores por Año y Semestre" }: Props) {
     const [selected, setSelected] = useState<Persona | undefined>(undefined);
 
+    const { data: rawData, loading, error } = useCMSContent<YearData | { colaboradores: YearData }>(
+        "/cms-content/colaboradores/index.json",
+        PeriodosData
+    );
+
+    // Si viene del CMS como { colaboradores: [...] }, extrae el arreglo.
+    // Si viene como array directo o fallback, usa rawData.
+    const activeData: YearData = useMemo(() => {
+        if (!rawData) return PeriodosData;
+        if (Array.isArray(rawData)) return rawData;
+        if (typeof rawData === "object" && "colaboradores" in rawData && Array.isArray((rawData).colaboradores)) {
+            return (rawData).colaboradores as YearData;
+        }
+        return PeriodosData;
+    }, [rawData]);
+
     const ordered = useMemo(
         () =>
-            [...PeriodosData].sort((a, b) => b.year - a.year).map((y) => ({
+            [...activeData].sort((a, b) => b.year - a.year).map((y) => ({
                 ...y,
                 periodos: [...y.periodos].sort((a, b) => {
                     const rank = (s: string) => {
@@ -201,8 +217,11 @@ export default function ColaboradoresList({ title = "Colaboradores por Año y Se
                     return rank(a.name) - rank(b.name);
                 }),
             })),
-        []
+        [activeData]
     );
+
+    if (loading) return <div className="text-center py-12">Cargando colaboradores...</div>;
+    if (error) return <div className="text-center py-12 text-red-600">Error: {error.message}</div>;
 
     return (
         <>

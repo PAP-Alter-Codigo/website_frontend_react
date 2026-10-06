@@ -5,20 +5,48 @@ backend:
   repo: PAP-Alter-Codigo/website_frontend_react
   branch: main
 
-media_folder: /public/cms-content
+media_folder: public/cms-content
 public_folder: /cms-content
 
 collections:
-  - name: "colaboradores_global"
-    label: "Colaboradores (Lista Completa)"
+  - name: "asesores"
+    label: "Asesores"
+    media_folder: "public/cms-content/asesores/imgs"
+    public_folder: "/cms-content/asesores/imgs"
     files:
-      - name: "colaboradores_index"
-        label: "Lista de Colaboradores por Año"
+      - name: "asesores_list"
+        label: "Lista de Asesores"
+        file: "public/cms-content/asesores/index.json"
+        format: "json"
+        fields:
+          - label: "Asesores"
+            name: "asesores"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "Nombre", name: "name", widget: "string" }
+              - label: "Grados Académicos"
+                name: "degrees"
+                widget: "list"
+                field: { label: "Grado / Título", widget: "string" }
+              - { label: "Especialidad / Area", name: "expertise", widget: "string" }
+              - label: "Imagen"
+                name: "photoPath"
+                widget: "image"
+                media_folder: "public/cms-content/asesores/imgs"
+                public_folder: "/cms-content/asesores/imgs"
+  - name: "colaboradores"
+    label: "Colaboradores"
+    media_folder: "public/cms-content/colaboradores/imgs"
+    public_folder: "/cms-content/colaboradores/imgs"
+    files:
+      - name: "colaboradores_data"
+        label: "Lista de Colaboradores"
         file: "public/cms-content/colaboradores/index.json"
         format: "json"
         fields:
           - label: "Periodos por Año"
-            name: "colaboradores" # Campo contenedor interno
+            name: "colaboradores"
             widget: "list"
             summary: "Año {{fields.year}}"
             fields:
@@ -39,6 +67,19 @@ collections:
                     fields:
                       - { label: "Nombre", name: "nombre", widget: "string" }
                       - { label: "Carrera", name: "carrera", widget: "string" }
-                      - { label: "Categoría", name: "categoria", widget: "string" }
+                      - label: "Categoría"
+                        name: "categoria"
+                        widget: "select"
+                        options:
+                          - "Audio"
+                          - "Tecnologias y desarrollo"
+                          - "Trabajo comunitario"
+                          - "Artes"
+                          - "Redes"
                       - { label: "Contacto", name: "contacto", widget: "string", required: false }
-                      - { label: "Imagen", name: "imagen", widget: "image", required: false }
+                      - label: "Imagen"
+                        name: "imagen"
+                        widget: "image"
+                        required: false
+                        media_folder: "public/cms-content/colaboradores/imgs"
+                        public_folder: "/cms-content/colaboradores/imgs"
