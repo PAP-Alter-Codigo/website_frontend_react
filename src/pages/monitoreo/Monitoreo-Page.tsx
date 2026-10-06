@@ -16,7 +16,7 @@ export default function MonitoreoPage() {
                         <div className="w-9/12">
                             <div className="text-4xl font-extrabold text-white pb-5">HERRAMIENTA DE MONITOREO</div>
                             <p className="text-white">
-                                La herramienta de monitoreo de TerritorioRios centraliza información sobre conflictos socioambientales
+                                La herramienta de monitoreo de TerritorioRios centraliza información sobre problemáticas ambientales
                                 en Jalisco, facilitando el acceso a datos relevantes para organizaciones,
                                 investigadores y defensores del territorio.
                             </p>
