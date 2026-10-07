@@ -12,13 +12,13 @@ export default function HomePage() {
             <img className="px-11 select-none" src={logo} alt="logo resonancias 1" />
             <div className="flex flex-1 justify-center pb-5">
                 <div className="w-9/12">
-                    <div className="text-4xl font-extrabold text-white pb-5">RESONANCIAS</div>
-                    <p className="text-white">
-                        Mujeres y Territorios, tiene la finalidad de ser un proyecto de comunicación transmedia que contribuya
+                    <div className="text-4xl font-extrabold text-white pb-5">Mujeres y Territorios</div>
+                    <p className="text-lg text-white">
+                        Este sitio tiene la finalidad de ser un proyecto de comunicación transmedia que contribuya
                         como herramienta para el reconocimiento de mujeres y comunidades defensoras del territorio de Jalisco.
                     </p> <br />
-                    <p className="text-white">
-                        Este proyecto surge desde el reconocimiento de los conflictos socioambientales en los que las mujeres,
+                    <p className="text-lg text-white">
+                        El proyecto surge desde el reconocimiento de los conflictos socioambientales en los que las mujeres,
                         conscientes de las afectaciones sobre sus dinámicas culturales, sociales, económicas y emocionales, juegan
                         un papel central en la defensa de los territorios. Siendo ellas quienes lideran espacios y generan
                         herramientas para el cuidado como parte de su lucha y subsistencia, en resistencia frente a situaciones de
