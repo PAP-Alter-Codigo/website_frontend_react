@@ -1,0 +1,58 @@
+{
+  "articles": [
+    {
+      "title": "Emotional Management Strategies and Care for Women Defenders of the Territory in Jalisco",
+      "description": "Cómo las activistas de Jalisco transforman el miedo y la sobrecarga de cuidados en resistencia colectiva.",
+      "type": "Article",
+      "url": "https://www.researchgate.net/publication/384323212_Emotional_Management_Strategies_and_Care_for_Women_Defenders_of_the_Territory_in_Jalisco",
+      "author": "Daniela Gloss Nuñez, Silvana Mabel Nuñez Fadda",
+      "date": "2024-09",
+      "image": "/cms-content/investigacion/imgs/emotional-management-strategies.webp"
+    },
+    {
+      "title": "Place Attachment Disruption: Emotions and Psychological Distress in Mexican Land Defenders",
+      "description": "Estudio sobre el impacto psicológico del daño ambiental en defensores del territorio de El Salto y Juanacatlán.",
+      "type": "Article",
+      "url": "https://www.researchgate.net/publication/399289286_Place_Attachment_Disruption_Emotions_and_Psychological_Distress_in_Mexican_Land_Defenders",
+      "author": "Silvana Mabel Nuñez Fadda, Daniela Mabel Gloss Nuñez",
+      "date": "2026-01",
+      "image": "/cms-content/investigacion/imgs/place-attachment-disruption.webp"
+    },
+    {
+      "title": "Emociones y estrategias de manejo emocional en la defensa del territorio de mujeres de la cuenca Lerma-Chapala-Santiago",
+      "description": "Análisis sobre cómo las defensoras de la cuenca superan el aislamiento mediante redes de apoyo mutuo.",
+      "type": "Book",
+      "url": "https://www.researchgate.net/publication/400631215_Emociones_y_estrategias_de_manejo_emocional_en_la_defensa_del_territorio_de_mujeres_de_la_cuenca_Lerma-Chapala-Santiago",
+      "author": "Daniela Gloss Nuñez",
+      "date": "2024-02",
+      "image": "/cms-content/investigacion/imgs/emociones-y-estrategias.webp"
+    },
+    {
+      "title": "Política de los cuidados: Las luchas de las mujeres por la defensa del territorio en Jalisco",
+      "description": "Video introductorio sobre la invisibilización de los cuidados en defensoras ambientales de Jalisco.",
+      "type": "Video",
+      "url": "https://youtu.be/7L7SRjAlnM0",
+      "author": "Lab de Análisis de Orgs y Movimientos Sociales",
+      "date": "2025-03",
+      "image": "/cms-content/investigacion/imgs/politica-de-los-cuidados.webp"
+    },
+    {
+      "title": "Día del Medio Ambiente",
+      "description": "Capsula Informativa con la Maestra Daniela Gloss con reflexiones sobre activismo y cuidado mutuo en el Día del Medio Ambiente.",
+      "type": "Video",
+      "url": "https://www.facebook.com/reel/3496106597211627",
+      "author": "Anima tv",
+      "date": "2025",
+      "image": "/cms-content/investigacion/imgs/dia-del-medio-ambiente.webp"
+    },
+    {
+      "title": "Espiritualidad y emociones en las luchas de mujeres defensoras del territorio en Jalisco",
+      "description": "Cápsula audiovisual sobre el uso de rituales y la espiritualidad como herramientas de resistencia.",
+      "type": "Video",
+      "url": "https://youtu.be/VKBPVGO7wFQ",
+      "author": "Lab de Análisis de Orgs y Movimientos Sociales",
+      "date": "2025-03",
+      "image": "/cms-content/investigacion/imgs/espiritualidad-y-emociones.webp"
+    }
+  ]
+}

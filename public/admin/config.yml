@@ -9,32 +9,6 @@ media_folder: public/cms-content
 public_folder: /cms-content
 
 collections:
-  - name: "asesores"
-    label: "Asesores"
-    media_folder: "public/cms-content/asesores/imgs"
-    public_folder: "/cms-content/asesores/imgs"
-    files:
-      - name: "asesores_list"
-        label: "Lista de Asesores"
-        file: "public/cms-content/asesores/index.json"
-        format: "json"
-        fields:
-          - label: "Asesores"
-            name: "asesores"
-            widget: "list"
-            summary: "{{fields.name}}"
-            fields:
-              - { label: "Nombre", name: "name", widget: "string" }
-              - label: "Grados Académicos"
-                name: "degrees"
-                widget: "list"
-                field: { label: "Grado / Título", widget: "string" }
-              - { label: "Especialidad / Area", name: "expertise", widget: "string" }
-              - label: "Imagen"
-                name: "photoPath"
-                widget: "image"
-                media_folder: "public/cms-content/asesores/imgs"
-                public_folder: "/cms-content/asesores/imgs"
   - name: "colaboradores"
     label: "Colaboradores"
     media_folder: "public/cms-content/colaboradores/imgs"
@@ -50,7 +24,12 @@ collections:
             widget: "list"
             summary: "Año {{fields.year}}"
             fields:
-              - { label: "Año", name: "year", widget: "number", value_type: "int" }
+              - {
+                  label: "Año",
+                  name: "year",
+                  widget: "number",
+                  value_type: "int",
+                }
               - label: "Periodos"
                 name: "periodos"
                 widget: "list"
@@ -76,10 +55,89 @@ collections:
                           - "Trabajo comunitario"
                           - "Artes"
                           - "Redes"
-                      - { label: "Contacto", name: "contacto", widget: "string", required: false }
+                      - {
+                          label: "Contacto",
+                          name: "contacto",
+                          widget: "string",
+                          required: false,
+                        }
                       - label: "Imagen"
                         name: "imagen"
                         widget: "image"
                         required: false
                         media_folder: "public/cms-content/colaboradores/imgs"
                         public_folder: "/cms-content/colaboradores/imgs"
+  - name: "asesores"
+    label: "Asesores"
+    media_folder: "public/cms-content/asesores/imgs"
+    public_folder: "/cms-content/asesores/imgs"
+    files:
+      - name: "asesores_list"
+        label: "Lista de Asesores"
+        file: "public/cms-content/asesores/index.json"
+        format: "json"
+        fields:
+          - label: "Asesores"
+            name: "asesores"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "Nombre", name: "name", widget: "string" }
+              - label: "Grados Académicos"
+                name: "degrees"
+                widget: "list"
+                field: { label: "Grado / Título", widget: "string" }
+              - {
+                  label: "Especialidad / Area",
+                  name: "expertise",
+                  widget: "string",
+                }
+              - label: "Imagen"
+                name: "photoPath"
+                widget: "image"
+                media_folder: "public/cms-content/asesores/imgs"
+                public_folder: "/cms-content/asesores/imgs"
+  - name: "investigacion"
+    label: "Investigación"
+    media_folder: "public/cms-content/investigacion/imgs"
+    public_folder: "/cms-content/investigacion/imgs"
+    files:
+      - name: "investigacion_articles"
+        label: "Lista de Artículos y Publicaciones"
+        file: "public/cms-content/investigacion/index.json"
+        format: "json"
+        fields:
+          - label: "Publicaciones"
+            name: "articles"
+            widget: "list"
+            summary: "{{fields.title}} ({{fields.type}})"
+            fields:
+              - { label: "Título", name: "title", widget: "string" }
+              - { label: "Descripción", name: "description", widget: "text" }
+              - label: "Tipo / Categoría"
+                name: "type"
+                widget: "select"
+                options: ["Article", "Video", "Infographic", "Book"]
+              - label: "URL de la Publicación"
+                name: "url"
+                widget: "string"
+                pattern:
+                  [
+                    '^https?:\/\/.+',
+                    "Ingresa una URL válida que empiece por http:// o https://",
+                  ]
+              - { label: "Autor(es)", name: "author", widget: "string" }
+              - label: "Fecha (ISO: YYYY-MM)"
+                name: "date"
+                widget: "string"
+                pattern:
+                  [
+                    '^\d{4}(-\d{2})?$',
+                    "La fecha debe estar en formato ISO (ej. 2024-09 o 2025)",
+                  ]
+              - label: "Imagen de Portada"
+                name: "image"
+                widget: "image"
+                required: false
+                media_folder: "public/cms-content/investigacion/imgs"
+                public_folder: "/cms-content/investigacion/imgs"
