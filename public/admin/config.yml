@@ -24,12 +24,7 @@ collections:
             widget: "list"
             summary: "Año {{fields.year}}"
             fields:
-              - {
-                  label: "Año",
-                  name: "year",
-                  widget: "number",
-                  value_type: "int",
-                }
+              - { label: "Año", name: "year", widget: "number", value_type: "int" }
               - label: "Periodos"
                 name: "periodos"
                 widget: "list"
@@ -55,12 +50,7 @@ collections:
                           - "Trabajo comunitario"
                           - "Artes"
                           - "Redes"
-                      - {
-                          label: "Contacto",
-                          name: "contacto",
-                          widget: "string",
-                          required: false,
-                        }
+                      - { label: "Contacto", name: "contacto", widget: "string", required: false }
                       - label: "Imagen"
                         name: "imagen"
                         widget: "image"
@@ -87,11 +77,8 @@ collections:
                 name: "degrees"
                 widget: "list"
                 field: { label: "Grado / Título", widget: "string" }
-              - {
-                  label: "Especialidad / Area",
-                  name: "expertise",
-                  widget: "string",
-                }
+              - { label: "Especialidad / Area", name: "expertise", widget: "string" }
+              - { label: "Contacto", name: "contact", widget: "string" }
               - label: "Imagen"
                 name: "photoPath"
                 widget: "image"

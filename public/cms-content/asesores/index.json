@@ -8,6 +8,7 @@
         "Dra. en Ciencias Sociales con especialidad en Antropología"
       ],
       "expertise": "Cuidados, pueblos indígenas y salud",
+      "contact": "selene.cruz@iteso.mx",
       "photoPath": "/cms-content/asesores/imgs/selene-cruz.jpg"
     },
     {
@@ -18,6 +19,7 @@
         "Dra. en Ciencias Sociales"
       ],
       "expertise": "Conflictividad socioambiental, defensa del territorio, emociones y cuidados",
+      "contact": "mabel.gloss@iteso.mx",
       "photoPath": "/cms-content/asesores/imgs/daniela-gloss.jpg"
     },
     {
@@ -26,6 +28,7 @@
         "Lic. en Comunicación"
       ],
       "expertise": "Postproducción, guionismo y animación 2D",
+      "contact": "hojasecafilms@gmail.com",
       "photoPath": "/cms-content/asesores/imgs/francisco-rivera.jpg"
     },
     {
@@ -34,6 +37,7 @@
         "Mtro. en Derechos humanos y paz"
       ],
       "expertise": "Estudios de derechos humanos y comunicación",
+      "contact": "joseramon@iteso.mx",
       "photoPath": "/cms-content/asesores/imgs/jose-ramon-becerra.jpeg"
     },
     {
@@ -42,6 +46,7 @@
         "Mtra. en Mercadotecnia Global"
       ],
       "expertise": "Comunicación de la ciencia, gestión de la investigación y posgrado",
+      "contact": "luzestel@iteso.mx",
       "photoPath": "/cms-content/asesores/imgs/luz-estela-alvarez.jpeg"
     },
     {
@@ -50,6 +55,7 @@
         "Lic. en Comunicación y Artes Audiovisuales"
       ],
       "expertise": "Diseño de videojuegos",
+      "contact": "roberto.castellanos@iteso.mx",
       "photoPath": "/cms-content/asesores/imgs/roberto-castellanos.jpg"
     },
     {
@@ -58,6 +64,7 @@
         "Ingeniero en Sistemas"
       ],
       "expertise": "Diseño y desarrollo de software",
+      "contact": "alexei.dealba@iteso.mx",
       "photoPath": "/cms-content/asesores/imgs/alexei-de-alba.jpeg"
     },
     {
@@ -68,6 +75,7 @@
         "Maestrante en Diseño Estratégico e Innovación Social"
       ],
       "expertise": "Educación ambiental, diseño estratégico e innovación social",
+      "contact": "andrea.garibay@iteso.mx",
       "photoPath": "/cms-content/asesores/imgs/andrea-garibay.jpeg"
     },
     {
@@ -78,6 +86,7 @@
         "Dra. en Ciencias Sociales"
       ],
       "expertise": "Género y participación política",
+      "contact": "isayocoru@gmail.com",
       "photoPath": "/cms-content/asesores/imgs/yoloxochitl-corona.jpeg"
     },
     {
@@ -88,6 +97,7 @@
         "Dra. en Ciencias Sociales"
       ],
       "expertise": "Arte, ciencias sociales y estudios sobre la región",
+      "contact": "talien@iteso.mx",
       "photoPath": "/cms-content/asesores/imgs/talien-corona.jpeg"
     }
   ]

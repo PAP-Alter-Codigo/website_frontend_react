@@ -36,6 +36,7 @@ export default function NosotrosAdvisors() {
             const name = advisor.name;
             const degrees = advisor.degrees;
             const expertise = advisor.expertise;
+            const contact = advisor.contact;
             const photoPath = advisor.photoPath;
 
             return (
@@ -73,17 +74,25 @@ export default function NosotrosAdvisors() {
                     ))}
                   </div>
 
-                  {/* Divider */}
-                  <div className="border-t border-gray-200 pt-3 mt-3">
-                    {/* Expertise Label */}
-                    <p className="text-xs font-semibold text-indigo-700 mb-2">
+                  {/* Expertise */}
+                  <p className="border-t border-gray-200 pt-3 mt-3">
+                    <span className="text-xs font-semibold text-indigo-700 mr-1.5">
                       Especialidad:
-                    </p>
-                    {/* Expertise Text */}
-                    <p className="text-sm italic text-gray-600">
+                    </span>
+                    <span className="text-sm italic text-gray-600">
                       {expertise}
-                    </p>
-                  </div>
+                    </span>
+                  </p>
+
+                  {/* Contact */}
+                  <p className="border-t border-gray-200 pt-3 mt-3">
+                    <span className="text-xs font-semibold text-indigo-700 mr-1.5">
+                      Contacto:
+                    </span>
+                    <span className="text-sm italic text-gray-600">
+                      {contact}
+                    </span>
+                  </p>
                 </div>
               </div>
             );

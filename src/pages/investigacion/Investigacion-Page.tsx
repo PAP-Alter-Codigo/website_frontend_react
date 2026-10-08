@@ -12,6 +12,7 @@ import brushLT from "@assets/brushStrokes/img10-3-1.png";
 import brushRT from "@assets/brushStrokes/img10-2-4.png";
 import brushLM from "@assets/brushStrokes/img9-1-7.png";
 import imgInvestigacion from "@assets/general/investigacion.webp";
+import AppFooter from "../../components/App-Footer";
 
 // Interfaz flexible para la lectura del CMS y Legacy sin usar 'any'
 interface RawResearchItem {
@@ -213,7 +214,12 @@ export default function InvestigacionPage() {
       </section>
 
       {/* Decorative Stroke */}
-      <img className="w-full select-none" src={prtInf1} alt="decorative stroke" />
+      <div className="relative flex items-center justify-center">
+        <img className="w-full select-none" src={prtInf1} alt="logo resonancias 1" />
+        <div className="absolute inset-0 z-10 flex items-center justify-center p-4">
+          <AppFooter />
+        </div>
+      </div>
     </>
   );
 }
