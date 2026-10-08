@@ -147,7 +147,7 @@ export default function ComunidadesMap() {
           <div className="pb-5">
             <h1 className="text-4xl font-extrabold text-green-800">MAPA</h1>
             <p className="text-gray-700">
-              Mapa del estado de Jalisco donde se muestran todas las comunidades activas del movimiento TerritoRios
+              Mapa del estado de Jalisco donde se muestran todas las comunidades con las que ha trabajado Resonancias.
             </p>
           </div>
 

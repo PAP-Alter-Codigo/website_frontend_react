@@ -5,6 +5,7 @@ import prtInf1 from "@assets/bigStrokes/piedepag-1-1.png"
 
 import AppHeader from "../../../../../components/App-Header"
 import XuchitlanComponent from "./Xuchitlan-Component"
+import AppFooter from "../../../../../components/App-Footer"
 
 export default function XuchitlanPage() {
     return (
@@ -16,7 +17,12 @@ export default function XuchitlanPage() {
             <div className="">
                 <XuchitlanComponent/> 
             </div>
-            <img className="w-full select-none" src={prtInf1} alt="logo resonancias 1" />
+            <div className="relative flex items-center justify-center">
+                <img className="w-full select-none" src={prtInf1} alt="logo resonancias 1" />
+                <div className="absolute inset-0 z-10 flex items-center justify-center p-4">
+                    <AppFooter />
+                </div>
+            </div>
         </>
     )
 }

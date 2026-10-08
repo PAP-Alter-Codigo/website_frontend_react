@@ -18,7 +18,7 @@ const cards: Card[] = [
     to: "/podcast",
     title: "PODCAST",
     desc:
-      "Escucha los capítulos del podcast Resonante, donde encontrarás avances investigativos, reflexiones, experiencias, dinámicas y memorias de mujeres defensoras.",
+      "Escucha los capítulos del podcast Resonante, donde encontrarás avances investigativos, reflexiones, experiencias, dinámicas y memorias de mujeres defensoras del territorio.",
     img: imgPodcast,
     alt: "Imagen de podcast",
   },
@@ -33,7 +33,7 @@ const cards: Card[] = [
   {
     to: "/colaboradores",
     title: "DIRECTORIO",
-    desc: "Explora el directorio virtual de asesoras especialistas para mujeres defensoras.",
+    desc: "Explora el directorio virtual de asesoras especialistas para mujeres defensoras del territorio.",
     img: imgDirectorio,
     alt: "Imagen de directorio",
   },

@@ -4,8 +4,9 @@ import AppHeader from "../../../../components/App-Header"
 import MuralJuanacatlanCollage from "./Mural-Juanacatlan-Collage"
 
 import muralPdf from "@assets/comunidades/juanacatlan/Mural/Memoria-mural-Extendida.pdf"
+import AppFooter from "../../../../components/App-Footer"
 
-import juanac1 from "@assets/comunidades/juanacatlan/DSCN0544.jpg";
+//import juanac1 from "@assets/comunidades/juanacatlan/DSCN0544.jpg";
 /* import juanac2 from "@assets/comunidades/juanacatlan/IMG_3182.jpg";
 import juanac3 from "@assets/comunidades/juanacatlan/IMG_3220.jpg";
 import juanac4 from "@assets/comunidades/juanacatlan/IMG_3242.jpg"; */
@@ -25,10 +26,9 @@ import mural7 from "@assets/comunidades/juanacatlan/Mural/mural7.jpeg";
 
 
 const imgs = [
-    { src: juanac1 },
+    { src: mural1 },
     { src: juanac6 },
     { src: juanac8 },
-    { src: mural1 },
     { src: mural4 },
     { src: mural5 },
     { src: mural7 },
@@ -83,7 +83,7 @@ export default function MuralJuanacatlanPage() {
                 </h3>
                 
                 <p className="text-xs sm:text-sm text-gray-600 mb-6 leading-relaxed">
-                  NUESTRO TERRITORIO: Memorias del Mural Comunitario en la Escuela Josefa Ortiz Dominguez en Juanacatlan
+                  NUESTRO TERRITORIO: Memorias del Mural Comunitario en la Escuela Josefa Ortiz de Domínguez en Juanacatlán
                 </p>
 
                 {/* Botón con indicador visual de clic y apertura externa */}
@@ -110,7 +110,12 @@ export default function MuralJuanacatlanPage() {
         </div>
       </div>
 
-      <img className="w-full select-none" src={prtInf1} alt="logo resonancias 1" />
+      <div className="relative flex items-center justify-center">
+        <img className="w-full select-none" src={prtInf1} alt="logo resonancias 1" />
+        <div className="absolute inset-0 z-10 flex items-center justify-center p-4">
+          <AppFooter />
+        </div>
+      </div>
     </>
   );
 }

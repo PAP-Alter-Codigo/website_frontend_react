@@ -5,6 +5,7 @@ import prtInf1 from "@assets/bigStrokes/piedepag-1-1.png"
 import AppHeader from "../../../../../components/App-Header"
 import MapaInteractivoHumedalAguasSub from "./Mapa-Interactivo-Humedal-AguasSub"
 import MapaInteractivoStory from "./Mapa-Interactivo-Story"
+import AppFooter from "../../../../../components/App-Footer"
 
 // ── Bases de datos CSV ─────────────────────────────────────────────
 const CSV_DESCARGAS = "/data/mapas/sta-cruz-de-las-flores/csv/descarga_aguas_residuales_2026.csv"
@@ -517,7 +518,12 @@ export default function MapaInteractivoPage() {
                 </div>
             </section>
 
-            <img className="w-full select-none" src={prtInf1} alt="logo resonancias 1" />
+            <div className="relative flex items-center justify-center">
+                <img className="w-full select-none" src={prtInf1} alt="logo resonancias 1" />
+                <div className="absolute inset-0 z-10 flex items-center justify-center p-4">
+                    <AppFooter />
+                </div>
+            </div>
         </>
     )
 }
