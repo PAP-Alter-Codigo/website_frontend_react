@@ -45,7 +45,7 @@ export interface CommunityDetail {
 
 export const juanacatlan = {
     id: 'juanacatlan',
-    title: 'JUANACATLAN',
+    title: 'JUANACATLÁN',
     imgPrincipal: img1,
     sections: [
         {
@@ -153,7 +153,7 @@ export const staCruzDeLasFlores = {
             to: '/comunidades/sta-cruz-de-las-flores/mapa'
         },
         {
-            title: 'Juego de Mesa Xuchitlan',
+            title: 'Juego de Mesa Xuchitlán',
             img: staCruz3,
             to: '/comunidades/sta-cruz-de-las-flores/xuchitlan'
         },

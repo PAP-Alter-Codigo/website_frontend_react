@@ -35,8 +35,8 @@ export default function HomeComunidades() {
                 <div className="w-9/12">
                     <div className="text-4xl font-extrabold  pb-5">COMUNIDADES</div>
                     <p className="">
-                        Aquí encontrarás información al respecto de las luchas y conflictos socioambientales en comunidades de
-                        las 12 regiones del estado de Jalisco. Explóralas en el siguiente mapa y conoce sus experiencias.
+                        Aquí encontrarás las comunidades en las que el equipo de Resonancias trabajó, junto con mujeres 
+                        defensoras de las 12 regiones del estado Jalisco.
                     </p>
                 </div>
             </div>

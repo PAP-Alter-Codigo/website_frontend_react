@@ -5,7 +5,7 @@ import prtInf1 from "@assets/bigStrokes/03-piedepag-gu-1.png"
 import NosotrosDescription from "./Nosotros-Description";
 import NosotrosAdvisors from "./Nosotros-Advisors";
 import NostrosButtons from "./Nosotros-Buttons";
-
+import AppFooter from "../../components/App-Footer";
 
 export default function NosotrosPage() {
     return (
@@ -17,7 +17,12 @@ export default function NosotrosPage() {
             <NosotrosDescription/>
             <NosotrosAdvisors/>
             <NostrosButtons/>
-            <img className="w-full select-none" src={prtInf1} alt="logo resonancias 1" />
+            <div className="relative flex items-center justify-center">
+                <img className="w-full select-none" src={prtInf1} alt="logo resonancias 1" />
+                <div className="absolute inset-0 z-10 flex items-center justify-center p-4">
+                    <AppFooter />
+                </div>
+            </div>
         </>
     )
 }
