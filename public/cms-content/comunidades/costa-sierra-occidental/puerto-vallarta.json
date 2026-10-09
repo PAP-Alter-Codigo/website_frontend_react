@@ -1,0 +1,52 @@
+{
+  "slug": "puerto-vallarta",
+  "region": "costa-sierra-occidental",
+  "nombre": "PUERTO VALLARTAfbsdjbfsd",
+  "imagen_principal": "/cms-content/comunidades/imgs/vallarta-principal.jpg",
+  "secciones": [
+    {
+      "subtitulo": "Ubicación y Entorno Geográfico",
+      "texto": "Puerto Vallarta se localiza en la costa pacífica de Jalisco, entre la Bahía de Banderas y la Sierra Madre Occidental, y abarca cerca de 1,300 km². Su relieve combina las montañas de la Sierra Madre Occidental con valles formados por ríos como el Ameca, el Cuale y el Pitillal. Además, alberga ecosistemas costeros clave como el Área Natural Protegida del Estero El Salado.",
+      "imagen": "/cms-content/comunidades/imgs/vallarta-sec-1.jpg",
+      "reverse": false
+    },
+    {
+      "subtitulo": "Historia y Evolución Turística",
+      "texto": "Fundado originalmente bajo el nombre de \"Las Peñas\", el municipio basó sus primeras décadas en el comercio, la pesca y la agricultura. A partir de los años 40 y 60, impulsado por políticas gubernamentales y la proyección cinematográfica internacional, transitó hacia un modelo turístico masivo. Esto aceleró un crecimiento demográfico desproporcionado, pasando de 24,155 habitantes en 1970 a más de 255,000 en 2010.",
+      "imagen": "/cms-content/comunidades/imgs/vallarta-sec-2.jpg",
+      "reverse": true
+    },
+    {
+      "subtitulo": "Economía y Dinámica Laboral",
+      "texto": "La economía local presenta una especialización extrema en el sector servicios, el cual absorbe aproximadamente al 88% de la población ocupada. Aunque genera empleo, este modelo crea una alta dependencia y empleos predominantemente operativos y temporales. Existe una marcada división sexual del trabajo, donde las mujeres suelen concentrarse en puestos de servicios domésticos extrapolados (camaristas, lavandería) y enfrentan el desgaste de una doble jornada laboral y del hogar.",
+      "imagen": "/cms-content/comunidades/imgs/vallarta-sec-3.jpg",
+      "reverse": false
+    },
+    {
+      "subtitulo": "Riqueza Natural y Biodiversidad",
+      "texto": "La región destaca por una gran biodiversidad que incluye selvas tropicales secas, manglares y ecosistemas marinos. Su vegetación cuenta con especies como la parota, la ceiba y manglares que protegen contra huracanes. En su fauna habitan jaguares, ocelotes, cocodrilos y más de 400 especies de aves, además de recibir anualmente a la ballena jorobada entre diciembre y marzo.",
+      "imagen": "/cms-content/comunidades/imgs/vallarta-sec-4.jpg",
+      "reverse": true
+    },
+    {
+      "subtitulo": "Conflictos Socioambientales Identificados",
+      "texto": "El desarrollo inmobiliario de lujo y el turismo de masas causan una crisis socioambiental en Puerto Vallarta, provocando desabasto de agua y playas contaminadas por obras que rompen mantos acuíferos. A esto se suma el cierre ilegal de 15 playas, daños en los ríos Ameca y Los Horcones, deforestación con riesgo de deslaves y un colapso en el manejo de basura que genera incendios y constantes alertas atmosféricas.",
+      "imagen": "/cms-content/comunidades/imgs/vallarta-sec-5.jpg",
+      "reverse": false
+    },
+    {
+      "subtitulo": "Gentrificación y Desigualdad Social",
+      "texto": "La proliferación de plataformas de hospedaje digital como Airbnb ha encarecido drásticamente las rentas para la población local. Zonas residenciales tradicionales (como la colonia Versalles) viven procesos de gentrificación que desplazan a los residentes originarios hacia la periferia. Esto ha generado un modelo de segregación donde los desarrollos de lujo coexisten con colonias trabajadoras que carecen de servicios básicos e infraestructura adecuada.",
+      "imagen": "/cms-content/comunidades/imgs/vallarta-sec-6.jpg",
+      "reverse": true
+    },
+    {
+      "subtitulo": "Actores que Trabajan por el Cambio",
+      "texto": "Frente al deterioro socioambiental, diversas organizaciones locales impulsan el cambio: \"Amigos por la Tierra\" realiza campañas de limpieza y reforestación; el Grupo Ecológico de Puerto Vallarta defiende legalmente áreas como el Estero El Salado; el Colectivo \"Playas Libres\" denuncia la privatización de accesos públicos; y la Organización para la Conservación de los Árboles (OCA) protege el arbolado urbano.",
+      "imagen": "/cms-content/comunidades/imgs/vallarta-sec-7.jpg",
+      "reverse": false
+    }
+  ],
+  "recursos": [],
+  "carrusel": []
+}

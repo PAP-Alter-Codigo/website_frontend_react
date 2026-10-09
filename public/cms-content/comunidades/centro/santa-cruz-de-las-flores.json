@@ -1,0 +1,67 @@
+{
+  "slug": "santa-cruz-de-las-flores",
+  "region": "centro",
+  "nombre": "SANTA CRUZ DE LAS FLORES",
+  "imagen_principal": "/cms-content/comunidades/imgs/santa-cruz-principal.jpg",
+  "secciones": [
+    {
+      "subtitulo": "Territorio",
+      "texto": "El antiguo valle de Xuchitlán, habitado desde el año 1550 por los pueblos cocas, tecuexes y tlajomulcas, se ubica en el eje volcánico y ha sido testigo de una larga historia de vida y transformación. En este territorio se encuentran los pueblos originarios de Cofradía, Buenavista, Santa Cruz de las Flores, Cruz Vieja y Santa Cruz de la Loma, comunidades que han mantenido una relación interdependiente con los cerros, barrancas y manantiales en el municipio de Tlajomulco de Zúñiga",
+      "imagen": "/cms-content/comunidades/imgs/santa-cruz-sec-1.jpg",
+      "reverse": false
+    },
+    {
+      "subtitulo": "Ecosistema del Corredor de Tlaxomulli",
+      "texto": "Los pueblos de Santa Cruz cohabitan con el volcán inactivo Totoltepec, los cerros El Conejo y La Coronilla, el bosque El Malvaste y el humedal La Playa. En conjunto, conforman el Corredor de Tlaxomulli, un ecosistema esencial para la regulación del clima, la reducción de desastres naturales y el control del crecimiento urbano. Además, este corredor mantiene activo el ciclo sociohidrológico que alimenta el acuífero de San Isidro, vital para la subcuenca de San Marcos.",
+      "imagen": "/cms-content/comunidades/imgs/santa-cruz-sec-2.jpg",
+      "reverse": true
+    },
+    {
+      "subtitulo": "Saberes y oficios",
+      "texto": "La comunidad de Santa Cruz preserva sus saberes intergeneracionales a través de los oficios tradicionales: el panadero que elabora los panes de trigo, el campesino que cultiva la tierra, y los músicos que mantienen vivas las tradiciones. Estos elementos forman parte del patrimonio cultural que da identidad y sentido de pertenencia al valle de Xuchitlán.",
+      "imagen": "/cms-content/comunidades/imgs/santa-cruz-sec-3.jpg",
+      "reverse": false
+    },
+    {
+      "subtitulo": "Símbolos y memoria colectiva",
+      "texto": "Los símbolos y lugares emblemáticos de Santa Cruz como el punto geodésico, el Templo de Santa Cruz, Tlalocan y la placita son espacios donde se expresa la identidad comunitaria. En ellos se guarda la memoria viva y colectiva de los pueblos, y se fortalecen los lazos sociales a través de celebraciones y rituales.",
+      "imagen": "/cms-content/comunidades/imgs/santa-cruz-sec-4.jpg",
+      "reverse": true
+    },
+    {
+      "subtitulo": "Impacto industrial y esperanza de recuperación",
+      "texto": "El crecimiento de distintas industrias ha provocado contaminación del aire y del agua, pérdida de espacios naturales y afectaciones a la salud. Sin embargo, en medio de la crisis ambiental, la comunidad busca reconstruir la esperanza, recuperar el territorio y fortalecer la defensa de los bienes comunes, promoviendo la armonía entre las personas y la naturaleza.",
+      "imagen": "/cms-content/comunidades/imgs/santa-cruz-sec-6.jpg",
+      "reverse": false
+    },
+    {
+      "subtitulo": "Luchas y defensas del territorio",
+      "texto": "La comunidad ha enfrentado procesos de despojo y contaminación provocados por la llegada de industrias que alteran el equilibrio ambiental. La defensa del agua subterránea, llevada a cabo en 1991, 2001 y 2021, forma parte de una memoria de resistencia que une a las generaciones. Personajes como el cantautor Vicente Miranda y las mujeres defensoras simbolizan la fuerza del territorio frente a las injusticias ambientales.",
+      "imagen": "/cms-content/comunidades/imgs/santa-cruz-sec-5.jpg",
+      "reverse": true
+    },
+    {
+      "subtitulo": "Colaboración comunitaria",
+      "texto": "En colaboración con el Comité Agua y Vida de Santa Cruz de las Flores, quienes comparten su conocimiento, memoria y compromiso por la defensa del valle y su entorno. Su participación demuestra que el trabajo colectivo es la base para la transformación del territorio.",
+      "imagen": "/cms-content/comunidades/imgs/santa-cruz-sec-7.jpeg",
+      "reverse": false
+    }
+  ],
+  "recursos": [
+    {
+      "titulo": "Mapa Interactivo",
+      "tipo": "mapa",
+      "slug_recurso": "mapa",
+      "imagen": "/cms-content/comunidades/centro/imgs/santa-cruz-sec-1.jpg",
+      "to": "/comunidades/sta-cruz-de-las-flores/mapa"
+    },
+    {
+      "titulo": "Juego de Mesa Xuchitlán",
+      "tipo": "juego-de-mesa",
+      "slug_recurso": "xuchitlan",
+      "imagen": "/cms-content/comunidades/centro/imgs/santa-cruz-sec-3.jpg",
+      "to": "/comunidades/sta-cruz-de-las-flores/xuchitlan"
+    }
+  ],
+  "carrusel": []
+}

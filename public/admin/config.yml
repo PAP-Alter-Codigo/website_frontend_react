@@ -8,6 +8,58 @@ backend:
 media_folder: public/cms-content
 public_folder: /cms-content
 
+# Plantilla reutilizable de campos para comunidades
+.community_fields: &community_fields
+  - { label: "Slug", name: "slug", widget: "string", hint: "Identificador único en URL (ej. juanacatlan)" }
+  - { 
+      label: "Región", 
+      name: "region", 
+      widget: "select", 
+      options: [
+        "norte", "altos-norte", "altos-sur", "cienega", 
+        "sureste", "sur", "sierra-de-amula", "costa-sur", 
+        "costa-sierra-occidental", "valles", "centro", "lagunas"
+      ] 
+    }
+  - { label: "Nombre de la Comunidad", name: "nombre", widget: "string" }
+  - { label: "Imagen Principal", name: "imagen_principal", widget: "image" }
+  
+  # SECCIONES
+  - label: "Secciones Informativas"
+    name: "secciones"
+    widget: "list"
+    summary: "{{fields.subtitulo}}"
+    fields:
+      - { label: "Subtítulo", name: "subtitulo", widget: "string", required: false }
+      - { label: "Texto / Contenido", name: "texto", widget: "text" }
+      - { label: "Imagen", name: "imagen", widget: "image" }
+      - { label: "Invertir Orden (Reverse)", name: "reverse", widget: "boolean", default: false }
+
+  # RECURSOS / MATERIALES
+  - label: "Recursos y Proyectos"
+    name: "recursos"
+    widget: "list"
+    required: false
+    summary: "{{fields.titulo}} ({{fields.tipo}})"
+    fields:
+      - { label: "Título del Recurso", name: "titulo", widget: "string" }
+      - { 
+          label: "Tipo de Recurso", 
+          name: "tipo", 
+          widget: "select", 
+          options: ["mural", "mapa", "juego-de-mesa", "corto", "otro"] 
+        }
+      - { label: "Slug del Recurso", name: "slug_recurso", widget: "string" }
+      - { label: "Imagen de Portada", name: "imagen", widget: "image" }
+      - { label: "Ruta Interna (URL)", name: "to", widget: "string" }
+
+  # CARRUSEL DE FOTOS
+  - label: "Galería / Carrusel de Fotos"
+    name: "carrusel"
+    widget: "list"
+    required: false
+    field: {label: "Imagen", name: "imagen", widget: "image" }
+
 collections:
   - name: "colaboradores"
     label: "Colaboradores"
@@ -128,3 +180,53 @@ collections:
                 required: false
                 media_folder: "public/cms-content/investigacion/imgs"
                 public_folder: "/cms-content/investigacion/imgs"
+  - name: "regiones"
+    label: "Regiones"
+    media_folder: "public/cms-content/comunidades/imgs"
+    public_folder: "/cms-content/comunidades/imgs"
+    files:
+      - name: "regiones_index"
+        label: "Lista de Regiones"
+        file: "public/cms-content/comunidades/index.json"
+        fields:
+          - label: "Regiones"
+            name: "regiones"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "ID / Slug Región", name: "id", widget: "string" }
+              - { label: "Título", name: "title", widget: "string" }
+              - label: "Imagen de Portada"
+                name: "imagen"
+                widget: "image"
+                media_folder: "public/cms-content/comunidades/imgs"
+                public_folder: "/cms-content/comunidades/imgs"
+              - { label: "Invertir Orden", name: "reverse", widget: "boolean", default: false }
+              - label: "Comunidades Pertenecientes"
+                name: "comunidades"
+                widget: "list"
+                fields:
+                  - { label: "Nombre (Label)", name: "label", widget: "string" }
+                  - { label: "Slug", name: "slug", widget: "string" }
+  - name: "comunidades"
+    label: "Comunidades"
+    media_folder: "public/cms-content/comunidades/imgs"
+    public_folder: "/cms-content/comunidades/imgs"
+    files:
+      # JUANACATLÁN
+      - file: "public/cms-content/comunidades/centro/juanacatlan.json"
+        label: "Centro: Juanacatlán"
+        name: "juanacatlan"
+        fields: *community_fields
+
+      # SANTA CRUZ DE LAS FLORES
+      - file: "public/cms-content/comunidades/centro/santa-cruz-de-las-flores.json"
+        label: "Centro: Santa Cruz de las Flores"
+        name: "santa_cruz_de_las_flores"
+        fields: *community_fields
+
+      # PUERTO VALLARTA
+      - file: "public/cms-content/comunidades/costa-sierra-occidental/puerto-vallarta.json"
+        label: "Costa Sierra Occidental: Puerto Vallarta"
+        name: "puerto_vallarta"
+        fields: *community_fields

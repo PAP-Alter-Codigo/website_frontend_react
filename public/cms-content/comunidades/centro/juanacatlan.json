@@ -1,0 +1,42 @@
+{
+  "slug": "juanacatlan",
+  "region": "centro",
+  "nombre": "JUANACATLÁN",
+  "imagen_principal": "/cms-content/comunidades/imgs/centro-2.png",
+  "secciones": [
+    {
+      "subtitulo": "Xonocatlan",
+      "texto": "El pueblo de Juanacatlán enfrenta problemáticas socioambientales derivadas de la industrialización, proyectos extractivos, contaminación ambiental y del crecimiento inmobiliario irregular. Las consecuencias de estas problemáticas se ven reflejadas en: Contaminación del aire, suelo y cuerpos de agua de la cuenca Alta Lerma-Chapala-Santiago; afectaciones a la salud y pérdida de un entorno sano; Deforestación de bosques y cambio de uso de suelos; Pérdida de biodiversidad; Incendios forestales y de vertederos municipales; Caza furtiva; Desplazamiento y despojo de las comunidades; Violencias e inseguridad.",
+      "imagen": "/cms-content/comunidades/imgs/juanacatlan-sec-1.jpeg",
+      "reverse": false
+    },
+    {
+      "subtitulo": "",
+      "texto": "La comunidad de Xonocatlan resiste ante estas problemáticas a través de distintas acciones: Actividades culturales y de protesta en el espacio público; Festivales, foros y talleres; Huertos comunitarios agroecológicos y medicinales; Recorridos de reconocimiento del paisaje y la herencia cultural; Conformación del Concejo Indígena de Xonocatlan; Investigación comunitaria; Defensa legal ante irregularidades, omisiones y afectaciones; Articulación con colectivos y universidades.",
+      "imagen": "/cms-content/comunidades/imgs/juanacatlan-sec-2.jpeg",
+      "reverse": true
+    }
+  ],
+  "recursos": [
+    {
+      "titulo": "MURAL",
+      "tipo": "mural",
+      "slug_recurso": "mural",
+      "imagen": "/cms-content/comunidades/imgs/juanacatlan-mural-thumb.jpeg",
+      "to": "/comunidades/juanacatlan/mural"
+    }
+  ],
+  "carrusel": [
+    "/cms-content/comunidades/imgs/juanacatlan-carrusel-1.jpg",
+    "/cms-content/comunidades/imgs/juanacatlan-carrusel-2.jpg",
+    "/cms-content/comunidades/imgs/juanacatlan-carrusel-3.jpg",
+    "/cms-content/comunidades/imgs/juanacatlan-carrusel-4.jpg",
+    "/cms-content/comunidades/imgs/juanacatlan-carrusel-5.jpg",
+    "/cms-content/comunidades/imgs/juanacatlan-carrusel-6.jpg",
+    "/cms-content/comunidades/imgs/juanacatlan-carrusel-7.jpg",
+    "/cms-content/comunidades/imgs/juanacatlan-carrusel-8.jpg",
+    "/cms-content/comunidades/imgs/juanacatlan-carrusel-9.jpg",
+    "/cms-content/comunidades/imgs/juanacatlan-carrusel-10.jpg",
+    "/cms-content/comunidades/imgs/juanacatlan-carrusel-11.jpg"
+  ]
+}
