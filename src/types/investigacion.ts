@@ -8,12 +8,17 @@ export const ResearchTypeEnum = {
 export type ResearchType = typeof ResearchTypeEnum[keyof typeof ResearchTypeEnum];
 
 export interface CMSInvestigacionItem {
-  slug: string;
+  slug?: string;
   title: string;
   description: string;
-  type: ResearchType;
+  type: ResearchType | string;
   image: string;
   url: string;
   author?: string;
   date?: string;
+}
+
+export interface InvestigacionCMSResponse {
+  articles?: CMSInvestigacionItem[];
+  investigaciones?: CMSInvestigacionItem[];
 }

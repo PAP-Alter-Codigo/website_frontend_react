@@ -6,6 +6,7 @@ import AppFooter from "../../../../components/App-Footer";
 import MuralJuanacatlanCollage from "./Mural-Juanacatlan-Collage";
 
 import { useCMSContent } from "../../../../hooks/useCMSContent";
+import type { CMSMuralContent } from "../../../../types/recursos";
 
 // Fallbacks de recursos estáticos legacy
 import muralPdf from "@assets/comunidades/juanacatlan/Mural/Memoria-mural-Extendida.pdf"
@@ -27,25 +28,10 @@ import mural5 from "@assets/comunidades/juanacatlan/Mural/mural5.jpeg";
 //import mural6 from "@assets/comunidades/juanacatlan/Mural/mural6.jpeg";
 import mural7 from "@assets/comunidades/juanacatlan/Mural/mural7.jpeg";
 
-interface ImageItem {
-  src: string;
-  alt?: string;
-  caption?: string;
-  href?: string;
-}
-
-interface MuralContent {
-  titulo: string;
-  parrafos: string[];
-  pdf_titulo: string;
-  pdf_descripcion: string;
-  pdf_archivo: string;
-  imagenes: ImageItem[];
-}
 
 export default function MuralJuanacatlanPage() {
   // Objeto de respaldo con los datos hardcodeados actuales
-  const fallbackData = useMemo<MuralContent>(
+  const fallbackData = useMemo<CMSMuralContent>(
     () => ({
       titulo: "Mural",
       parrafos: [
@@ -70,7 +56,7 @@ export default function MuralJuanacatlanPage() {
 
   // Consumo dinámico con useCMSContent
   const jsonUrl = "/cms-content/comunidades/centro/mural.json";
-  const { data, loading } = useCMSContent<MuralContent>(jsonUrl, fallbackData);
+  const { data, loading } = useCMSContent<CMSMuralContent>(jsonUrl, fallbackData);
 
   if (loading) {
     return (

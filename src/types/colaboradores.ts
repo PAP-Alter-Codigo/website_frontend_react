@@ -4,5 +4,19 @@ export interface CMSColaborador {
   carrera: string;
   categoria: string;
   contacto?: string;
-  imagen?: string; // Ruta estática (ej: "/cms-content/colaboradores/foto.jpg")
+  imagen?: string;
+}
+
+export interface Periodo {
+  name: string;
+  data: CMSColaborador[];
+}
+
+export interface YearBlock {
+  year: number;
+  periodos: Periodo[];
+}
+
+export interface ColaboradoresCMSResponse {
+  colaboradores?: YearBlock[];
 }

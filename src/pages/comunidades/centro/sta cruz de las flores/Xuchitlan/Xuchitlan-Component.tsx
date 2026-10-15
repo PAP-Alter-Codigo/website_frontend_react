@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import BrushCard from "../../../../../components/Brush-Card";
 import { useCMSContent } from "../../../../../hooks/useCMSContent";
+import type { CMSXuchitlanContent } from "../../../../../types/recursos";
 
 // Assets locales estáticos para Fallback
 import tablero from "@assets/comunidades/staCruz/xuchitlan/TABLERO_Final.png";
@@ -15,29 +16,10 @@ import card2_B from "@assets/comunidades/staCruz/xuchitlan/cartas-03.png";
 import card3_F from "@assets/comunidades/staCruz/xuchitlan/cartas frente-07.png";
 import card3_B from "@assets/comunidades/staCruz/xuchitlan/cartas-04.png";
 
-interface CardItem {
-  titulo: string;
-  caption: string;
-  color: string;
-  front: string;
-  back: string;
-}
-
-interface XuchitlanContent {
-  titulo: string;
-  descripcion: string;
-  pdf_titulo: string;
-  pdf_descripcion: string;
-  pdf_archivo: string;
-  tablero_titulo: string;
-  tablero_descripcion: string;
-  tablero_imagen: string;
-  cartas: CardItem[];
-}
 
 export default function XuchitlanComponent() {
   // Objeto de respaldo con los datos e imágenes locales
-  const fallbackData = useMemo<XuchitlanContent>(
+  const fallbackData = useMemo<CMSXuchitlanContent>(
     () => ({
       titulo: "Xuchitlán",
       descripcion:
@@ -82,7 +64,7 @@ export default function XuchitlanComponent() {
 
   // Consumo dinámico con el hook useCMSContent
   const jsonUrl = "/cms-content/comunidades/centro/xuchitlan.json";
-  const { data, loading } = useCMSContent<XuchitlanContent>(jsonUrl, fallbackData);
+  const { data, loading } = useCMSContent<CMSXuchitlanContent>(jsonUrl, fallbackData);
 
   if (loading) {
     return (

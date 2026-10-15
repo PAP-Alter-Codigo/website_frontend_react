@@ -1,7 +1,7 @@
-// src/components/ColaboradoresAcordeon.tsx
-import { type Persona, type YearData, PeriodosData } from "./Colaboradores-Data";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useCMSContent } from "../../hooks/useCMSContent";
+import type { CMSColaborador, YearBlock, ColaboradoresCMSResponse } from "../../types/colaboradores";
+
 
 /* ---------- Utils ---------- */
 function Chevron({ className = "w-5 h-5 text-gray-500" }: { className?: string }) {
@@ -74,7 +74,7 @@ function ContactLink({ value }: { value?: string }) {
 type ModalProps = {
     open: boolean;
     onClose: () => void;
-    person?: Persona;
+    person?: CMSColaborador;
 };
 
 function PersonModal({ open, onClose, person }: ModalProps) {
@@ -184,22 +184,21 @@ function PersonModal({ open, onClose, person }: ModalProps) {
 type Props = { title?: string };
 
 export default function ColaboradoresList({ title = "Colaboradores por Año y Semestre" }: Props) {
-    const [selected, setSelected] = useState<Persona | undefined>(undefined);
+    const [selected, setSelected] = useState<CMSColaborador | undefined>(undefined);
 
-    const { data: rawData, loading, error } = useCMSContent<YearData | { colaboradores: YearData }>(
-        "/cms-content/colaboradores/index.json",
-        PeriodosData
+    // Petición directa al CMS sin fallback local
+    const { data: rawData, loading, error } = useCMSContent<YearBlock[] | ColaboradoresCMSResponse>(
+        "/cms-content/colaboradores/index.json"
     );
 
-    // Si viene del CMS como { colaboradores: [...] }, extrae el arreglo.
-    // Si viene como array directo o fallback, usa rawData.
-    const activeData: YearData = useMemo(() => {
-        if (!rawData) return PeriodosData;
+    // Normalización de respuesta desde el CMS
+    const activeData: YearBlock[] = useMemo(() => {
+        if (!rawData) return [];
         if (Array.isArray(rawData)) return rawData;
-        if (typeof rawData === "object" && "colaboradores" in rawData && Array.isArray((rawData).colaboradores)) {
-            return (rawData).colaboradores as YearData;
+        if (typeof rawData === "object" && "colaboradores" in rawData && Array.isArray(rawData.colaboradores)) {
+            return rawData.colaboradores;
         }
-        return PeriodosData;
+        return [];
     }, [rawData]);
 
     const ordered = useMemo(
@@ -221,68 +220,72 @@ export default function ColaboradoresList({ title = "Colaboradores por Año y Se
     );
 
     if (loading) return <div className="text-center py-12">Cargando colaboradores...</div>;
-    if (error) return <div className="text-center py-12 text-red-600">Error: {error.message}</div>;
+    if (error) return <div className="text-center py-12 text-red-600">Error al cargar colaboradores: {error.message}</div>;
 
     return (
         <>
             <section className="max-w-5xl mx-auto px-4 py-8">
                 <h2 className="text-4xl font-extrabold pb-12 text-center">{title}</h2>
 
-                {ordered.map((yearBlock) => (
-                    <details key={yearBlock.year} className="group mb-4 rounded-xl border border-gray-200 bg-white open:shadow">
-                        <summary className="flex items-center justify-between cursor-pointer select-none px-5 py-4">
-                            <span className="text-xl font-bold text-gray-900">{yearBlock.year}</span>
-                            <Chevron />
-                        </summary>
+                {ordered.length === 0 ? (
+                    <p className="text-center text-gray-500">No hay colaboradores registrados actualmente.</p>
+                ) : (
+                    ordered.map((yearBlock) => (
+                        <details key={yearBlock.year} className="group mb-4 rounded-xl border border-gray-200 bg-white open:shadow">
+                            <summary className="flex items-center justify-between cursor-pointer select-none px-5 py-4">
+                                <span className="text-xl font-bold text-gray-900">{yearBlock.year}</span>
+                                <Chevron />
+                            </summary>
 
-                        <div className="px-5 pb-5 space-y-4">
-                            {yearBlock.periodos.map((season) => {
-                                const byCat = groupBy(season.data, (e) => (e.categoria && e.categoria.trim()) || "Sin categoría");
+                            <div className="px-5 pb-5 space-y-4">
+                                {yearBlock.periodos.map((season) => {
+                                    const byCat = groupBy(season.data, (e) => (e.categoria && e.categoria.trim()) || "Sin categoría");
 
-                                return (
-                                    <details key={`${yearBlock.year}-${season.name}`} className="group rounded-lg border border-gray-100 open:shadow-sm">
-                                        <summary className="flex items-center justify-between px-4 py-3 cursor-pointer">
-                                            <span className={seasonClass(season.name)}>{season.name}</span>
-                                            <Chevron className="w-4 h-4 text-gray-500" />
-                                        </summary>
+                                    return (
+                                        <details key={`${yearBlock.year}-${season.name}`} className="group rounded-lg border border-gray-100 open:shadow-sm">
+                                            <summary className="flex items-center justify-between px-4 py-3 cursor-pointer">
+                                                <span className={seasonClass(season.name)}>{season.name}</span>
+                                                <Chevron className="w-4 h-4 text-gray-500" />
+                                            </summary>
 
-                                        <div className="px-4 pb-4 space-y-6">
-                                            {Object.entries(byCat).map(([categoria, people]) => (
-                                                <div key={`${yearBlock.year}-${season.name}-${categoria}`}>
-                                                    <h4 className="text-sm font-bold uppercase tracking-wide text-gray-500 mb-2">{categoria}</h4>
-                                                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                                        {people.map((p) => (
-                                                            <li
-                                                                key={`${p.nombre}-${p.carrera}`}
-                                                                className="flex items-center gap-3 rounded-lg border border-gray-100 p-3 hover:bg-gray-50 transition cursor-pointer"
-                                                                onClick={() => setSelected(p)}
-                                                                role="button"
-                                                                tabIndex={0}
-                                                                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setSelected(p); }}
-                                                                aria-label={`Abrir ficha de ${p.nombre}`}
-                                                            >
-                                                                <Avatar src={p.imagen} name={p.nombre} />
-                                                                <div>
-                                                                    <p className="font-semibold text-gray-900 leading-tight">{p.nombre}</p>
-                                                                    <p className="text-sm text-gray-600">{p.carrera}</p>
-                                                                </div>
-                                                                <div className="ml-auto opacity-60">
-                                                                    <svg viewBox="0 0 24 24" className="w-5 h-5">
-                                                                        <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                                                                    </svg>
-                                                                </div>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </details>
-                                );
-                            })}
-                        </div>
-                    </details>
-                ))}
+                                            <div className="px-4 pb-4 space-y-6">
+                                                {Object.entries(byCat).map(([categoria, people]) => (
+                                                    <div key={`${yearBlock.year}-${season.name}-${categoria}`}>
+                                                        <h4 className="text-sm font-bold uppercase tracking-wide text-gray-500 mb-2">{categoria}</h4>
+                                                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                            {people.map((p) => (
+                                                                <li
+                                                                    key={p.slug || `${p.nombre}-${p.carrera}`}
+                                                                    className="flex items-center gap-3 rounded-lg border border-gray-100 p-3 hover:bg-gray-50 transition cursor-pointer"
+                                                                    onClick={() => setSelected(p)}
+                                                                    role="button"
+                                                                    tabIndex={0}
+                                                                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setSelected(p); }}
+                                                                    aria-label={`Abrir ficha de ${p.nombre}`}
+                                                                >
+                                                                    <Avatar src={p.imagen} name={p.nombre} />
+                                                                    <div>
+                                                                        <p className="font-semibold text-gray-900 leading-tight">{p.nombre}</p>
+                                                                        <p className="text-sm text-gray-600">{p.carrera}</p>
+                                                                    </div>
+                                                                    <div className="ml-auto opacity-60">
+                                                                        <svg viewBox="0 0 24 24" className="w-5 h-5">
+                                                                            <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                                                                        </svg>
+                                                                    </div>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </details>
+                                    );
+                                })}
+                            </div>
+                        </details>
+                    ))
+                )}
             </section>
 
             {/* Modal */}

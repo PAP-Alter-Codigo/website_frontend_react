@@ -1,81 +1,19 @@
-import { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import brushLT from "@assets/brushStrokes/img10-3-1.png";
 import brushRT from "@assets/brushStrokes/img10-2-4.png";
 import brushLM from "@assets/brushStrokes/img9-1-7.png";
 
-import { useCMSContent } from "../../../hooks/useCMSContent"; // Ajusta la ruta a tu hook si es necesario
-import { juanacatlan, staCruzDeLasFlores, type CommunityDetail } from "./Centro-Data";
+import { useCMSContent } from "../../../hooks/useCMSContent";
+import type { CommunityContent } from "../../../types/regiones";
 import CentroButtons from "./Centro-buttons";
 import Carrousel from "../../../components/Carrousel";
-
-interface SectionData {
-    subtitulo?: string;
-    subtitle?: string;
-    texto?: string;
-    data?: string;
-    imagen?: string;
-    img?: string;
-    reverse?: boolean;
-}
-
-interface ResourceData {
-    titulo?: string;
-    title?: string;
-    imagen?: string;
-    img?: string;
-    to: string;
-}
-
-interface CommunityContent {
-    nombre?: string;
-    title?: string;
-    imagen_principal?: string;
-    imgPrincipal?: string;
-    secciones?: SectionData[];
-    sections?: SectionData[];
-    recursos?: ResourceData[];
-    resourses?: ResourceData[];
-    carrusel?: string[];
-    carrousel?: string[];
-}
-
-const legacyComunidades: CommunityDetail[] = [
-    juanacatlan,
-    staCruzDeLasFlores
-];
-
-function getLegacyMatch(slug: string): CommunityContent | undefined {
-    const match = legacyComunidades.find((e) => e.id === slug);
-    if (!match) return undefined;
-
-    return {
-        nombre: match.title,
-        imagen_principal: match.imgPrincipal,
-        secciones: match.sections.map((s) => ({
-            subtitulo: s.subtitle,
-            texto: s.data,
-            imagen: s.img,
-            reverse: s.reverse,
-        })),
-        recursos: match.resourses.map((r) => ({
-            titulo: r.title,
-            imagen: r.img,
-            to: r.to,
-        })),
-        carrusel: match.carrousel,
-    };
-}
 
 export default function CentroInfo() {
     const { region = "centro", slug = "" } = useParams<{ region?: string; slug?: string }>();
 
-    // Fallback con los datos locales legacy
-    const fallbackData = useMemo(() => getLegacyMatch(slug), [slug]);
+    // Consumo directo desde la ruta del CMS sin fallback local
     const jsonUrl = `/cms-content/comunidades/${region}/${slug}.json`;
-
-    // Consumo del hook useCMSContent
-    const { data, loading } = useCMSContent<CommunityContent>(jsonUrl, fallbackData);
+    const { data, loading, error } = useCMSContent<CommunityContent>(jsonUrl);
 
     if (loading) {
         return (
@@ -85,12 +23,12 @@ export default function CentroInfo() {
         );
     }
 
-    if (!data) {
+    if (error || !data) {
         return (
-            <section className="max-w-6xl mx-auto px-4 py-12">
+            <section className="max-w-6xl mx-auto px-4 py-12 text-center">
                 <h1 className="text-3xl font-extrabold mb-4">Comunidad no encontrada</h1>
                 <p className="text-gray-600 mb-6">
-                    La comunidad “{slug}” no existe en el catálogo.
+                    La comunidad “{slug}” no existe o no se pudo cargar desde el CMS.
                 </p>
                 <Link
                     to="/"
@@ -105,7 +43,7 @@ export default function CentroInfo() {
         );
     }
 
-    // Normalización para soportar tanto la nomenclatura JSON del CMS como el fallback
+    // Normalización de propiedades entre la estructura del CMS y la interfaz
     const nombre = data.nombre || data.title || "";
     const imagenPrincipal = data.imagen_principal || data.imgPrincipal || "";
     const carrusel = data.carrusel || data.carrousel;

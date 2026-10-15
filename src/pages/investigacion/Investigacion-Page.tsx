@@ -1,10 +1,15 @@
 import { useState, useMemo } from "react";
 import { useCMSContent } from "../../hooks/useCMSContent";
 import AppHeader from "../../components/App-Header";
-import { researchItems } from "./Investigacion-Data";
-
+import AppFooter from "../../components/App-Footer";
 import ResearchCard from "../../components/Research-Card";
-import { ResearchTypeEnum } from "../../components/Research-Card";
+
+import type {
+  CMSInvestigacionItem,
+  InvestigacionCMSResponse,
+  ResearchType,
+} from "../../types/investigacion";
+import { ResearchTypeEnum } from "../../types/investigacion";
 
 import prtSup1 from "@assets/bigStrokes/01-prt-sup-1.png";
 import prtInf1 from "@assets/bigStrokes/piedepag-1-1.png";
@@ -12,27 +17,8 @@ import brushLT from "@assets/brushStrokes/img10-3-1.png";
 import brushRT from "@assets/brushStrokes/img10-2-4.png";
 import brushLM from "@assets/brushStrokes/img9-1-7.png";
 import imgInvestigacion from "@assets/general/investigacion.webp";
-import AppFooter from "../../components/App-Footer";
 
-// Interfaz flexible para la lectura del CMS y Legacy sin usar 'any'
-interface RawResearchItem {
-  id?: string;
-  title?: string;
-  titulo?: string;
-  description?: string;
-  descripcion?: string;
-  type?: string;
-  tipo?: string;
-  image?: string;
-  imagen?: string;
-  url?: string;
-  author?: string;
-  autor?: string;
-  date?: string;
-  fecha?: string;
-}
-
-type FilterType = "all" | typeof ResearchTypeEnum[keyof typeof ResearchTypeEnum];
+type FilterType = "all" | ResearchType;
 
 const filterOptions: { value: FilterType; label: string }[] = [
   { value: "all", label: "Todos" },
@@ -42,41 +28,49 @@ const filterOptions: { value: FilterType; label: string }[] = [
   { value: ResearchTypeEnum.Book, label: "Libros" },
 ];
 
+// Helper oñembojoja hag̃ua opaite 'type' oúva CMS-gui
+function normalizeType(rawType?: string): ResearchType {
+  if (!rawType) return ResearchTypeEnum.Article;
+  const t = rawType.toLowerCase().trim();
+  if (t.includes("art") || t === "article") return ResearchTypeEnum.Article;
+  if (t.includes("vid") || t === "video") return ResearchTypeEnum.Video;
+  if (t.includes("info") || t === "infographic") return ResearchTypeEnum.Infographic;
+  if (t.includes("libr") || t === "book") return ResearchTypeEnum.Book;
+  return (t as ResearchType) || ResearchTypeEnum.Article;
+}
+
 export default function InvestigacionPage() {
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
 
-  // Lectura reactiva desde el CMS con fallback al TS local
-  const { data: rawData } = useCMSContent(
-    "/cms-content/investigacion/index.json",
-    researchItems
-  );
+  const { data: rawData, loading, error } = useCMSContent<
+    CMSInvestigacionItem[] | InvestigacionCMSResponse
+  >("/cms-content/investigacion/index.json");
 
-  // Normalización limpia de los datos sin requerir 'id' explícito
-  const normalizedItems = useMemo(() => {
-    let rawList: RawResearchItem[] = researchItems;
+  const normalizedItems = useMemo<CMSInvestigacionItem[]>(() => {
+    if (!rawData) return [];
+
+    let rawList: CMSInvestigacionItem[] = [];
 
     if (Array.isArray(rawData)) {
-      rawList = rawData as RawResearchItem[];
-    } else if (
-      typeof rawData === "object" &&
-      rawData !== null &&
-      "articles" in rawData
-    ) {
-      const cmsData = rawData as Record<string, unknown>;
+      rawList = rawData;
+    } else if (typeof rawData === "object" && rawData !== null) {
+      const cmsData = rawData as InvestigacionCMSResponse;
       if (Array.isArray(cmsData.articles)) {
-        rawList = cmsData.articles as RawResearchItem[];
+        rawList = cmsData.articles;
+      } else if (Array.isArray(cmsData.investigaciones)) {
+        rawList = cmsData.investigaciones;
       }
     }
 
     return rawList.map((item, idx) => ({
-      id: item.id || `item-${idx}`,
-      title: item.title || item.titulo || "",
-      description: item.description || item.descripcion || "",
-      type: item.type || item.tipo || ResearchTypeEnum.Article,
-      image: item.image || item.imagen || "",
+      slug: item.slug || `item-${idx}`,
+      title: item.title || "",
+      description: item.description || "",
+      type: normalizeType(item.type),
+      image: item.image || "",
       url: item.url || "",
-      author: item.author || item.autor || "",
-      date: item.date || item.fecha || "",
+      author: item.author || "",
+      date: item.date || "",
     }));
   }, [rawData]);
 
@@ -87,10 +81,9 @@ export default function InvestigacionPage() {
 
   return (
     <>
-      {/* Header Section with Background */}
+      {/* Header Section */}
       <div className="bgColor relative overflow-hidden">
         <AppHeader />
-        {/* Content */}
         <div className="py-12 md:py-20 lg:py-40">
           <div className="flex justify-center px-4">
             <div className="w-full md:w-9/12 text-white">
@@ -115,7 +108,6 @@ export default function InvestigacionPage() {
         <div className="flex justify-center px-4">
           <div className="w-full md:w-9/12">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12 items-center">
-              {/* Text Content */}
               <div>
                 <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-extrabold mb-4 sm:mb-5 md:mb-6">
                   Objetivo de la Investigación
@@ -137,7 +129,6 @@ export default function InvestigacionPage() {
                 </div>
               </div>
 
-              {/* Image */}
               <div className="flex justify-center md:justify-end">
                 <div data-aos="fade-left" className="w-full md:w-auto">
                   <img
@@ -152,7 +143,7 @@ export default function InvestigacionPage() {
             </div>
           </div>
         </div>
-        {/* Brushes decorativos */}
+
         <div className="pointer-events-none hidden md:block absolute -top-2 left-[-4vw] -z-10 select-none">
           <img className="max-w-[30vw] lg:max-w-[24vw] opacity-90" src={brushLT} alt="" />
         </div>
@@ -182,10 +173,10 @@ export default function InvestigacionPage() {
                 <button
                   key={option.value}
                   onClick={() => setActiveFilter(option.value)}
-                  className={`group relative px-3 sm:px-4 md:px-6 py-2 sm:py-2 md:py-3 text-xs sm:text-sm md:text-base rounded-full font-semibold border-2 transition-all duration-300 ease-out transform-gpu hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cello/50 focus-visible:ring-offset-2 ${
+                  className={`px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm md:text-base rounded-full font-bold border-2 transition-all duration-200 ${
                     activeFilter === option.value
-                      ? "bg-cello text-cello border-cello shadow-lg scale-105"
-                      : "bg-white text-gray-700 border-gray-300 hover:border-cello hover:text-cello hover:bg-cello/5"
+                      ? "bg-white text-black border-2 border-black shadow-md"
+                      : "bg-white text-gray-600 border border-gray-300 hover:border-gray-400"
                   }`}
                 >
                   {option.label}
@@ -194,21 +185,33 @@ export default function InvestigacionPage() {
             </div>
 
             {/* Research Grid */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 2xl:grid-cols-4 2xl:gap-8 items-stretch">
-              {filteredItems.length > 0 ? (
-                filteredItems.map((item, index) => (
-                  <ResearchCard
-                    key={item.url || item.title || index}
-                    item={item}
-                    dataAosDelay={index * 60}
-                  />
-                ))
-              ) : (
-                <div className="col-span-full text-center py-12 text-gray-500">
-                  <p className="text-lg">Aún no hay resultados disponibles para este filtro.</p>
-                </div>
-              )}
-            </div>
+            {loading ? (
+              <div className="text-center py-12">
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-black border-t-transparent mb-2"></div>
+                <p className="text-gray-600">Cargando publicaciones...</p>
+              </div>
+            ) : error ? (
+              <div className="text-center py-12 text-red-600">
+                <p className="text-lg font-semibold">Ocurrió un error al cargar la investigación</p>
+                <p className="text-sm">{error.message}</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 2xl:grid-cols-4 2xl:gap-8 items-stretch">
+                {filteredItems.length > 0 ? (
+                  filteredItems.map((item, index) => (
+                    <ResearchCard
+                      key={item.url || item.title || item.slug || index}
+                      item={item}
+                      dataAosDelay={index * 60}
+                    />
+                  ))
+                ) : (
+                  <div className="col-span-full text-center py-12 text-gray-500">
+                    <p className="text-lg">Aún no hay resultados disponibles para este filtro.</p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </section>

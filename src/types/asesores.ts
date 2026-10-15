@@ -3,5 +3,10 @@ export interface CMSAsesor {
   name: string;
   degrees: string[];
   expertise: string;
-  photoPath: string; // Ruta relativa string
+  photoPath: string;
+  contact?: string;
+}
+
+export interface AsesoresCMSResponse {
+  asesores?: CMSAsesor[];
 }

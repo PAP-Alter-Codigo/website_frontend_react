@@ -1,39 +1,9 @@
-import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import bursh1 from "@assets/brushStrokes/03-graf-1.png";
 import bursh2 from "@assets/brushStrokes/03-graf-4.png";
 
-import { useCMSContent } from "../../hooks/useCMSContent"; // Ajusta la ruta a tu hook si es necesario
-import { regiones as legacyRegiones } from "./Comunidades-Data";
-
-type Item = { label: string; to: string };
-
-interface CMSRegionItem {
-  label: string;
-  slug?: string;
-  to?: string;
-}
-
-interface CMSRegion {
-  id?: string;
-  title: string;
-  imagen?: string;
-  img?: string;
-  reverse?: boolean;
-  comunidades?: CMSRegionItem[];
-  items?: Item[];
-}
-
-interface IndexContent {
-  regiones: CMSRegion[];
-}
-
-type RegionBlockProps = {
-  title: string;
-  img: string;
-  items: Item[];
-  reverse?: boolean;
-};
+import { useCMSContent } from "../../hooks/useCMSContent";
+import type { RegionesIndexContent, RegionBlockProps } from "../../types/regiones";
 
 const IMG = {
   deco1: bursh1,
@@ -96,11 +66,8 @@ function RegionBlock({ title, img, items, reverse }: RegionBlockProps) {
 }
 
 export default function ComunidadesCatalogue() {
-  // Objeto de respaldo con datos legacy
-  const fallbackData = useMemo<IndexContent>(() => ({ regiones: legacyRegiones }), []);
-  
-  // Consumo del JSON del índice de regiones a través del hook useCMSContent
-  const { data, loading } = useCMSContent<IndexContent>("/cms-content/comunidades/index.json", fallbackData);
+  // Consumo directo del JSON del índice de regiones sin fallback local
+  const { data, loading, error } = useCMSContent<RegionesIndexContent>("/cms-content/comunidades/index.json");
 
   if (loading) {
     return (
@@ -110,13 +77,20 @@ export default function ComunidadesCatalogue() {
     );
   }
 
-  // Normalización de datos para soportar tanto la estructura del CMS como la del archivo local
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-[50vh] text-red-600 font-semibold">
+        Error al cargar el catálogo de regiones: {error.message}
+      </div>
+    );
+  }
+
+  // Normalización de datos provenientes del CMS
   const formattedRegiones = (data?.regiones || []).map((r) => {
     const regionId = r.id || r.title.toLowerCase().replace(/\s+/g, "-");
     
-    // Si viene desde index.json, mapea comunidades [{ label, slug }] a URLs relativas /comunidades/:region/:slug
-    const items: Item[] = r.items
-      ? r.items
+    const items = r.items
+      ? r.items.map((it) => ({ label: it.label, to: it.to || "" }))
       : (r.comunidades || []).map((c) => ({
           label: c.label,
           to: c.to || `/comunidades/${regionId}/${c.slug}`,
@@ -134,10 +108,13 @@ export default function ComunidadesCatalogue() {
     <section className="overflow-hidden">
       <div className="relative flex flex-1 justify-center pb-5">
         <div className="w-full">
-          {/* Render dinámico de todas las regiones */}
-          {formattedRegiones.map((r) => (
-            <RegionBlock key={r.title} {...r} />
-          ))}
+          {formattedRegiones.length === 0 ? (
+            <p className="text-center py-12 text-gray-500">No hay regiones disponibles actualmente.</p>
+          ) : (
+            formattedRegiones.map((r) => (
+              <RegionBlock key={r.title} {...r} />
+            ))
+          )}
 
           {/* Decorativos de fondo */}
           <div className="hidden md:block absolute top-0 left-0 -z-30">
