@@ -208,25 +208,87 @@ collections:
                 fields:
                   - { label: "Nombre (Label)", name: "label", widget: "string" }
                   - { label: "Slug", name: "slug", widget: "string" }
-  - name: "comunidades"
-    label: "Comunidades"
-    media_folder: "public/cms-content/comunidades/imgs"
-    public_folder: "/cms-content/comunidades/imgs"
+  - name: "comunidades_centro"
+    label: "Comunidades: Centro"
+    media_folder: "public/cms-content/comunidades/centro/imgs"
+    public_folder: "/cms-content/comunidades/centro/imgs"
     files:
       # JUANACATLÁN
       - file: "public/cms-content/comunidades/centro/juanacatlan.json"
-        label: "Centro: Juanacatlán"
+        label: "Juanacatlán"
         name: "juanacatlan"
+        media_folder: "public/cms-content/comunidades/centro/imgs"
+        public_folder: "/cms-content/comunidades/centro/imgs"
         fields: *community_fields
-
       # SANTA CRUZ DE LAS FLORES
       - file: "public/cms-content/comunidades/centro/santa-cruz-de-las-flores.json"
-        label: "Centro: Santa Cruz de las Flores"
+        label: "Santa Cruz de las Flores"
         name: "santa_cruz_de_las_flores"
+        media_folder: "public/cms-content/comunidades/centro/imgs"
+        public_folder: "/cms-content/comunidades/centro/imgs"
         fields: *community_fields
-
+  - name: "comunidades_costa_sierra"
+    label: "Comunidades: Costa Sierra Occidental"
+    media_folder: "public/cms-content/comunidades/costa-sierra-occidental/imgs"
+    public_folder: "/cms-content/comunidades/costa-sierra-occidental/imgs"
+    files:
       # PUERTO VALLARTA
       - file: "public/cms-content/comunidades/costa-sierra-occidental/puerto-vallarta.json"
-        label: "Costa Sierra Occidental: Puerto Vallarta"
+        label: "Puerto Vallarta"
         name: "puerto_vallarta"
+        media_folder: "public/cms-content/comunidades/costa-sierra-occidental/imgs"
+        public_folder: "/cms-content/comunidades/costa-sierra-occidental/imgs"
         fields: *community_fields
+  - name: "recursos_centro"
+    label: "Recursos: Centro"
+    media_folder: "public/cms-content/comunidades/centro/imgs"
+    public_folder: "/cms-content/comunidades/centro/imgs"
+    files:
+      # MURAL DE JUANACATLÁN
+      - file: "public/cms-content/comunidades/centro/mural.json"
+        label: "Mural de Juanacatlán"
+        name: "mural_juanacatlan"
+        media_folder: "public/cms-content/comunidades/centro/imgs"
+        public_folder: "/cms-content/comunidades/centro/imgs"
+        fields:
+          - { label: "Título Principal", name: "titulo", widget: "string" }
+          - label: "Párrafos Descriptivos"
+            name: "parrafos"
+            widget: "list"
+            field: { label: "Párrafo", name: "parrafo", widget: "text" }
+          - { label: "Título de Tarjeta PDF", name: "pdf_titulo", widget: "string" }
+          - { label: "Descripción de Tarjeta PDF", name: "pdf_descripcion", widget: "string" }
+          - { label: "Archivo PDF Descargable", name: "pdf_archivo", widget: "file" }
+          - label: "Collage / Galería de Imágenes"
+            name: "imagenes"
+            widget: "list"
+            fields:
+              - { label: "Imagen", name: "src", widget: "image" }
+              - { label: "Texto Alternativo (Alt)", name: "alt", widget: "string", required: false }
+              - { label: "Leyenda / Pie de Foto", name: "caption", widget: "string", required: false }
+              - { label: "Enlace Externo (Opcional)", name: "href", widget: "string", required: false }
+      # JUEGO DE XUCHITLÁN
+      - file: "public/cms-content/comunidades/centro/xuchitlan.json"
+        label: "Juego de Xuchitlán (Santa Cruz)"
+        name: "juego_xuchitlan"
+        media_folder: "public/cms-content/comunidades/centro/imgs"
+        public_folder: "/cms-content/comunidades/centro/imgs"
+        fields:
+          - { label: "Título Principal", name: "titulo", widget: "string" }
+          - { label: "Descripción del Juego", name: "descripcion", widget: "text" }
+          - { label: "Título de Tarjeta PDF", name: "pdf_titulo", widget: "string" }
+          - { label: "Descripción de Tarjeta PDF", name: "pdf_descripcion", widget: "string" }
+          - { label: "Archivo PDF Descargable", name: "pdf_archivo", widget: "file" }
+          - { label: "Título Sección Tablero", name: "tablero_titulo", widget: "string" }
+          - { label: "Descripción del Tablero", name: "tablero_descripcion", widget: "text" }
+          - { label: "Imagen del Tablero", name: "tablero_imagen", widget: "image" }
+          - label: "Cartas Interactivas"
+            name: "cartas"
+            widget: "list"
+            summary: "{{fields.titulo}}"
+            fields:
+              - { label: "Categoría / Título", name: "titulo", widget: "string" }
+              - { label: "Descripción / Instructivo", name: "caption", widget: "text" }
+              - { label: "Color del Pincel (Hexadecimal)", name: "color", widget: "color" }
+              - { label: "Imagen Reverso (Frente en reposo)", name: "front", widget: "image" }
+              - { label: "Imagen Frente (Al dar clic)", name: "back", widget: "image" }

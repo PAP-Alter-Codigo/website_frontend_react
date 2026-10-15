@@ -1,0 +1,33 @@
+{
+  "titulo": "Xuchitlán",
+  "descripcion": "Xuchitlán es un juego que busca recuperar los saberes intergeneracionales del antiguo valle de Xuchitlán mediante el reconocimiento de los elementos bioculturales (flora, fauna y cultura) que dan forma a su identidad. Se trata de un recorrido visual e interactivo por el territorio para conocer los pueblos originarios como Cofradía, Buenavista, Santa Cruz de las Flores, Cruz Vieja, Santa Cruz de la Loma cuya relación interdependiente con el Cerro del Totoltepec, el bosque El Malvaste, el humedal La Playa que forman parte de un mismo ecosistema conocido como Corredor de Tlaxomulli, resaltando la importancia del ciclo sociohidrológico.",
+  "pdf_titulo": "Conoce la experiencia completa aquí",
+  "pdf_descripcion": "Conoce el proceso de elaboración del juego Xuchitlán paso a paso.",
+  "pdf_archivo": "/cms-content/comunidades/centro/memoria-de-xuchitlan.pdf",
+  "tablero_titulo": "Tablero",
+  "tablero_descripcion": "El diseño del tablero se realizó en colaboración con el Comité Agua y Vida de Santa Cruz de las Flores, quienes nos proporcionaron distintos mapas como base. Se trabajó a partir de dicho diseño, corrigiendo los elementos mal representados, además de que se agregaron aquellos que el comité nos pidió, como las distintas corrientes de agua que fluyen desde el cerro del Totoltepec.\n\nPara los elementos bioculturales que se incluyeron, se realizó una investigación en fuentes de información complementarias.",
+  "tablero_imagen": "/cms-content/comunidades/centro/imgs/xuchitlan-tablero-final.png",
+  "cartas": [
+    {
+      "titulo": "Informativas",
+      "caption": "Este tipo de cartas contienen distinta información de los elementos bioculturales de Santa Cruz de las Flores, como lo son datos curiosos, sus funciones, y palabras en la lengua coca.",
+      "color": "#629fde",
+      "front": "/cms-content/comunidades/centro/imgs/xuchitlan-cartas-02.png",
+      "back": "/cms-content/comunidades/centro/imgs/xuchitlan-cartas-frente-05.png"
+    },
+    {
+      "titulo": "Trivia",
+      "caption": "Este tipo de cartas se encargan de cuestionar los conocimientos de los participantes a través de distintas preguntas.",
+      "color": "#de9862",
+      "front": "/cms-content/comunidades/centro/imgs/xuchitlan-cartas-03.png",
+      "back": "/cms-content/comunidades/centro/imgs/xuchitlan-cartas-frente-06.png"
+    },
+    {
+      "titulo": "Comunidad",
+      "caption": "Este tipo de cartas busca que los participantes realicen actividades en conjunto, relacionadas con el territorio, para estimular la creación de comunidad entre quienes juegan.",
+      "color": "#227839",
+      "front": "/cms-content/comunidades/centro/imgs/xuchitlan-cartas-04.png",
+      "back": "/cms-content/comunidades/centro/imgs/xuchitlan-cartas-frente-07.png"
+    }
+  ]
+}

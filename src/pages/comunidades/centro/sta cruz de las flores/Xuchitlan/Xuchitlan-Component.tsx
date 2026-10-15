@@ -1,36 +1,116 @@
+import { useMemo } from "react";
+import BrushCard from "../../../../../components/Brush-Card";
+import { useCMSContent } from "../../../../../hooks/useCMSContent";
 
-import tablero from "@assets/comunidades/staCruz/xuchitlan/TABLERO_Final.png"
+// Assets locales estáticos para Fallback
+import tablero from "@assets/comunidades/staCruz/xuchitlan/TABLERO_Final.png";
+import juegoXuchitlanPdf from "@assets/comunidades/staCruz/xuchitlan/Memoria-de-Xuchitlan.pdf";
 
-import BrushCard from "../../../../../components/Brush-Card"
+import card1_F from "@assets/comunidades/staCruz/xuchitlan/cartas frente-05.png";
+import card1_B from "@assets/comunidades/staCruz/xuchitlan/cartas-02.png";
 
-import juegoXuchitlanPdf from "@assets/comunidades/staCruz/xuchitlan/Memoria-de-Xuchitlan.pdf"
+import card2_F from "@assets/comunidades/staCruz/xuchitlan/cartas frente-06.png";
+import card2_B from "@assets/comunidades/staCruz/xuchitlan/cartas-03.png";
 
-import card1_F from "@assets/comunidades/staCruz/xuchitlan/cartas frente-05.png"
-import card1_B from "@assets/comunidades/staCruz/xuchitlan/cartas-02.png"
+import card3_F from "@assets/comunidades/staCruz/xuchitlan/cartas frente-07.png";
+import card3_B from "@assets/comunidades/staCruz/xuchitlan/cartas-04.png";
 
-import card2_F from "@assets/comunidades/staCruz/xuchitlan/cartas frente-06.png"
-import card2_B from "@assets/comunidades/staCruz/xuchitlan/cartas-03.png"
+interface CardItem {
+  titulo: string;
+  caption: string;
+  color: string;
+  front: string;
+  back: string;
+}
 
-import card3_F from "@assets/comunidades/staCruz/xuchitlan/cartas frente-07.png"
-import card3_B from "@assets/comunidades/staCruz/xuchitlan/cartas-04.png"
+interface XuchitlanContent {
+  titulo: string;
+  descripcion: string;
+  pdf_titulo: string;
+  pdf_descripcion: string;
+  pdf_archivo: string;
+  tablero_titulo: string;
+  tablero_descripcion: string;
+  tablero_imagen: string;
+  cartas: CardItem[];
+}
 
 export default function XuchitlanComponent() {
+  // Objeto de respaldo con los datos e imágenes locales
+  const fallbackData = useMemo<XuchitlanContent>(
+    () => ({
+      titulo: "Xuchitlán",
+      descripcion:
+        "Xuchitlán es un juego que busca recuperar los saberes intergeneracionales del antiguo valle de Xuchitlán mediante el reconocimiento de los elementos bioculturales (flora, fauna y cultura) que dan forma a su identidad. Se trata de un recorrido visual e interactivo por el territorio para conocer los pueblos originarios como Cofradía, Buenavista, Santa Cruz de las Flores, Cruz Vieja, Santa Cruz de la Loma cuya relación interdependiente con el Cerro del Totoltepec, el bosque El Malvaste, el humedal La Playa que forman parte de un mismo ecosistema conocido como Corredor de Tlaxomulli, resaltando la importancia del ciclo sociohidrológico.",
+      pdf_titulo: "Conoce la experiencia completa aquí",
+      pdf_descripcion:
+        "Conoce el proceso de elaboración del juego Xuchitlán paso a paso.",
+      pdf_archivo: juegoXuchitlanPdf,
+      tablero_titulo: "Tablero",
+      tablero_descripcion:
+        "El diseño del tablero se realizó en colaboración con el Comité Agua y Vida de Santa Cruz de las Flores, quienes nos proporcionaron distintos mapas como base. Se trabajó a partir de dicho diseño, corrigiendo los elementos mal representados, además de que se agregaron aquellos que el comité nos pidió, como las distintas corrientes de agua que fluyen desde el cerro del Totoltepec.\n\nPara los elementos bioculturales que se incluyeron, se realizó una investigación en fuentes de información complementarias.",
+      tablero_imagen: tablero,
+      cartas: [
+        {
+          front: card1_B,
+          back: card1_F,
+          color: "#629FDE",
+          titulo: "Informativas",
+          caption:
+            "Este tipo de cartas contienen distinta información de los elementos bioculturales de Santa Cruz de las Flores, como lo son datos curiosos, sus funciones, y palabras en la lengua coca.",
+        },
+        {
+          front: card2_B,
+          back: card2_F,
+          color: "#DE9862",
+          titulo: "Trivia",
+          caption:
+            "Este tipo de cartas se encargan de cuestionar los conocimientos de los participantes a través de distintas preguntas.",
+        },
+        {
+          front: card3_B,
+          back: card3_F,
+          color: "#227839",
+          titulo: "Comunidad",
+          caption:
+            "Este tipo de cartas busca que los participantes realicen actividades en conjunto, relacionadas con el territorio, para estimular la creación de comunidad entre quienes juegan.",
+        },
+      ],
+    }),
+    []
+  );
+
+  // Consumo dinámico con el hook useCMSContent
+  const jsonUrl = "/cms-content/comunidades/centro/xuchitlan.json";
+  const { data, loading } = useCMSContent<XuchitlanContent>(jsonUrl, fallbackData);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col justify-center items-center min-h-[40vh] gap-3">
+        <div className="animate-spin rounded-full h-10 w-10 border-4 border-amber-700 border-t-transparent"></div>
+        <p className="text-sm font-medium text-amber-900">Cargando juego de Xuchitlán...</p>
+      </div>
+    );
+  }
+
+  const content = data || fallbackData;
+
   return (
     <>
       <div className="max-w-6xl mx-auto px-4 pt-8 sm:pt-12">
         {/* Sección Superior: Texto Descriptivo + Tarjeta Descargable */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
-          {/* Texto Principal */}
+          {/* Texto Principal Dinámico */}
           <div className="lg:col-span-2">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-black pb-3 sm:pb-4">
-              Xuchitlán
+              {content.titulo}
             </h2>
             <p className="text-base sm:text-lg lg:text-xl text-black/90 leading-relaxed">
-              Xuchitlán es un juego que busca recuperar los saberes intergeneracionales del antiguo valle de Xuchitlán mediante el reconocimiento de los elementos bioculturales (flora, fauna y cultura) que dan forma a su identidad. Se trata de un recorrido visual e interactivo por el territorio para conocer los pueblos originarios como Cofradía, Buenavista, Santa Cruz de las Flores, Cruz Vieja, Santa Cruz de la Loma cuya relación interdependiente con el Cerro del Totoltepec, el bosque El Malvaste, el humedal La Playa que forman parte de un mismo ecosistema conocido como Corredor de Tlaxomulli, resaltando la importancia del ciclo sociohidrológico.
+              {content.descripcion}
             </p>
           </div>
 
-          {/* Tarjeta de Descarga PDF */}
+          {/* Tarjeta de Descarga PDF Dinámica */}
           <div className="lg:col-span-1">
             <div className="group relative bg-amber-50/60 border-2 border-amber-200 hover:border-amber-400 rounded-3xl p-6 sm:p-8 transition-all duration-300 ease-out shadow-sm hover:shadow-md">
               <div className="flex items-center justify-between mb-4">
@@ -46,15 +126,15 @@ export default function XuchitlanComponent() {
               </div>
 
               <h3 className="text-lg sm:text-xl font-extrabold text-gray-900 mb-2 leading-tight">
-                Conoce la experiencia completa aquí
+                {content.pdf_titulo}
               </h3>
               
               <p className="text-xs sm:text-sm text-gray-600 mb-6 leading-relaxed">
-                Conoce el proceso de elaboración del juego Xuchitlán paso a paso.
+                {content.pdf_descripcion}
               </p>
 
               <a
-                href={juegoXuchitlanPdf}
+                href={content.pdf_archivo}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-white bg-amber-700 hover:bg-amber-800 rounded-full transition-all duration-300 shadow-sm hover:shadow-md group-hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2"
@@ -68,24 +148,22 @@ export default function XuchitlanComponent() {
           </div>
         </div>
 
-        {/* Sección del Tablero */}
+        {/* Sección del Tablero Dinámica */}
         <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-6 lg:gap-10 pt-10 sm:pt-14 lg:pt-14 items-stretch">
           <div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-black pb-3 sm:pb-4">
-              Tablero
+              {content.tablero_titulo}
             </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-black/90 leading-relaxed">
-              El diseño del tablero se realizó en colaboración con el Comité Agua y Vida de Santa Cruz de las Flores, quienes nos proporcionaron distintos mapas como base. Se trabajó a partir de dicho diseño, corrigiendo los elementos mal representados, además de que se agregaron aquellos que el comité nos pidió, como las distintas corrientes de agua que fluyen desde el cerro del Totoltepec.
-              <br /><br />
-              Para los elementos bioculturales que se incluyeron, se realizó una investigación en fuentes de información complementarias.
+            <p className="text-base sm:text-lg lg:text-xl text-black/90 leading-relaxed whitespace-pre-line">
+              {content.tablero_descripcion}
             </p>
           </div>
 
           <div className="w-full overflow-hidden flex items-center justify-center p-4 md:p-8">
             <img
               className="max-w-full h-auto max-h-[500px] object-contain rounded-2xl shadow-lg select-none"
-              src={tablero}
-              alt="Tablero del juego Xuchitlán"
+              src={content.tablero_imagen}
+              alt={`Imagen de ${content.tablero_titulo}`}
             />
           </div>
         </div>
@@ -96,7 +174,6 @@ export default function XuchitlanComponent() {
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-black">
               Cartas
             </h2>
-            {/* Mensaje indicador global */}
             <span className="text-xs sm:text-sm font-semibold text-amber-800 bg-amber-100/80 px-3 py-1 rounded-full w-fit flex items-center gap-1.5 shadow-sm">
               <svg className="w-4 h-4 animate-spin-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -106,36 +183,10 @@ export default function XuchitlanComponent() {
           </div>
         </div>
 
-        {/* Grid de Cartas Interactivas */}
+        {/* Grid Dinámico de Cartas Interactivas */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center mt-6">
-          {[
-            {
-              front: card1_B,
-              back: card1_F,
-              color: "#629FDE",
-              title: "Informativas",
-              caption:
-                "Este tipo de cartas contienen distinta información de los elementos bioculturales de Santa Cruz de las Flores, como lo son datos curiosos, sus funciones, y palabras en la lengua coca.",
-            },
-            {
-              front: card2_B,
-              back: card2_F,
-              color: "#DE9862",
-              title: "Trivia",
-              caption:
-                "Este tipo de cartas se encargan de cuestionar los conocimientos de los participantes a través de distintas preguntas.",
-            },
-            {
-              front: card3_B,
-              back: card3_F,
-              color: "#227839",
-              title: "Comunidad",
-              caption:
-                "Este tipo de cartas busca que los participantes realicen actividades en conjunto, relacionadas con el territorio, para estimular la creación de comunidad entre quienes juegan.",
-            },
-          ].map(({ front, back, title, caption, color }) => (
-            <div key={title} className="flex flex-col items-center gap-3 group w-full">
-              {/* Contenedor relativo para montar la superposición indicadora */}
+          {content.cartas.map((card) => (
+            <div key={card.titulo} className="flex flex-col items-center gap-3 group w-full">
               <div className="relative flex-none cursor-pointer">
                 {/* Badge Flotante "Voltear" */}
                 <div className="absolute top-3 right-3 z-20 pointer-events-none transition-all duration-300 group-hover:scale-110">
@@ -147,21 +198,21 @@ export default function XuchitlanComponent() {
                   </span>
                 </div>
 
-                {/* Tarjeta Brush */}
+                {/* Componente BrushCard que conserva su lógica interna de flip */}
                 <BrushCard
-                  frontImage={front}
-                  backImage={back}
-                  frontBrush={{ primaryColor: color }}
-                  backBrush={{ primaryColor: color }}
+                  frontImage={card.front}
+                  backImage={card.back}
+                  frontBrush={{ primaryColor: card.color }}
+                  backBrush={{ primaryColor: card.color }}
                 />
               </div>
 
               <div className="text-center px-2 pt-2">
                 <h3 className="font-bold text-black text-base sm:text-lg leading-tight flex items-center justify-center gap-1.5">
-                  {title}
+                  {card.titulo}
                 </h3>
                 <p className="text-black/70 text-sm sm:text-base leading-relaxed mt-1">
-                  {caption}
+                  {card.caption}
                 </p>
               </div>
             </div>
