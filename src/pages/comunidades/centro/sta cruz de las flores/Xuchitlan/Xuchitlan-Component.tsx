@@ -1,70 +1,11 @@
-import { useMemo } from "react";
-import BrushCard from "../../../../../components/Brush-Card";
 import { useCMSContent } from "../../../../../hooks/useCMSContent";
 import type { CMSXuchitlanContent } from "../../../../../types/recursos";
-
-// Assets locales estáticos para Fallback
-import tablero from "@assets/comunidades/staCruz/xuchitlan/TABLERO_Final.png";
-import juegoXuchitlanPdf from "@assets/comunidades/staCruz/xuchitlan/Memoria-de-Xuchitlan.pdf";
-
-import card1_F from "@assets/comunidades/staCruz/xuchitlan/cartas frente-05.png";
-import card1_B from "@assets/comunidades/staCruz/xuchitlan/cartas-02.png";
-
-import card2_F from "@assets/comunidades/staCruz/xuchitlan/cartas frente-06.png";
-import card2_B from "@assets/comunidades/staCruz/xuchitlan/cartas-03.png";
-
-import card3_F from "@assets/comunidades/staCruz/xuchitlan/cartas frente-07.png";
-import card3_B from "@assets/comunidades/staCruz/xuchitlan/cartas-04.png";
-
+import BrushCard from "../../../../../components/Brush-Card";
 
 export default function XuchitlanComponent() {
-  // Objeto de respaldo con los datos e imágenes locales
-  const fallbackData = useMemo<CMSXuchitlanContent>(
-    () => ({
-      titulo: "Xuchitlán",
-      descripcion:
-        "Xuchitlán es un juego que busca recuperar los saberes intergeneracionales del antiguo valle de Xuchitlán mediante el reconocimiento de los elementos bioculturales (flora, fauna y cultura) que dan forma a su identidad. Se trata de un recorrido visual e interactivo por el territorio para conocer los pueblos originarios como Cofradía, Buenavista, Santa Cruz de las Flores, Cruz Vieja, Santa Cruz de la Loma cuya relación interdependiente con el Cerro del Totoltepec, el bosque El Malvaste, el humedal La Playa que forman parte de un mismo ecosistema conocido como Corredor de Tlaxomulli, resaltando la importancia del ciclo sociohidrológico.",
-      pdf_titulo: "Conoce la experiencia completa aquí",
-      pdf_descripcion:
-        "Conoce el proceso de elaboración del juego Xuchitlán paso a paso.",
-      pdf_archivo: juegoXuchitlanPdf,
-      tablero_titulo: "Tablero",
-      tablero_descripcion:
-        "El diseño del tablero se realizó en colaboración con el Comité Agua y Vida de Santa Cruz de las Flores, quienes nos proporcionaron distintos mapas como base. Se trabajó a partir de dicho diseño, corrigiendo los elementos mal representados, además de que se agregaron aquellos que el comité nos pidió, como las distintas corrientes de agua que fluyen desde el cerro del Totoltepec.\n\nPara los elementos bioculturales que se incluyeron, se realizó una investigación en fuentes de información complementarias.",
-      tablero_imagen: tablero,
-      cartas: [
-        {
-          front: card1_B,
-          back: card1_F,
-          color: "#629FDE",
-          titulo: "Informativas",
-          caption:
-            "Este tipo de cartas contienen distinta información de los elementos bioculturales de Santa Cruz de las Flores, como lo son datos curiosos, sus funciones, y palabras en la lengua coca.",
-        },
-        {
-          front: card2_B,
-          back: card2_F,
-          color: "#DE9862",
-          titulo: "Trivia",
-          caption:
-            "Este tipo de cartas se encargan de cuestionar los conocimientos de los participantes a través de distintas preguntas.",
-        },
-        {
-          front: card3_B,
-          back: card3_F,
-          color: "#227839",
-          titulo: "Comunidad",
-          caption:
-            "Este tipo de cartas busca que los participantes realicen actividades en conjunto, relacionadas con el territorio, para estimular la creación de comunidad entre quienes juegan.",
-        },
-      ],
-    }),
-    []
-  );
-
-  // Consumo dinámico con el hook useCMSContent
+  // Consumo dinámico con useCMSContent directamente desde el CMS
   const jsonUrl = "/cms-content/comunidades/centro/xuchitlan.json";
-  const { data, loading } = useCMSContent<CMSXuchitlanContent>(jsonUrl, fallbackData);
+  const { data, loading, error } = useCMSContent<CMSXuchitlanContent>(jsonUrl);
 
   if (loading) {
     return (
@@ -75,7 +16,14 @@ export default function XuchitlanComponent() {
     );
   }
 
-  const content = data || fallbackData;
+  if (error || !data) {
+    return (
+      <div className="text-center py-12 text-red-600">
+        <p className="text-lg font-semibold">No se pudo cargar la información del Juego de Xuchitlán.</p>
+        <p className="text-sm">{error?.message}</p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -85,10 +33,10 @@ export default function XuchitlanComponent() {
           {/* Texto Principal Dinámico */}
           <div className="lg:col-span-2">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-black pb-3 sm:pb-4">
-              {content.titulo}
+              {data.titulo}
             </h2>
             <p className="text-base sm:text-lg lg:text-xl text-black/90 leading-relaxed">
-              {content.descripcion}
+              {data.descripcion}
             </p>
           </div>
 
@@ -108,24 +56,26 @@ export default function XuchitlanComponent() {
               </div>
 
               <h3 className="text-lg sm:text-xl font-extrabold text-gray-900 mb-2 leading-tight">
-                {content.pdf_titulo}
+                {data.pdf_titulo}
               </h3>
               
               <p className="text-xs sm:text-sm text-gray-600 mb-6 leading-relaxed">
-                {content.pdf_descripcion}
+                {data.pdf_descripcion}
               </p>
 
-              <a
-                href={content.pdf_archivo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-white bg-amber-700 hover:bg-amber-800 rounded-full transition-all duration-300 shadow-sm hover:shadow-md group-hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2"
-              >
-                <span>Abrir Documento</span>
-                <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </a>
+              {data.pdf_archivo && (
+                <a
+                  href={data.pdf_archivo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-white bg-amber-700 hover:bg-amber-800 rounded-full transition-all duration-300 shadow-sm hover:shadow-md group-hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2"
+                >
+                  <span>Abrir Documento</span>
+                  <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -134,18 +84,20 @@ export default function XuchitlanComponent() {
         <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-6 lg:gap-10 pt-10 sm:pt-14 lg:pt-14 items-stretch">
           <div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-black pb-3 sm:pb-4">
-              {content.tablero_titulo}
+              {data.tablero_titulo}
             </h2>
             <p className="text-base sm:text-lg lg:text-xl text-black/90 leading-relaxed whitespace-pre-line">
-              {content.tablero_descripcion}
+              {data.tablero_descripcion}
             </p>
           </div>
 
           <div className="w-full overflow-hidden flex items-center justify-center p-4 md:p-8">
             <img
               className="max-w-full h-auto max-h-[500px] object-contain rounded-2xl shadow-lg select-none"
-              src={content.tablero_imagen}
-              alt={`Imagen de ${content.tablero_titulo}`}
+              src={data.tablero_imagen}
+              alt={`Imagen de ${data.tablero_titulo}`}
+              loading="lazy"
+              decoding="async"
             />
           </div>
         </div>
@@ -167,7 +119,7 @@ export default function XuchitlanComponent() {
 
         {/* Grid Dinámico de Cartas Interactivas */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center mt-6">
-          {content.cartas.map((card) => (
+          {(data.cartas || []).map((card) => (
             <div key={card.titulo} className="flex flex-col items-center gap-3 group w-full">
               <div className="relative flex-none cursor-pointer">
                 {/* Badge Flotante "Voltear" */}

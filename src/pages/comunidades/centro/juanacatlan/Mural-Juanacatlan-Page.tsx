@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { Link } from "react-router-dom";
 import prtSup1 from "@assets/bigStrokes/01-prt-sup-1.png";
 import prtInf1 from "@assets/bigStrokes/piedepag-1-1.png";
 import AppHeader from "../../../../components/App-Header";
@@ -8,55 +8,10 @@ import MuralJuanacatlanCollage from "./Mural-Juanacatlan-Collage";
 import { useCMSContent } from "../../../../hooks/useCMSContent";
 import type { CMSMuralContent } from "../../../../types/recursos";
 
-// Fallbacks de recursos estáticos legacy
-import muralPdf from "@assets/comunidades/juanacatlan/Mural/Memoria-mural-Extendida.pdf"
-//import juanac1 from "@assets/comunidades/juanacatlan/DSCN0544.jpg";
-/* import juanac2 from "@assets/comunidades/juanacatlan/IMG_3182.jpg";
-import juanac3 from "@assets/comunidades/juanacatlan/IMG_3220.jpg";
-import juanac4 from "@assets/comunidades/juanacatlan/IMG_3242.jpg"; */
-//import juanac5 from "@assets/comunidades/juanacatlan/IMG_3621.jpg";
-import juanac6 from "@assets/comunidades/juanacatlan/IMG_20240529_100755.jpg";
-//import juanac7 from "@assets/comunidades/juanacatlan/IMG_20240529_125517.jpg";
-import juanac8 from "@assets/comunidades/juanacatlan/IMG_20240611_091546.jpg";
-//import juanac9 from "@assets/comunidades/juanacatlan/IMG_20240611_091603.jpg";
-
-import mural1 from "@assets/comunidades/juanacatlan/Mural/mural1.jpeg";
-//import mural2 from "@assets/comunidades/juanacatlan/Mural/mural2.jpeg";
-//import mural3 from "@assets/comunidades/juanacatlan/Mural/mural3.jpeg";
-import mural4 from "@assets/comunidades/juanacatlan/Mural/mural4.jpeg";
-import mural5 from "@assets/comunidades/juanacatlan/Mural/mural5.jpeg";
-//import mural6 from "@assets/comunidades/juanacatlan/Mural/mural6.jpeg";
-import mural7 from "@assets/comunidades/juanacatlan/Mural/mural7.jpeg";
-
-
 export default function MuralJuanacatlanPage() {
-  // Objeto de respaldo con los datos hardcodeados actuales
-  const fallbackData = useMemo<CMSMuralContent>(
-    () => ({
-      titulo: "Mural",
-      parrafos: [
-        "El mural comunitario “Nuestro territorio” es el resultado del encuentro entre imaginación, memoria y colaboración. A través del arte, las y los estudiantes y profesorado de la Escuela Josefa Ortiz de Domínguez, junto con el Grupo El Roble y Un Salto de Vida, en la cabecera municipal de Juanacatlán, transformaron los muros de su entrada en un espacio vivo, lleno de colores, relatos y significados compartidos. Cada trazo fue una conversación, cada color una emoción, cada imagen una ventana al territorio.",
-        "El mural comunitario que hemos realizado no solo es una expresión artística, sino un reflejo del esfuerzo colectivo de las infancias, la identidad compartida y la memoria de quienes participaron en su creación. Representa la memoria viva de Juanacatlán, la conexión con su territorio y la esperanza de que las nuevas generaciones encuentren en el arte un camino de unión, aprendizaje y memoria comunitaria.",
-      ],
-      pdf_titulo: "Conoce la experiencia completa aquí",
-      pdf_descripcion:
-        "NUESTRO TERRITORIO: Memorias del Mural Comunitario en la Escuela Josefa Ortiz de Domínguez en Juanacatlán",
-      pdf_archivo: muralPdf,
-      imagenes: [
-        { src: mural1 },
-        { src: juanac6 },
-        { src: juanac8 },
-        { src: mural4 },
-        { src: mural5 },
-        { src: mural7 },
-      ],
-    }),
-    []
-  );
-
-  // Consumo dinámico con useCMSContent
+  // Consumo dinámico con useCMSContent directamente desde el CMS sin fallback local
   const jsonUrl = "/cms-content/comunidades/centro/mural.json";
-  const { data, loading } = useCMSContent<CMSMuralContent>(jsonUrl, fallbackData);
+  const { data, loading, error } = useCMSContent<CMSMuralContent>(jsonUrl);
 
   if (loading) {
     return (
@@ -66,7 +21,25 @@ export default function MuralJuanacatlanPage() {
     );
   }
 
-  const content = data || fallbackData;
+  if (error || !data) {
+    return (
+      <section className="max-w-6xl mx-auto px-4 py-12 text-center">
+        <h1 className="text-3xl font-extrabold mb-4">Contenido no disponible</h1>
+        <p className="text-gray-600 mb-6">
+          No se pudo cargar la información del Mural de Juanacatlán desde el CMS.
+        </p>
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 rounded-full bg-black text-white px-5 py-2 hover:opacity-90"
+        >
+          Volver al inicio
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </Link>
+      </section>
+    );
+  }
 
   return (
     <>
@@ -78,13 +51,13 @@ export default function MuralJuanacatlanPage() {
       <div className="flex justify-center pt-8 sm:pt-12 px-4">
         <div className="w-full md:w-10/12 max-w-7xl">
           <h1 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-black pb-4 sm:pb-6">
-            {content.titulo}
+            {data.titulo}
           </h1>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
             {/* Texto Principal dinámico */}
             <div className="lg:col-span-2 text-base sm:text-lg text-black/90 leading-relaxed space-y-4">
-              {content.parrafos.map((parrafo, idx) => (
+              {(data.parrafos || []).map((parrafo, idx) => (
                 <p key={idx}>{parrafo}</p>
               ))}
             </div>
@@ -122,42 +95,44 @@ export default function MuralJuanacatlanPage() {
 
                 {/* Título y descripción dinámicos */}
                 <h3 className="text-lg sm:text-xl font-extrabold text-gray-900 mb-2 leading-tight">
-                  {content.pdf_titulo}
+                  {data.pdf_titulo}
                 </h3>
 
                 <p className="text-xs sm:text-sm text-gray-600 mb-6 leading-relaxed">
-                  {content.pdf_descripcion}
+                  {data.pdf_descripcion}
                 </p>
 
                 {/* Enlace al archivo PDF */}
-                <a
-                  href={content.pdf_archivo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-white bg-amber-700 hover:bg-amber-800 rounded-full transition-all duration-300 shadow-sm hover:shadow-md group-hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2"
-                >
-                  <span>Abrir Documento</span>
-                  <svg
-                    className="w-4 h-4 ml-2 transform group-hover:translate-x-0.5 transition-transform"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+                {data.pdf_archivo && (
+                  <a
+                    href={data.pdf_archivo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-bold text-white bg-amber-700 hover:bg-amber-800 rounded-full transition-all duration-300 shadow-sm hover:shadow-md group-hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2.5"
-                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                    />
-                  </svg>
-                </a>
+                    <span>Abrir Documento</span>
+                    <svg
+                      className="w-4 h-4 ml-2 transform group-hover:translate-x-0.5 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2.5"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                      />
+                    </svg>
+                  </a>
+                )}
               </div>
             </div>
           </div>
 
           {/* Collage de imágenes dinámico */}
           <MuralJuanacatlanCollage
-            images={content.imagenes}
+            images={data.imagenes || []}
             className="pt-12 sm:pt-16"
           />
         </div>
