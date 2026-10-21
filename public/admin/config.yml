@@ -130,7 +130,7 @@ collections:
               - label: "Grados Académicos"
                 name: "degrees"
                 widget: "list"
-                field: { label: "Grado / Título", widget: "string" }
+                field: { label: "Grado / Título", name: "degree", widget: "string" }
               - { label: "Especialidad / Area", name: "expertise", widget: "string" }
               - { label: "Contacto", name: "contact", widget: "string" }
               - label: "Imagen"
