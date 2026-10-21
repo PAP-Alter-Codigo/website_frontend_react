@@ -4,6 +4,7 @@ backend:
   name: github
   repo: PAP-Alter-Codigo/website_frontend_react
   branch: main
+  base_url: https://auth.sveltia.dev
 
 auth_methods:
   - token
