@@ -3,7 +3,10 @@
 backend:
   name: github
   repo: PAP-Alter-Codigo/website_frontend_react
-  branch: feature-cms
+  branch: main
+
+auth_methods:
+  - token
 
 media_folder: public/cms-content
 public_folder: /cms-content
