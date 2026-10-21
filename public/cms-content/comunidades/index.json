@@ -1,0 +1,201 @@
+{
+  "regiones": [
+    {
+      "id": "norte",
+      "title": "NORTE",
+      "imagen": "/cms-content/comunidades/imgs/norte.jpg",
+      "reverse": true,
+      "comunidades": [
+        {
+          "label": "Santa Catarina Cuexcomatitlán",
+          "slug": "santa-catarina-cuexcomatitlan"
+        },
+        {
+          "label": "San Andrés Cohamiata",
+          "slug": "san-andres-cohamiata"
+        }
+      ]
+    },
+    {
+      "id": "altos-norte",
+      "title": "ALTOS-NORTE",
+      "imagen": "/cms-content/comunidades/imgs/altos-norte.jpg",
+      "reverse": false,
+      "comunidades": [
+        {
+          "label": "Lagos de Moreno",
+          "slug": "lagos-de-moreno"
+        }
+      ]
+    },
+    {
+      "id": "altos-sur",
+      "title": "ALTOS-SUR",
+      "imagen": "/cms-content/comunidades/imgs/altos-sur.jpeg",
+      "reverse": true,
+      "comunidades": [
+        {
+          "label": "Lagos de Moreno",
+          "slug": "lagos-de-moreno"
+        }
+      ]
+    },
+    {
+      "id": "cienega",
+      "title": "CIENEGA",
+      "imagen": "/cms-content/comunidades/imgs/cienega.jpg",
+      "reverse": false,
+      "comunidades": [
+        {
+          "label": "La Noria",
+          "slug": "la-noria"
+        },
+        {
+          "label": "Agua Caliente",
+          "slug": "agua-caliente"
+        },
+        {
+          "label": "Mezcala",
+          "slug": "mezcala"
+        }
+      ]
+    },
+    {
+      "id": "sureste",
+      "title": "SURESTE",
+      "imagen": "/cms-content/comunidades/imgs/sureste.png",
+      "reverse": true,
+      "comunidades": [
+        {
+          "label": "Santa Cruz de la Soledad",
+          "slug": "santa-cruz-de-la-soledad"
+        },
+        {
+          "label": "Mezcala",
+          "slug": "mezcala"
+        },
+        {
+          "label": "San Antonio Tlayacapan",
+          "slug": "san-antonio-tlayacapan"
+        }
+      ]
+    },
+    {
+      "id": "sur",
+      "title": "SUR",
+      "imagen": "/cms-content/comunidades/imgs/sur.jpeg",
+      "reverse": false,
+      "comunidades": [
+        {
+          "label": "Sierra de Manantlán",
+          "slug": "sierra-de-manantlan"
+        },
+        {
+          "label": "Ciudad Guzmán",
+          "slug": "ciudad-guzman"
+        }
+      ]
+    },
+    {
+      "id": "sierra-de-amula",
+      "title": "SIERRA-DE-AMULA",
+      "imagen": "/cms-content/comunidades/imgs/sierra-de-amula.jpeg",
+      "reverse": true,
+      "comunidades": [
+        {
+          "label": "Autlán",
+          "slug": "autlan"
+        },
+        {
+          "label": "El Grullo",
+          "slug": "el-grullo"
+        }
+      ]
+    },
+    {
+      "id": "costa-sur",
+      "title": "COSTA-SUR",
+      "imagen": "/cms-content/comunidades/imgs/costa-sur.jpeg",
+      "reverse": false,
+      "comunidades": [
+        {
+          "label": "Costa Careyes",
+          "slug": "costa-careyes"
+        }
+      ]
+    },
+    {
+      "id": "costa-sierra-occidental",
+      "title": "COSTA-SIERRA-OCCIDENTAL",
+      "imagen": "/cms-content/comunidades/imgs/costa-sierra-occidental.jpeg",
+      "reverse": true,
+      "comunidades": [
+        {
+          "label": "Puerto Vallarta",
+          "slug": "puerto-vallarta",
+          "to": "/comunidades/puerto-vallarta"
+        }
+      ]
+    },
+    {
+      "id": "valles",
+      "title": "VALLES",
+      "imagen": "/cms-content/comunidades/imgs/valles.jpeg",
+      "reverse": false,
+      "comunidades": [
+        {
+          "label": "Tequila",
+          "slug": "tequila"
+        },
+        {
+          "label": "Tecolotlán",
+          "slug": "tecolotlan"
+        },
+        {
+          "label": "Tala",
+          "slug": "tala"
+        },
+        {
+          "label": "Sierra de Quila",
+          "slug": "sierra-de-quila"
+        }
+      ]
+    },
+    {
+      "id": "centro",
+      "title": "CENTRO",
+      "imagen": "/cms-content/comunidades/imgs/centro.jpg",
+      "reverse": true,
+      "comunidades": [
+        {
+          "label": "Juanacatlán",
+          "slug": "juanacatlan"
+        },
+        {
+          "label": "Santa Cruz de las Flores",
+          "slug": "santa-cruz-de-las-flores"
+        },
+        {
+          "label": "El Salto",
+          "slug": "el-salto"
+        },
+        {
+          "label": "Ixtlahuacán del Río",
+          "slug": "ixtlahuacan-del-rio"
+        }
+      ]
+    },
+    {
+      "id": "lagunas",
+      "title": "LAGUNAS",
+      "imagen": "/cms-content/comunidades/imgs/lagunas.jpeg",
+      "reverse": false,
+      "comunidades": [
+        {
+          "label": "Sayula",
+          "slug": "sayula"
+        }
+      ]
+    }
+  ]
+}

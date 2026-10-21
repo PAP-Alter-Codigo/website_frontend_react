@@ -1,0 +1,122 @@
+{
+  "colaboradores": [
+    {
+      "year": 2025,
+      "periodos": [
+        {
+          "name": "otoño",
+          "data": [
+            {
+              "nombre": "Victoria Valle Chávez",
+              "carrera": "Lic. En Arte y Creación.",
+              "categoria": "Artes",
+              "contacto": "",
+              "imagen": "/cms-content/colaboradores/imgs/victoria-valle.png"
+            },
+            {
+              "nombre": "Ximena García García",
+              "carrera": "Lic. En Diseño Integral.",
+              "categoria": "Redes",
+              "contacto": "",
+              "imagen": "/cms-content/colaboradores/imgs/ximena-garcia.png"
+            },
+            {
+              "nombre": "Carla Ximena Ramírez Gutiérrez",
+              "carrera": "Lic. En Diseño Integral.",
+              "categoria": "Redes",
+              "contacto": "",
+              "imagen": "/cms-content/colaboradores/imgs/carla-ramirez.png"
+            },
+            {
+              "nombre": "Eduardo Sedano Álvarez",
+              "carrera": "Lic. En Ciencias De La Comunicación.",
+              "categoria": "Trabajo Comunitario",
+              "contacto": "",
+              "imagen": "/cms-content/colaboradores/imgs/eduardo-sedano.png"
+            },
+            {
+              "nombre": "Santiago González Solórzano",
+              "carrera": "Lic. En Comunicación y Artes Audiovisuales.",
+              "categoria": "Audio",
+              "contacto": "",
+              "imagen": "/cms-content/colaboradores/imgs/santiago-gonzalez.png"
+            },
+            {
+              "nombre": "Mónica Michelle Reyes Hernández",
+              "carrera": "Lic. En Comunicación y Artes Audiovisuales.",
+              "categoria": "Audio",
+              "contacto": "",
+              "imagen": "/cms-content/colaboradores/imgs/monica-reyes.png"
+            },
+            {
+              "nombre": "Daniela Bustos Crispin",
+              "carrera": "Lic. En Comunicación y Artes Audiovisuales.",
+              "categoria": "Redes",
+              "contacto": "",
+              "imagen": ""
+            },
+            {
+              "nombre": "José Jorge Villarreal Farias",
+              "carrera": "Lic. En Desarrollo de Software.",
+              "categoria": "Tecnologias y desarrollo",
+              "contacto": "",
+              "imagen": "/cms-content/colaboradores/imgs/jorge-villarreal.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "year": 2024,
+      "periodos": [
+        {
+          "name": "verano",
+          "data": [
+            {
+              "nombre": "Francisco Meza Escoto",
+              "carrera": "Lic. en Comunicación y Artes Audiovisuales",
+              "categoria": "Audio",
+              "contacto": "",
+              "imagen": "/cms-content/colaboradores/imgs/francisco-meza.jpeg"
+            },
+            {
+              "nombre": "Christa Barrios Martínez",
+              "carrera": "Ingeniería y Ciencia de Datos",
+              "categoria": "Tecnologias y desarrollo",
+              "contacto": "",
+              "imagen": "/cms-content/colaboradores/imgs/christa-barrios.jpeg"
+            },
+            {
+              "nombre": "Ernesto Rodríguez Hernández",
+              "carrera": "Lic. en Comunicación y Artes Audiovisuales",
+              "categoria": "Audio",
+              "contacto": "",
+              "imagen": "/cms-content/colaboradores/imgs/ernesto-rodriguez.jpeg"
+            },
+            {
+              "nombre": "Ivana Ledesma Osuna",
+              "carrera": "Lic. en Ciencias de la Comunicación",
+              "categoria": "Trabajo comunitario",
+              "contacto": "",
+              "imagen": "/cms-content/colaboradores/imgs/ivana-ledesma.jpeg"
+            },
+            {
+              "nombre": "Odette López Cuevas",
+              "carrera": "Lic. en Gestión Cultural",
+              "categoria": "Trabajo comunitario",
+              "contacto": "",
+              "imagen": "/cms-content/colaboradores/imgs/odette-lopez.jpeg"
+            },
+            {
+              "nombre": "Ian Parres Ocegueda",
+              "carrera": "Lic. en Comunicación y Artes Audiovisuales",
+              "categoria": "Audio",
+              "contacto": "",
+              "imagen": "/cms-content/colaboradores/imgs/ian-parres.jpeg"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

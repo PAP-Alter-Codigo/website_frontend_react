@@ -1,5 +1,5 @@
-import pozoImg from "@assets/comunidades/staCruz/mapa-interactivo/DSCF0307.jpg"
-import lirioImg from "@assets/comunidades/staCruz/mapa-interactivo/DSCF0308.jpg"
+import pozoImg from "@assets/comunidades/staCruz/mapa-interactivo/mapa-interactivo-1.jpg"
+import lirioImg from "@assets/comunidades/staCruz/mapa-interactivo/mapa-interactivo-2.jpg"
 import type { InstruccionPaso } from "./data/types"
 // ── Interfaces ───────────────────────────────────────────────────────────────
 

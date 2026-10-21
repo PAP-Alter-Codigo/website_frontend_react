@@ -1,0 +1,297 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+backend:
+  name: github
+  repo: PAP-Alter-Codigo/website_frontend_react
+  branch: main
+
+auth_methods:
+  - token
+
+media_folder: public/cms-content
+public_folder: /cms-content
+
+# Plantilla reutilizable de campos para comunidades
+.community_fields: &community_fields
+  - { label: "Slug", name: "slug", widget: "string", hint: "Identificador único en URL (ej. juanacatlan)" }
+  - { 
+      label: "Región", 
+      name: "region", 
+      widget: "select", 
+      options: [
+        "norte", "altos-norte", "altos-sur", "cienega", 
+        "sureste", "sur", "sierra-de-amula", "costa-sur", 
+        "costa-sierra-occidental", "valles", "centro", "lagunas"
+      ] 
+    }
+  - { label: "Nombre de la Comunidad", name: "nombre", widget: "string" }
+  - { label: "Imagen Principal", name: "imagen_principal", widget: "image" }
+  
+  # SECCIONES
+  - label: "Secciones Informativas"
+    name: "secciones"
+    widget: "list"
+    summary: "{{fields.subtitulo}}"
+    fields:
+      - { label: "Subtítulo", name: "subtitulo", widget: "string", required: false }
+      - { label: "Texto / Contenido", name: "texto", widget: "text" }
+      - { label: "Imagen", name: "imagen", widget: "image" }
+      - { label: "Invertir Orden (Reverse)", name: "reverse", widget: "boolean", default: false }
+
+  # RECURSOS / MATERIALES
+  - label: "Recursos y Proyectos"
+    name: "recursos"
+    widget: "list"
+    required: false
+    summary: "{{fields.titulo}} ({{fields.tipo}})"
+    fields:
+      - { label: "Título del Recurso", name: "titulo", widget: "string" }
+      - { 
+          label: "Tipo de Recurso", 
+          name: "tipo", 
+          widget: "select", 
+          options: ["mural", "mapa", "juego-de-mesa", "corto", "otro"] 
+        }
+      - { label: "Slug del Recurso", name: "slug_recurso", widget: "string" }
+      - { label: "Imagen de Portada", name: "imagen", widget: "image" }
+      - { label: "Ruta Interna (URL)", name: "to", widget: "string" }
+
+  # CARRUSEL DE FOTOS
+  - label: "Galería / Carrusel de Fotos"
+    name: "carrusel"
+    widget: "list"
+    required: false
+    field: {label: "Imagen", name: "imagen", widget: "image" }
+
+collections:
+  - name: "colaboradores"
+    label: "Colaboradores"
+    media_folder: "public/cms-content/colaboradores/imgs"
+    public_folder: "/cms-content/colaboradores/imgs"
+    files:
+      - name: "colaboradores_data"
+        label: "Lista de Colaboradores"
+        file: "public/cms-content/colaboradores/index.json"
+        format: "json"
+        fields:
+          - label: "Periodos por Año"
+            name: "colaboradores"
+            widget: "list"
+            summary: "Año {{fields.year}}"
+            fields:
+              - { label: "Año", name: "year", widget: "number", value_type: "int" }
+              - label: "Periodos"
+                name: "periodos"
+                widget: "list"
+                summary: "{{fields.name}}"
+                fields:
+                  - label: "Nombre del Periodo"
+                    name: "name"
+                    widget: "select"
+                    options: ["primavera", "verano", "otoño"]
+                  - label: "Personas"
+                    name: "data"
+                    widget: "list"
+                    summary: "{{fields.nombre}} - {{fields.carrera}}"
+                    fields:
+                      - { label: "Nombre", name: "nombre", widget: "string" }
+                      - { label: "Carrera", name: "carrera", widget: "string" }
+                      - label: "Categoría"
+                        name: "categoria"
+                        widget: "select"
+                        options:
+                          - "Audio"
+                          - "Tecnologias y desarrollo"
+                          - "Trabajo comunitario"
+                          - "Artes"
+                          - "Redes"
+                      - { label: "Contacto", name: "contacto", widget: "string", required: false }
+                      - label: "Imagen"
+                        name: "imagen"
+                        widget: "image"
+                        required: false
+                        media_folder: "public/cms-content/colaboradores/imgs"
+                        public_folder: "/cms-content/colaboradores/imgs"
+  - name: "asesores"
+    label: "Asesores"
+    media_folder: "public/cms-content/asesores/imgs"
+    public_folder: "/cms-content/asesores/imgs"
+    files:
+      - name: "asesores_list"
+        label: "Lista de Asesores"
+        file: "public/cms-content/asesores/index.json"
+        format: "json"
+        fields:
+          - label: "Asesores"
+            name: "asesores"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "Nombre", name: "name", widget: "string" }
+              - label: "Grados Académicos"
+                name: "degrees"
+                widget: "list"
+                field: { label: "Grado / Título", widget: "string" }
+              - { label: "Especialidad / Area", name: "expertise", widget: "string" }
+              - { label: "Contacto", name: "contact", widget: "string" }
+              - label: "Imagen"
+                name: "photoPath"
+                widget: "image"
+                media_folder: "public/cms-content/asesores/imgs"
+                public_folder: "/cms-content/asesores/imgs"
+  - name: "investigacion"
+    label: "Investigación"
+    media_folder: "public/cms-content/investigacion/imgs"
+    public_folder: "/cms-content/investigacion/imgs"
+    files:
+      - name: "investigacion_articles"
+        label: "Lista de Artículos y Publicaciones"
+        file: "public/cms-content/investigacion/index.json"
+        format: "json"
+        fields:
+          - label: "Publicaciones"
+            name: "articles"
+            widget: "list"
+            summary: "{{fields.title}} ({{fields.type}})"
+            fields:
+              - { label: "Título", name: "title", widget: "string" }
+              - { label: "Descripción", name: "description", widget: "text" }
+              - label: "Tipo / Categoría"
+                name: "type"
+                widget: "select"
+                options: ["Article", "Video", "Infographic", "Book"]
+              - label: "URL de la Publicación"
+                name: "url"
+                widget: "string"
+                pattern:
+                  [
+                    '^https?:\/\/.+',
+                    "Ingresa una URL válida que empiece por http:// o https://",
+                  ]
+              - { label: "Autor(es)", name: "author", widget: "string" }
+              - label: "Fecha (ISO: YYYY-MM)"
+                name: "date"
+                widget: "string"
+                pattern:
+                  [
+                    '^\d{4}(-\d{2})?$',
+                    "La fecha debe estar en formato ISO (ej. 2024-09 o 2025)",
+                  ]
+              - label: "Imagen de Portada"
+                name: "image"
+                widget: "image"
+                required: false
+                media_folder: "public/cms-content/investigacion/imgs"
+                public_folder: "/cms-content/investigacion/imgs"
+  - name: "regiones"
+    label: "Regiones"
+    media_folder: "public/cms-content/comunidades/imgs"
+    public_folder: "/cms-content/comunidades/imgs"
+    files:
+      - name: "regiones_index"
+        label: "Lista de Regiones"
+        file: "public/cms-content/comunidades/index.json"
+        fields:
+          - label: "Regiones"
+            name: "regiones"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "ID / Slug Región", name: "id", widget: "string" }
+              - { label: "Título", name: "title", widget: "string" }
+              - label: "Imagen de Portada"
+                name: "imagen"
+                widget: "image"
+                media_folder: "public/cms-content/comunidades/imgs"
+                public_folder: "/cms-content/comunidades/imgs"
+              - { label: "Invertir Orden", name: "reverse", widget: "boolean", default: false }
+              - label: "Comunidades Pertenecientes"
+                name: "comunidades"
+                widget: "list"
+                fields:
+                  - { label: "Nombre (Label)", name: "label", widget: "string" }
+                  - { label: "Slug", name: "slug", widget: "string" }
+  - name: "comunidades_centro"
+    label: "Comunidades: Centro"
+    media_folder: "public/cms-content/comunidades/centro/imgs"
+    public_folder: "/cms-content/comunidades/centro/imgs"
+    files:
+      # JUANACATLÁN
+      - file: "public/cms-content/comunidades/centro/juanacatlan.json"
+        label: "Juanacatlán"
+        name: "juanacatlan"
+        media_folder: "public/cms-content/comunidades/centro/imgs"
+        public_folder: "/cms-content/comunidades/centro/imgs"
+        fields: *community_fields
+      # SANTA CRUZ DE LAS FLORES
+      - file: "public/cms-content/comunidades/centro/santa-cruz-de-las-flores.json"
+        label: "Santa Cruz de las Flores"
+        name: "santa_cruz_de_las_flores"
+        media_folder: "public/cms-content/comunidades/centro/imgs"
+        public_folder: "/cms-content/comunidades/centro/imgs"
+        fields: *community_fields
+  - name: "comunidades_costa_sierra"
+    label: "Comunidades: Costa Sierra Occidental"
+    media_folder: "public/cms-content/comunidades/costa-sierra-occidental/imgs"
+    public_folder: "/cms-content/comunidades/costa-sierra-occidental/imgs"
+    files:
+      # PUERTO VALLARTA
+      - file: "public/cms-content/comunidades/costa-sierra-occidental/puerto-vallarta.json"
+        label: "Puerto Vallarta"
+        name: "puerto_vallarta"
+        media_folder: "public/cms-content/comunidades/costa-sierra-occidental/imgs"
+        public_folder: "/cms-content/comunidades/costa-sierra-occidental/imgs"
+        fields: *community_fields
+  - name: "recursos_centro"
+    label: "Recursos: Centro"
+    media_folder: "public/cms-content/comunidades/centro/imgs"
+    public_folder: "/cms-content/comunidades/centro/imgs"
+    files:
+      # MURAL DE JUANACATLÁN
+      - file: "public/cms-content/comunidades/centro/mural.json"
+        label: "Mural de Juanacatlán"
+        name: "mural_juanacatlan"
+        media_folder: "public/cms-content/comunidades/centro/imgs"
+        public_folder: "/cms-content/comunidades/centro/imgs"
+        fields:
+          - { label: "Título Principal", name: "titulo", widget: "string" }
+          - label: "Párrafos Descriptivos"
+            name: "parrafos"
+            widget: "list"
+            field: { label: "Párrafo", name: "parrafo", widget: "text" }
+          - { label: "Título de Tarjeta PDF", name: "pdf_titulo", widget: "string" }
+          - { label: "Descripción de Tarjeta PDF", name: "pdf_descripcion", widget: "string" }
+          - { label: "Archivo PDF Descargable", name: "pdf_archivo", widget: "file" }
+          - label: "Collage / Galería de Imágenes"
+            name: "imagenes"
+            widget: "list"
+            fields:
+              - { label: "Imagen", name: "src", widget: "image" }
+              - { label: "Texto Alternativo (Alt)", name: "alt", widget: "string", required: false }
+              - { label: "Leyenda / Pie de Foto", name: "caption", widget: "string", required: false }
+              - { label: "Enlace Externo (Opcional)", name: "href", widget: "string", required: false }
+      # JUEGO DE XUCHITLÁN
+      - file: "public/cms-content/comunidades/centro/xuchitlan.json"
+        label: "Juego de Xuchitlán (Santa Cruz)"
+        name: "juego_xuchitlan"
+        media_folder: "public/cms-content/comunidades/centro/imgs"
+        public_folder: "/cms-content/comunidades/centro/imgs"
+        fields:
+          - { label: "Título Principal", name: "titulo", widget: "string" }
+          - { label: "Descripción del Juego", name: "descripcion", widget: "text" }
+          - { label: "Título de Tarjeta PDF", name: "pdf_titulo", widget: "string" }
+          - { label: "Descripción de Tarjeta PDF", name: "pdf_descripcion", widget: "string" }
+          - { label: "Archivo PDF Descargable", name: "pdf_archivo", widget: "file" }
+          - { label: "Título Sección Tablero", name: "tablero_titulo", widget: "string" }
+          - { label: "Descripción del Tablero", name: "tablero_descripcion", widget: "text" }
+          - { label: "Imagen del Tablero", name: "tablero_imagen", widget: "image" }
+          - label: "Cartas Interactivas"
+            name: "cartas"
+            widget: "list"
+            summary: "{{fields.titulo}}"
+            fields:
+              - { label: "Categoría / Título", name: "titulo", widget: "string" }
+              - { label: "Descripción / Instructivo", name: "caption", widget: "text" }
+              - { label: "Color del Pincel (Hexadecimal)", name: "color", widget: "color" }
+              - { label: "Imagen Reverso (Frente en reposo)", name: "front", widget: "image" }
+              - { label: "Imagen Frente (Al dar clic)", name: "back", widget: "image" }
