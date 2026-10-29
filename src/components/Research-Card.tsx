@@ -1,6 +1,5 @@
 import type { FC } from "react";
 
-
 export const ResearchTypeEnum = {
   Article: "article",
   Video: "video",
@@ -9,10 +8,10 @@ export const ResearchTypeEnum = {
 } as const;
 
 export interface ResearchItem {
-  id: string; 
+  id?: string; 
   title: string;
   description: string;
-  type: typeof ResearchTypeEnum[keyof typeof ResearchTypeEnum];
+  type: string;
   image: string;
   url: string;
   author?: string;
@@ -24,15 +23,23 @@ interface ResearchCardProps {
   dataAosDelay?: number;
 }
 
-const typeConfig: Record<typeof ResearchTypeEnum[keyof typeof ResearchTypeEnum], { label: string; color: string;}> = {
+const typeConfig: Record<string, { label: string; color: string }> = {
   article: { label: "Artículo", color: "bg-blue-100 text-blue-800" },
   video: { label: "Video", color: "bg-purple-100 text-purple-800" },
-  infographic: { label: "Infografía", color: "bg-orange-100 text-orange-800"},
+  infographic: { label: "Infografía", color: "bg-orange-100 text-orange-800" },
   book: { label: "Libro", color: "bg-red-100 text-red-800" },
 };
 
+// Fallback seguro en caso de que llegue un tipo desconocido o no definido
+const defaultConfig = {
+  label: "Publicación",
+  color: "bg-gray-100 text-gray-800",
+};
+
 const ResearchCard: FC<ResearchCardProps> = ({ item, dataAosDelay }) => {
-  const config = typeConfig[item.type];
+  // Normaliza el tipo a minúsculas para coincidir con typeConfig
+  const normalizedType = item.type ? item.type.toLowerCase() : "";
+  const config = typeConfig[normalizedType] || defaultConfig;
 
   return (
     <article
@@ -61,12 +68,12 @@ const ResearchCard: FC<ResearchCardProps> = ({ item, dataAosDelay }) => {
           </span>
         </div>
 
-        {/* Title - clamp to 2 lines, max 60 chars */}
+        {/* Title */}
         <h3 className="text-sm sm:text-base md:text-lg font-semibold text-gray-800 mb-1 sm:mb-2 line-clamp-2 leading-tight">
           {item.title}
         </h3>
 
-        {/* Description - max 150 chars */}
+        {/* Description */}
         <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 flex-1 line-clamp-3">
           {item.description}
         </p>

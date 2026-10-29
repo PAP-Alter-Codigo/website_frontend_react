@@ -1,18 +1,9 @@
-// src/components/Regiones.tsx
 import { Link } from "react-router-dom";
-import { regiones } from "./Comunidades-Data";
-
-type Item = { label: string; to: string };
-type Region = {
-  title: string;
-  img: string;
-  items: Item[];
-  reverse?: boolean; // alterna imagen/tarjeta
-};
-
 import bursh1 from "@assets/brushStrokes/03-graf-1.png";
 import bursh2 from "@assets/brushStrokes/03-graf-4.png";
 
+import { useCMSContent } from "../../hooks/useCMSContent";
+import type { RegionesIndexContent, RegionBlockProps } from "../../types/regiones";
 
 const IMG = {
   deco1: bursh1,
@@ -27,7 +18,7 @@ function Chevron() {
   );
 }
 
-function RegionBlock({ title, img, items, reverse }: Region) {
+function RegionBlock({ title, img, items, reverse }: RegionBlockProps) {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className={`grid gap-6 lg:gap-10 md:grid-cols-2 items-stretch ${reverse ? "md:[&>*:first-child]:order-2" : ""}`}>
@@ -75,14 +66,55 @@ function RegionBlock({ title, img, items, reverse }: Region) {
 }
 
 export default function ComunidadesCatalogue() {
+  // Consumo directo del JSON del índice de regiones sin fallback local
+  const { data, loading, error } = useCMSContent<RegionesIndexContent>("/cms-content/comunidades/index.json");
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[50vh]">
+        <div className="animate-spin rounded-full h-10 w-10 border-4 border-black border-t-transparent"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-[50vh] text-red-600 font-semibold">
+        Error al cargar el catálogo de regiones: {error.message}
+      </div>
+    );
+  }
+
+  // Normalización de datos provenientes del CMS
+  const formattedRegiones = (data?.regiones || []).map((r) => {
+    const regionId = r.id || r.title.toLowerCase().replace(/\s+/g, "-");
+    
+    const items = r.items
+      ? r.items.map((it) => ({ label: it.label, to: it.to || "" }))
+      : (r.comunidades || []).map((c) => ({
+          label: c.label,
+          to: c.to || `/comunidades/${regionId}/${c.slug}`,
+        }));
+
+    return {
+      title: r.title,
+      img: r.imagen || r.img || "",
+      items,
+      reverse: Boolean(r.reverse),
+    };
+  });
+
   return (
     <section className="overflow-hidden">
       <div className="relative flex flex-1 justify-center pb-5">
         <div className="w-full">
-          {/* Render dinámico de todas las regiones */}
-          {regiones.map((r) => (
-            <RegionBlock key={r.title} {...r} />
-          ))}
+          {formattedRegiones.length === 0 ? (
+            <p className="text-center py-12 text-gray-500">No hay regiones disponibles actualmente.</p>
+          ) : (
+            formattedRegiones.map((r) => (
+              <RegionBlock key={r.title} {...r} />
+            ))
+          )}
 
           {/* Decorativos de fondo */}
           <div className="hidden md:block absolute top-0 left-0 -z-30">
