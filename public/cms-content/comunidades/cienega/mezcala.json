@@ -1,0 +1,22 @@
+{
+  "slug": "mezcala",
+  "region": "cienega",
+  "nombre": "Mezcala",
+  "imagen_principal": "/cms-content/comunidades/cienega/imgs/mezcala-hero.jpg",
+  "secciones": [
+    {
+      "subtitulo": "Defensa de la Tierra Comunal",
+      "texto": "Mezcala de la Asunción es una comunidad indígena coca ubicada en el municipio de Poncitlán, Jalisco, a orillas del lago de Chapala. Desde hace años, sus habitantes enfrentan conflictos por la defensa de sus tierras comunales, debido a intentos de ocupación de su territorio y a proyectos que amenazan a la naturaleza y a la salud comunitaria. Uno de los casos más importantes es el del cerro El Pandillo, donde un empresario ocupó terrenos comunales sin el consentimiento de la asamblea. Además, algunos comuneros han denunciado amenazas, intimidación y procesos penales relacionados con sus acciones para defender el territorio.",
+      "imagen": "/cms-content/comunidades/cienega/imgs/mezcala-1.jpg",
+      "reverse": false
+    },
+    {
+      "subtitulo": "Litigio Agrario y Autonomía",
+      "texto": "La comunidad ha recurrido a los tribunales agrarios y a otros recursos legales para recuperar sus tierras y defender sus derechos colectivos. Después de más de dos décadas de litigio, en 2025 se ejecutó la sentencia que permitió recuperar el predio de El Pandillo; sin embargo, en enero de 2026, los comuneros denunciaron una nueva ocupación en otro terreno. También han promovido amparos para defenderse de los procesos penales que consideran injustos y han mantenido la organización comunitaria mediante su asamblea de comuneros, que participa en las decisiones sobre el territorio. Estas acciones buscan proteger la tierra, los recursos naturales y la autonomía de la comunidad. El conflicto todavía no se encuentra completamente resuelto.",
+      "imagen": "/cms-content/comunidades/cienega/imgs/mezcala-2.jpg",
+      "reverse": true
+    }
+  ],
+  "recursos": [],
+  "carrusel": []
+}

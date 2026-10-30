@@ -1,0 +1,22 @@
+{
+  "slug": "santa-catarina-cuexcomatitlan",
+  "region": "norte",
+  "nombre": "Santa Catarina Cuexcomatitlán",
+  "imagen_principal": "/cms-content/comunidades/norte/imgs/santa-catarina-hero.jpg",
+  "secciones": [
+    {
+      "subtitulo": "Contexto Territorial y Necesidades",
+      "texto": "Es una comunidad indígena wixárika ubicada en el municipio de Mezquitic, Jalisco. Su población conserva su lengua, tradiciones y prácticas ceremoniales, y mantiene una relación muy importante con su territorio y sus lugares sagrados. La comunidad enfrenta diversas necesidades relacionadas con la infraestructura, los servicios de salud y educación, el acceso al agua potable y los conflictos territoriales. También se han señalado problemas de inseguridad que afectan la vida cotidiana de las comunidades wixárikas.",
+      "imagen": "/cms-content/comunidades/norte/imgs/santa-catarina-1.jpg",
+      "reverse": false
+    },
+    {
+      "subtitulo": "Resistencia Comunitaria y Educación Intercultural",
+      "texto": "Desde hace décadas, la comunidad trabaja activamente en proyectos de educación intercultural con énfasis en educación ambiental, bienes comunales, el legado de la lengua y las prácticas comunitarias. Han interpuesto diferentes recursos legales, y resistido, a través de la organización comunitaria, diversos tipos de despojo territorial por parte de actores gubernamentales privados y el crimen organizado.",
+      "imagen": "/cms-content/comunidades/norte/imgs/santa-catarina-2.jpg",
+      "reverse": true
+    }
+  ],
+  "recursos": [],
+  "carrusel": []
+}

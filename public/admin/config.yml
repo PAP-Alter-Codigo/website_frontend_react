@@ -241,6 +241,33 @@ collections:
         media_folder: "public/cms-content/comunidades/costa-sierra-occidental/imgs"
         public_folder: "/cms-content/comunidades/costa-sierra-occidental/imgs"
         fields: *community_fields
+  - name: comunidades_norte
+    label: "Comunidades: Norte"
+    files:
+      # SANTA CATARINA CUEXCOMATITLÁN
+      - file: "public/cms-content/comunidades/norte/santa-catarina-cuexcomatitlan.json"
+        label: "Santa Catarina Cuexcomatitlán"
+        name: santa_catarina_cuexcomatitlan
+        media_folder: "public/cms-content/comunidades/norte/imgs"
+        public_folder: "/cms-content/comunidades/norte/imgs"
+        fields: *community_fields
+  - name: comunidades_cienega
+    label: "Comunidades: Ciénega"
+    files:
+      # AGUA CALIENTE
+      - file: "public/cms-content/comunidades/cienega/agua-caliente.json"
+        label: "Agua Caliente"
+        name: agua_caliente
+        media_folder: "public/cms-content/comunidades/cienega/imgs"
+        public_folder: "/cms-content/comunidades/cienega/imgs"
+        fields: *community_fields
+      # MEZCALA
+      - file: "public/cms-content/comunidades/cienega/mezcala.json"
+        label: "Mezcala"
+        name: mezcala
+        media_folder: "public/cms-content/comunidades/cienega/imgs"
+        public_folder: "/cms-content/comunidades/cienega/imgs"
+        fields: *community_fields
   - name: "recursos_centro"
     label: "Recursos: Centro"
     media_folder: "public/cms-content/comunidades/centro/imgs"

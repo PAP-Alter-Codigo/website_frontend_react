@@ -1,0 +1,22 @@
+{
+  "slug": "agua-caliente",
+  "region": "cienega",
+  "nombre": "Agua Caliente",
+  "imagen_principal": "/cms-content/comunidades/cienega/imgs/agua-caliente-hero.jpg",
+  "secciones": [
+    {
+      "subtitulo": "Salud Comunitaria y Cuenca Hídrica",
+      "texto": "Esta comunidad, principalmente indígena Coca, ha enfrentado una elevada presencia de enfermedad renal crónica y problemas de malnutrición infantil. A partir de múltiples estudios científicos se ha correlacionado la contaminación del lago de Chapala (asociada a descargas residuales, metales pesados y escorrentía agrícola) y de la cuenca Lerma-Chapala-Santiago, con la contaminación del entorno y del agua potable en la zona que son factores importantes en la coincidencia de enfermedad renal crónica. Las desigualdades económicas, el acceso limitado a servicios médicos y los problemas de abastecimiento de alimentos aumentan las dificultades de las familias.",
+      "imagen": "/cms-content/comunidades/cienega/imgs/agua-caliente-1.jpg",
+      "reverse": false
+    },
+    {
+      "subtitulo": "Organización de Mujeres y Agroecología",
+      "texto": "Una de las iniciativas más importantes, a través del trabajo con la Red de Defensoras Jalisco, es la organización de un grupo de mujeres de la comunidad que creó un huerto comunitario de plantas medicinales y comenzó a elaborar composta con residuos orgánicos, buscando cuidar la tierra y fortalecer la salud comunitaria mediante prácticas agroecológicas. Además, investigadores de la Universidad de Guadalajara han realizado evaluaciones de salud y seguimiento nutricional de la población infantil. La implementación de comedores escolares también ha contribuido a mejorar algunos indicadores de desnutrición.",
+      "imagen": "/cms-content/comunidades/cienega/imgs/agua-caliente-2.jpg",
+      "reverse": true
+    }
+  ],
+  "recursos": [],
+  "carrusel": []
+}

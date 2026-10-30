@@ -22,7 +22,8 @@ import XuchitlanPage from './pages/comunidades/centro/sta cruz de las flores/Xuc
 import PodcastPage from './pages/podcast/Podcast-Page';
 import InvestigacionPage from './pages/investigacion/Investigacion-Page';
 import SierraOccidentalPage from './pages/comunidades/costaSierraOccidental/SierraOccidental-Page';
-
+import NortePage from './pages/comunidades/norte/Norte-Page';
+import CienegaPage from './pages/comunidades/cienega/Cienega-Page';
 
 
 function AOSRouterSync() {
@@ -67,6 +68,8 @@ function App() {
         <Route path="/comunidades/sta-cruz-de-las-flores/xuchitlan" element={<XuchitlanPage />} />
         <Route path="/investigacion" element={<InvestigacionPage />} />
         <Route path="/comunidades/puerto-vallarta" element={<SierraOccidentalPage />} />
+        <Route path="/comunidades/norte/:slug?" element={<NortePage />} />
+        <Route path="/comunidades/cienega/:slug?" element={<CienegaPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
