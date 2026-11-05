@@ -2,18 +2,18 @@
   "slug": "lagos-de-moreno",
   "region": "altos-norte",
   "nombre": "Lagos de Moreno - San Juan de la Laguna",
-  "imagen_principal": "/cms-content/comunidades/altos-norte/imgs/lagos-de-moreno-principal.jpg",
+  "imagen_principal": "/cms-content/comunidades/altos-norte/imgs/lagos-de-moreno-principal.jpeg",
   "secciones": [
     {
       "subtitulo": "Resistencia de San Juan de la Laguna frente al Gasoducto",
       "texto": "San Juan de la Laguna es una comunidad de Lagos de Moreno, Jalisco, cuyos habitantes se reconocen como parte de un pueblo indígena y buscan conservar su identidad, sus costumbres y su territorio. Desde hace varios años, la comunidad se opone a la construcción de un gasoducto que atraviesa sus tierras, debido a los posibles riesgos para su seguridad y el medio ambiente. Los habitantes también denuncian que el proyecto se realizó sin consultar adecuadamente a la población. Además, enfrentan carencias de servicios básicos, como el drenaje, lo que ha generado inconformidad porque consideran que no se han atendido sus necesidades.",
-      "imagen": "/cms-content/comunidades/altos-norte/imgs/lagos-de-moreno-sec-1.jpg",
+      "imagen": "/cms-content/comunidades/altos-norte/imgs/lagos-de-moreno-sec-1.jpeg",
       "reverse": false
     },
     {
       "subtitulo": "Organización Comunitaria y Recomendación de Derechos Humanos",
       "texto": "Los habitantes se han organizado mediante encuentros, protestas y acciones legales para defender su territorio y exigir que se respeten sus derechos. Las mujeres han tenido un papel importante en esta lucha, participando en actividades para proteger sus tierras y preservar la identidad de su pueblo. En 2020, la Comisión Estatal de Derechos Humanos de Jalisco emitió una recomendación relacionada con las violaciones a los derechos de la comunidad. Asimismo, sus habitantes han buscado el reconocimiento de sus derechos como pueblo indígena, así como una mayor participación en las decisiones que afectan su territorio. Sin embargo, todavía existen demandas relacionadas con el gasoducto y la falta de servicios básicos que requieren atención.",
-      "imagen": "/cms-content/comunidades/altos-norte/imgs/lagos-de-moreno-sec-2.jpg",
+      "imagen": "/cms-content/comunidades/altos-norte/imgs/lagos-de-moreno-sec-2.jpeg",
       "reverse": true
     }
   ],

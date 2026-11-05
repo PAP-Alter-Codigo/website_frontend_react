@@ -102,7 +102,7 @@ export default function AltosNorteInfo() {
                                                     {section.subtitulo}
                                                 </h2>
                                             )}
-                                            <p className="text-base sm:text-lg lg:text-xl text-black/90 leading-relaxed">
+                                            <p className="text-base sm:text-md lg:text-lg text-black/90 leading-relaxed">
                                                 {section.texto}
                                             </p>
                                         </div>
