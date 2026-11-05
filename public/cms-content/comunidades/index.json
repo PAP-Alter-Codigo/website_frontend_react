@@ -34,10 +34,6 @@
       "imagen": "/cms-content/comunidades/imgs/altos-sur.jpeg",
       "reverse": true,
       "comunidades": [
-        {
-          "label": "Lagos de Moreno",
-          "slug": "lagos-de-moreno"
-        }
       ]
     },
     {
@@ -69,10 +65,6 @@
         {
           "label": "Santa Cruz de la Soledad",
           "slug": "santa-cruz-de-la-soledad"
-        },
-        {
-          "label": "Mezcala",
-          "slug": "mezcala"
         },
         {
           "label": "San Antonio Tlayacapan",

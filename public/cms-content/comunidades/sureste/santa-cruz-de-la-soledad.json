@@ -1,0 +1,22 @@
+{
+  "slug": "santa-cruz-de-la-soledad",
+  "region": "sureste",
+  "nombre": "Santa Cruz de la Soledad",
+  "imagen_principal": "/cms-content/comunidades/sureste/imgs/santa-cruz-de-la-soledad-principal.jpg",
+  "secciones": [
+    {
+      "subtitulo": "Conflicto Territorial y Proyectos Inmobiliarios",
+      "texto": "Santa Cruz de la Soledad es una comunidad ubicada en el municipio de Chapala, Jalisco. Desde hace varios años, sus habitantes enfrentan un conflicto por sus tierras ejidales, debido a un proyecto inmobiliario que busca construir viviendas y otras instalaciones en terrenos que la comunidad considera parte de su territorio. Las y los ejidatarios han denunciado irregularidades en la compra y venta de las tierras, así como amenazas contra las personas que participan en su defensa. También les preocupa que el proyecto afecte los cerros, las zonas naturales y las fuentes de agua de la comunidad. Por ello, las y los habitantes se han organizado para evitar la pérdida de sus tierras y proteger el medio ambiente.",
+      "imagen": "/cms-content/comunidades/sureste/imgs/santa-cruz-de-la-soledad-sec-1.jpg",
+      "reverse": false
+    },
+    {
+      "subtitulo": "Defensa Comunitaria e Infraestructura Reciente",
+      "texto": "Se han realizado protestas, acciones legales y reuniones para defender sus tierras y exigir que se respeten sus derechos. También han recibido apoyo de organizaciones y personas de comunidades cercanas que buscan proteger el territorio y evitar daños ambientales. Además del conflicto territorial, en 2026 el gobierno municipal realizó obras para mejorar el ingreso a la localidad y la parada de autobús, e inauguró letras monumentales para identificar a la comunidad. En septiembre de 2026 también se anunció una medida para restringir el paso de vehículos pesados por el centro del poblado, con el objetivo de evitar daños en las calles y las redes de agua y drenaje. Aunque estas obras buscan mejorar la infraestructura, el conflicto por las tierras continúa siendo una de las principales preocupaciones de las y los ejidatarios.",
+      "imagen": "/cms-content/comunidades/sureste/imgs/santa-cruz-de-la-soledad-sec-2.jpg",
+      "reverse": true
+    }
+  ],
+  "recursos": [],
+  "carrusel": []
+}

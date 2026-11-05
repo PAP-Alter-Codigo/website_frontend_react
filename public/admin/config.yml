@@ -210,6 +210,80 @@ collections:
                 fields:
                   - { label: "Nombre (Label)", name: "label", widget: "string" }
                   - { label: "Slug", name: "slug", widget: "string" }
+  - name: comunidades_norte
+    label: "Comunidades: Norte"
+    media_folder: "public/cms-content/comunidades/norte/imgs"
+    public_folder: "/cms-content/comunidades/norte/imgs"
+    files:
+      # SANTA CATARINA CUEXCOMATITLÁN
+      - file: "public/cms-content/comunidades/norte/santa-catarina-cuexcomatitlan.json"
+        label: "Santa Catarina Cuexcomatitlán"
+        name: santa_catarina_cuexcomatitlan
+        media_folder: "public/cms-content/comunidades/norte/imgs"
+        public_folder: "/cms-content/comunidades/norte/imgs"
+        fields: *community_fields
+  - name: comunidades_altos_norte
+    label: "Comunidades: Altos Norte"
+    media_folder: "public/cms-content/comunidades/altos-norte/imgs"
+    public_folder: "/cms-content/comunidades/altos-norte/imgs"
+    files:
+      # ALTOS NORTE
+      - file: "public/cms-content/comunidades/altos-norte/lagos-de-moreno.json"
+        label: "Lagos de Moreno"
+        name: lagos_de_moreno
+        media_folder: "public/cms-content/comunidades/altos-norte/imgs"
+        public_folder: "/cms-content/comunidades/altos-norte/imgs"
+        fields: *community_fields
+  - name: comunidades_cienega
+    label: "Comunidades: Ciénega"
+    media_folder: "public/cms-content/comunidades/cienega/imgs"
+    public_folder: "/cms-content/comunidades/cienega/imgs"
+    files:
+      # LA NORIA
+      - file: "public/cms-content/comunidades/cienega/la-noria.json"
+        label: "La Noria"
+        name: la_noria
+        media_folder: "public/cms-content/comunidades/cienega/imgs"
+        public_folder: "/cms-content/comunidades/cienega/imgs"
+        fields: *community_fields
+      # AGUA CALIENTE
+      - file: "public/cms-content/comunidades/cienega/agua-caliente.json"
+        label: "Agua Caliente"
+        name: agua_caliente
+        media_folder: "public/cms-content/comunidades/cienega/imgs"
+        public_folder: "/cms-content/comunidades/cienega/imgs"
+        fields: *community_fields
+      # MEZCALA
+      - file: "public/cms-content/comunidades/cienega/mezcala.json"
+        label: "Mezcala"
+        name: mezcala
+        media_folder: "public/cms-content/comunidades/cienega/imgs"
+        public_folder: "/cms-content/comunidades/cienega/imgs"
+        fields: *community_fields
+  - name: comunidades_sureste
+    label: "Comunidades: Sureste"
+    media_folder: "public/cms-content/comunidades/sureste/imgs"
+    public_folder: "/cms-content/comunidades/sureste/imgs"
+    files:
+      # SANTA CRUZ DE LA SOLEDAD
+      - file: "public/cms-content/comunidades/sureste/santa-cruz-de-la-soledad.json"
+        label: "Santa Cruz de la Soledad"
+        name: santa_cruz_de_la_soledad
+        media_folder: "public/cms-content/comunidades/sureste/imgs"
+        public_folder: "/cms-content/comunidades/sureste/imgs"
+        fields: *community_fields
+  - name: "comunidades_costa_sierra"
+    label: "Comunidades: Costa Sierra Occidental"
+    media_folder: "public/cms-content/comunidades/costa-sierra-occidental/imgs"
+    public_folder: "/cms-content/comunidades/costa-sierra-occidental/imgs"
+    files:
+      # PUERTO VALLARTA
+      - file: "public/cms-content/comunidades/costa-sierra-occidental/puerto-vallarta.json"
+        label: "Puerto Vallarta"
+        name: "puerto_vallarta"
+        media_folder: "public/cms-content/comunidades/costa-sierra-occidental/imgs"
+        public_folder: "/cms-content/comunidades/costa-sierra-occidental/imgs"
+        fields: *community_fields
   - name: "comunidades_centro"
     label: "Comunidades: Centro"
     media_folder: "public/cms-content/comunidades/centro/imgs"
@@ -228,45 +302,6 @@ collections:
         name: "santa_cruz_de_las_flores"
         media_folder: "public/cms-content/comunidades/centro/imgs"
         public_folder: "/cms-content/comunidades/centro/imgs"
-        fields: *community_fields
-  - name: "comunidades_costa_sierra"
-    label: "Comunidades: Costa Sierra Occidental"
-    media_folder: "public/cms-content/comunidades/costa-sierra-occidental/imgs"
-    public_folder: "/cms-content/comunidades/costa-sierra-occidental/imgs"
-    files:
-      # PUERTO VALLARTA
-      - file: "public/cms-content/comunidades/costa-sierra-occidental/puerto-vallarta.json"
-        label: "Puerto Vallarta"
-        name: "puerto_vallarta"
-        media_folder: "public/cms-content/comunidades/costa-sierra-occidental/imgs"
-        public_folder: "/cms-content/comunidades/costa-sierra-occidental/imgs"
-        fields: *community_fields
-  - name: comunidades_norte
-    label: "Comunidades: Norte"
-    files:
-      # SANTA CATARINA CUEXCOMATITLÁN
-      - file: "public/cms-content/comunidades/norte/santa-catarina-cuexcomatitlan.json"
-        label: "Santa Catarina Cuexcomatitlán"
-        name: santa_catarina_cuexcomatitlan
-        media_folder: "public/cms-content/comunidades/norte/imgs"
-        public_folder: "/cms-content/comunidades/norte/imgs"
-        fields: *community_fields
-  - name: comunidades_cienega
-    label: "Comunidades: Ciénega"
-    files:
-      # AGUA CALIENTE
-      - file: "public/cms-content/comunidades/cienega/agua-caliente.json"
-        label: "Agua Caliente"
-        name: agua_caliente
-        media_folder: "public/cms-content/comunidades/cienega/imgs"
-        public_folder: "/cms-content/comunidades/cienega/imgs"
-        fields: *community_fields
-      # MEZCALA
-      - file: "public/cms-content/comunidades/cienega/mezcala.json"
-        label: "Mezcala"
-        name: mezcala
-        media_folder: "public/cms-content/comunidades/cienega/imgs"
-        public_folder: "/cms-content/comunidades/cienega/imgs"
         fields: *community_fields
   - name: "recursos_centro"
     label: "Recursos: Centro"
