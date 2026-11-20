@@ -69,10 +69,11 @@ function App() {
         <Route path="/comunidades/sta-cruz-de-las-flores/mapa" element={<MapaInteractivoPage />} />
         <Route path="/comunidades/sta-cruz-de-las-flores/xuchitlan" element={<XuchitlanPage />} />
         <Route path="/investigacion" element={<InvestigacionPage />} />
-        <Route path="/comunidades/norte/:slug?" element={<NortePage />} />
+        {/* <Route path="/comunidades/norte/:slug?" element={<NortePage />} /> */}
         <Route path="/comunidades/altos-norte/:slug?" element={<AltosNortePage />} />
-        <Route path="/comunidades/cienega/:slug?" element={<CienegaPage />} />
-        <Route path="/comunidades/sureste/:slug?" element={<SurestePage />} />
+        {/* <Route path="/comunidades/cienega/:slug?" element={<CienegaPage />} /> */}
+        <Route path="/comunidades/cienega/agua-caliente" element={<CienegaPage />} />
+        {/* <Route path="/comunidades/sureste/:slug?" element={<SurestePage />} /> */}
         <Route path="/comunidades/puerto-vallarta" element={<SierraOccidentalPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

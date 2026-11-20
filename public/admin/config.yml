@@ -62,6 +62,7 @@ public_folder: /cms-content
     required: false
     field: {label: "Imagen", name: "imagen", widget: "image" }
 
+
 collections:
   - name: "colaboradores"
     label: "Colaboradores"
@@ -210,18 +211,18 @@ collections:
                 fields:
                   - { label: "Nombre (Label)", name: "label", widget: "string" }
                   - { label: "Slug", name: "slug", widget: "string" }
-  - name: comunidades_norte
-    label: "Comunidades: Norte"
-    media_folder: "public/cms-content/comunidades/norte/imgs"
-    public_folder: "/cms-content/comunidades/norte/imgs"
-    files:
+#  - name: comunidades_norte
+#    label: "Comunidades: Norte"
+#    media_folder: "public/cms-content/comunidades/norte/imgs"
+#    public_folder: "/cms-content/comunidades/norte/imgs"
+#    files:
       # SANTA CATARINA CUEXCOMATITLÁN
-      - file: "public/cms-content/comunidades/norte/santa-catarina-cuexcomatitlan.json"
-        label: "Santa Catarina Cuexcomatitlán"
-        name: santa_catarina_cuexcomatitlan
-        media_folder: "public/cms-content/comunidades/norte/imgs"
-        public_folder: "/cms-content/comunidades/norte/imgs"
-        fields: *community_fields
+#      - file: "public/cms-content/comunidades/norte/santa-catarina-cuexcomatitlan.json"
+#        label: "Santa Catarina Cuexcomatitlán"
+#        name: santa_catarina_cuexcomatitlan
+#        media_folder: "public/cms-content/comunidades/norte/imgs"
+#        public_folder: "/cms-content/comunidades/norte/imgs"
+#        fields: *community_fields
   - name: comunidades_altos_norte
     label: "Comunidades: Altos Norte"
     media_folder: "public/cms-content/comunidades/altos-norte/imgs"
@@ -240,12 +241,12 @@ collections:
     public_folder: "/cms-content/comunidades/cienega/imgs"
     files:
       # LA NORIA
-      - file: "public/cms-content/comunidades/cienega/la-noria.json"
-        label: "La Noria"
-        name: la_noria
-        media_folder: "public/cms-content/comunidades/cienega/imgs"
-        public_folder: "/cms-content/comunidades/cienega/imgs"
-        fields: *community_fields
+#      - file: "public/cms-content/comunidades/cienega/la-noria.json"
+#        label: "La Noria"
+#        name: la_noria
+#        media_folder: "public/cms-content/comunidades/cienega/imgs"
+#        public_folder: "/cms-content/comunidades/cienega/imgs"
+#        fields: *community_fields
       # AGUA CALIENTE
       - file: "public/cms-content/comunidades/cienega/agua-caliente.json"
         label: "Agua Caliente"
@@ -254,24 +255,24 @@ collections:
         public_folder: "/cms-content/comunidades/cienega/imgs"
         fields: *community_fields
       # MEZCALA
-      - file: "public/cms-content/comunidades/cienega/mezcala.json"
-        label: "Mezcala"
-        name: mezcala
-        media_folder: "public/cms-content/comunidades/cienega/imgs"
-        public_folder: "/cms-content/comunidades/cienega/imgs"
-        fields: *community_fields
-  - name: comunidades_sureste
-    label: "Comunidades: Sureste"
-    media_folder: "public/cms-content/comunidades/sureste/imgs"
-    public_folder: "/cms-content/comunidades/sureste/imgs"
-    files:
+#      - file: "public/cms-content/comunidades/cienega/mezcala.json"
+#        label: "Mezcala"
+#        name: mezcala
+#        media_folder: "public/cms-content/comunidades/cienega/imgs"
+#        public_folder: "/cms-content/comunidades/cienega/imgs"
+#        fields: *community_fields
+#  - name: comunidades_sureste
+#    label: "Comunidades: Sureste"
+#    media_folder: "public/cms-content/comunidades/sureste/imgs"
+#    public_folder: "/cms-content/comunidades/sureste/imgs"
+#    files:
       # SANTA CRUZ DE LA SOLEDAD
-      - file: "public/cms-content/comunidades/sureste/santa-cruz-de-la-soledad.json"
-        label: "Santa Cruz de la Soledad"
-        name: santa_cruz_de_la_soledad
-        media_folder: "public/cms-content/comunidades/sureste/imgs"
-        public_folder: "/cms-content/comunidades/sureste/imgs"
-        fields: *community_fields
+#      - file: "public/cms-content/comunidades/sureste/santa-cruz-de-la-soledad.json"
+#        label: "Santa Cruz de la Soledad"
+#        name: santa_cruz_de_la_soledad
+#        media_folder: "public/cms-content/comunidades/sureste/imgs"
+#        public_folder: "/cms-content/comunidades/sureste/imgs"
+#        fields: *community_fields
   - name: "comunidades_costa_sierra"
     label: "Comunidades: Costa Sierra Occidental"
     media_folder: "public/cms-content/comunidades/costa-sierra-occidental/imgs"
