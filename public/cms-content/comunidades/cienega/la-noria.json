@@ -1,0 +1,22 @@
+{
+  "slug": "la-noria",
+  "region": "cienega",
+  "nombre": "La Noria",
+  "imagen_principal": "/cms-content/comunidades/cienega/imgs/la-noria-principal.jpg",
+  "secciones": [
+    {
+      "subtitulo": "Soberanía Alimentaria y Expansión Agavera",
+      "texto": "Zapotlán del Rey es un municipio donde la agricultura, en especial la siembra del maíz, es muy importante para su economía y alimentación. Sin embargo, los agricultores enfrentan problemas por los bajos precios del maíz y el aumento de los costos de producción. Además, la expansión del cultivo de agave ha provocado deforestación de algunas zonas, afectando los terrenos agrícolas, la biodiversidad y los recursos naturales, como el agua.",
+      "imagen": "/cms-content/comunidades/cienega/imgs/la-noria-sec-1.jpg",
+      "reverse": false
+    },
+    {
+      "subtitulo": "Agroecología y Encuentro de Mujeres 'Las Tiburonas'",
+      "texto": "Los agricultores se han organizado para exigir precios justos para el maíz y que se entreguen los apoyos pendientes. También se han presentado denuncias por la siembra de agave en terrenos protegidos. En 2021 los agricultores del ejido de San Miguel Zapotitlán denunciaron que la interrupción del riego dañó sus cultivos de trigo y anunciaron acciones legales para reclamar una indemnización. Habitantes de la comunidad de La Noria se han organizado para buscar alternativas en sus métodos de agricultura a través de diversas técnicas agroecológicas. El grupo de 'Las Tiburonas' anualmente realiza un encuentro de mujeres, dedicado a la reflexión sobre los cuidados, los saberes comunitarios y la agroecología.",
+      "imagen": "/cms-content/comunidades/cienega/imgs/la-noria-sec-2.jpg",
+      "reverse": true
+    }
+  ],
+  "recursos": [],
+  "carrusel": []
+}
