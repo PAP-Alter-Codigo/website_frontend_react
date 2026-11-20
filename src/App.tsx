@@ -22,10 +22,10 @@ import XuchitlanPage from './pages/comunidades/centro/sta cruz de las flores/Xuc
 import PodcastPage from './pages/podcast/Podcast-Page';
 import InvestigacionPage from './pages/investigacion/Investigacion-Page';
 import SierraOccidentalPage from './pages/comunidades/costaSierraOccidental/SierraOccidental-Page';
-import NortePage from './pages/comunidades/norte/Norte-Page';
+//import NortePage from './pages/comunidades/norte/Norte-Page';
 import AltosNortePage from './pages/comunidades/altosNorte/AltosNorte-Page';
 import CienegaPage from './pages/comunidades/cienega/Cienega-Page';
-import SurestePage from './pages/comunidades/sureste/Sureste-Page';
+//import SurestePage from './pages/comunidades/sureste/Sureste-Page';
 
 
 function AOSRouterSync() {
